@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Container, Grid, makeStyles, Typography, TextField } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
+import {createUser} from './api'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,8 +95,16 @@ const SignUp = () => {
       password: validatePassword(password),
     })
     console.log(isValid);
-    console.log(`Firstname: ${firstname} Lastname: ${lastname} Email: ${email} Password: ${password}`)
-    // Do other things
+    //console.log(`Firstname: ${firstname} Lastname: ${lastname} Email: ${email} Password: ${password}`)
+    // Do other things 
+    if(isValid){
+      createUser({
+      email,
+      firstname,
+      lastname,
+      password
+      })
+    }
   }
 
   const classes = useStyles();
