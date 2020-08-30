@@ -94,10 +94,17 @@ const SignUp = () => {
       email: validateEmail(email),
       password: validatePassword(password),
     })
-    console.log(isValid);
-    //console.log(`Firstname: ${firstname} Lastname: ${lastname} Email: ${email} Password: ${password}`)
-    // Do other things 
-    if(isValid){
+    console.log(validateName(firstname), 
+      validateName(lastname), 
+      validateEmail(email), 
+      validatePassword(password));
+    // Check for valid inputs before proceeding
+    if(
+      validateName(firstname) && 
+      validateName(lastname) && 
+      validateEmail(email) && 
+      validatePassword(password)
+    )
       createUser({
       email,
       firstname,
@@ -105,7 +112,6 @@ const SignUp = () => {
       password
       })
     }
-  }
 
   const classes = useStyles();
   return (
