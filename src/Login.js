@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Container, Grid, makeStyles, Typography, TextField } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
+import { loginUser } from './api'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +47,7 @@ const Login = () => {
 
     console.log(`Email: ${email} Password: ${password}`)
     // Do other things
+    loginUser({email, password})
   }
 
   const classes = useStyles();

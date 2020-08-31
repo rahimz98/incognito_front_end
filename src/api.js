@@ -24,6 +24,22 @@ export function createUser(user) {
         lastname,
         password
       })
-    }).then(res => window.location.reload());
-  }
+  }).then(res => window.location.reload());
+}
+
+export function loginUser(user) {
+  const { email, password} = user;
+
+  const endpoint = BASE_URL + 'users/loginUser';
+  return fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email,
+      password
+    })
+  }).then(res => window.location.reload());
+}
   
