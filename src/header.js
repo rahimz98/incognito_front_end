@@ -54,11 +54,11 @@ export default function MenuAppBar() {
       <AppBar position="static" >
         <Toolbar className={classes.root}>
           
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" className={classes.title} href = '/'>
             Incognito
           </Typography>
         
-          <Button className  = {classes.button} href = '/'>
+          <Button className  = {classes.button} href = '/signup'>
               Get Started
           </Button>
           <Button variant = "contained"  className  = {classes.signInButton} href  = '/login'>
