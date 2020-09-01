@@ -58,10 +58,10 @@ export default function MenuAppBar() {
             Incognito
           </Typography>
         
-          <Button className  = {classes.button}>
+          <Button className  = {classes.button} href = '/'>
               Get Started
           </Button>
-          <Button variant = "contained"  className  = {classes.signInButton}>
+          <Button variant = "contained"  className  = {classes.signInButton} href  = '/login'>
               Sign In
           </Button>
             

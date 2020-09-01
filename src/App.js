@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Login from './Login';
 import SignUp from './SignUp';
 import Header from './header.js';
+import Footer from './footer.js';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             </Link>
           </Route>
         </Switch>
+        <Footer/>
       </div>
     </Router>
   );
