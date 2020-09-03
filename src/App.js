@@ -6,8 +6,8 @@ import {ThemeProvider , createMuiTheme} from "@material-ui/core/styles";
 import Login from './Login';
 import SignUp from './SignUp';
 import Header from './header.js';
-import Footer from './footer.js';
 import Footer2 from './new_footer.js';
+import HomePage from './home.js';
 
 
 
@@ -36,17 +36,12 @@ function App() {
             <SignUp/>
           </Route>
           <Route path="/">
-            <h1>Incognito - ePortfoilo</h1>
-            <Link to="/login">
-              Log In
-            </Link>
-            <Link to="/signup">
-              Sign Up
-            </Link>
+            <HomePage />
           </Route>
          </Switch>
-        <SW checked={darkMode} onChange={() => setDarkmode(!darkMode)}/> 
         <Footer2/>
+        <SW checked={darkMode} onChange={() => setDarkmode(!darkMode)}/> 
+
       </Paper>
       </ThemeProvider>  
       </div>
