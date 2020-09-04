@@ -172,7 +172,7 @@ const SignUp = () => {
               <TextField
                 error={!isValid.email}
                 fullWidth
-                helperText={isValid.email ? "" : "Please enter a valid email addresss"}
+                helperText={isValid.email ? "" : "Please enter a valid email address"}
                 label="Email"
                 name="email"
                 onChange={handleEmailChange}
