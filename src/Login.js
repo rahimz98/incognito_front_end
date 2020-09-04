@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Container, Grid, makeStyles, Typography, TextField } from '@material-ui/core'
-import Button from '@material-ui/core/Button'
-import { loginUser } from './api'
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Container, Grid, makeStyles, Typography, TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import { loginUser } from './actions/user';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,31 +26,77 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+function validateEmail(email) {
+  return (
+    email.length > 0
+  );
+};
+
+function validatePassword(password) {
+  return (
+    password.length > 0
+  );
+};
+
+const mapState = ({user}) => ({
+  loginSuccess: user.loginSuccess,
+  loginError: user.loginError
+});
+
 const Login = () => {
+  const dispatch = useDispatch();
+  const { loginSuccess, loginError } = useSelector(mapState);
   const[email, setEmail] = useState("")
   const[password, setPassword] = useState("")
 
+  const[isValid, setIsValid] = useState({
+    email: true,
+    password: true
+  })
+
   const handleEmailChange = (e) => {
-    setEmail(e.target.value)
+    setEmail(e.target.value);
+    setIsValid({...isValid, email: true});
   }
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
+    setPassword(e.target.value);
+    setIsValid({...isValid, password: true});
   }
 
   const onEnterPress = (e) => {
     if(e.key === "Enter") {
-      handleSubmit(e)
+      handleSubmit(e);
     }
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  useEffect(() => {
+    if (loginSuccess) {
+      console.log(loginSuccess);
+      console.log("Successful logged in! Redirect me!");
+      // Feedback and redirect
+    }
+  }, [loginSuccess]);
 
-    console.log(`Email: ${email} Password: ${password}`)
-    // Do other things
-    loginUser({email, password})
-  }
+  useEffect(() => {
+    if (loginError !== "") {
+      console.log(loginError);
+      console.log("Display feedback for user!");
+      // Feedback
+    }
+  }, [loginError]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setIsValid({
+      email: validateEmail(email),
+      password: validatePassword(password)
+    })
+    if (validateEmail(email) && validatePassword(password)) {
+      dispatch(loginUser({email, password}));
+    }
+  };
 
   const classes = useStyles();
   return (
@@ -66,7 +114,9 @@ const Login = () => {
             <Grid item xs={12}>
               <TextField
               autoFocus
+              error={!isValid.email}
               fullWidth
+              helperText={isValid.email ? "" : "This field can't be empty"}
               label="Email"
               name="email"
               onChange={handleEmailChange}
@@ -76,7 +126,9 @@ const Login = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+              error={!isValid.password}
               fullWidth
+              helperText={isValid.password ? "" : "This field can't be empty"}
               label="Password"
               name="password"
               onChange={handlePasswordChange}
@@ -105,7 +157,7 @@ const Login = () => {
         </form>
       </div>
     </Container>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

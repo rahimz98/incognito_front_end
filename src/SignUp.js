@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Container, Grid, makeStyles, Typography, TextField } from '@material-ui/core'
-import Button from '@material-ui/core/Button'
-import {createUser} from './api'
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Container, Grid, makeStyles, Typography, TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import { createUser } from './actions/user';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,90 +30,105 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     float: "left",
   },
-}))
+}));
 
 function validateName(name) {
   return (
     name.length >= 2 && 
     name.length <= 50
-  )
-}
+  );
+};
 
 function validateEmail(email) {
   return (
     email !== "" && 
     email.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/)
-  )
-}
+  );
+};
 
 function validatePassword(password) {
   return (
     password.length >= 8
-  )
-}
+  );
+};
+
+const mapState = ({user}) => ({
+  signUpSuccess: user.signUpSuccess,
+  signUpError: user.signUpError
+});
 
 const SignUp = () => {
-  const[firstname, setFirstname] = useState("")
-  const[lastname, setLastname] = useState("")
-  const[email, setEmail] = useState("")
-  const[password, setPassword] = useState("")
-
+  const dispatch = useDispatch();
+  const { signUpSuccess, signUpError } = useSelector(mapState);
+  const[firstname, setFirstname] = useState("");
+  const[lastname, setLastname] = useState("");
+  const[email, setEmail] = useState("");
+  const[password, setPassword] = useState("");
+  
   const [isValid, setIsValid] = useState({
     firstname: true, 
     lastname: true, 
     email: true, 
-    password: true,
-  })
+    password: true
+  });
 
   const handleFirstnameChange = (e) => {
-    setFirstname(e.target.value)
-  }
+    setFirstname(e.target.value);
+    setIsValid({...isValid, firstname: true});
+  };
 
   const handleLastnameChange = (e) => {
-    setLastname(e.target.value)
-  }
+    setLastname(e.target.value);
+    setIsValid({...isValid, lastname: true});
+  };
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value)
-  }
+    setEmail(e.target.value);
+    setIsValid({...isValid, email: true});
+  };
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
-  }
+    setPassword(e.target.value);
+    setIsValid({...isValid, password: true});
+  };
 
   const onEnterPress = (e) => {
     if(e.key === "Enter") {
-      handleSubmit(e)
+      handleSubmit(e);
     }
-  }
+  };
+
+  useEffect(() => {
+    if (signUpSuccess) {
+      console.log(signUpSuccess);
+      console.log("Successful registered! Redirect me!");
+      // Feedback and redirect
+    }
+  }, [signUpSuccess]);
+
+  useEffect(() => {
+    if (signUpError !== "") {
+      console.log(signUpError);
+      console.log("Display feedback for user!");
+      // Feedback
+    }
+  }, [signUpError]);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-
+    e.preventDefault();
+    
     setIsValid({
       firstname: validateName(firstname),
       lastname: validateName(lastname),
       email: validateEmail(email),
-      password: validatePassword(password),
-    })
-    console.log(validateName(firstname), 
-      validateName(lastname), 
-      validateEmail(email), 
-      validatePassword(password));
+      password: validatePassword(password)
+    });
+    
     // Check for valid inputs before proceeding
-    if(
-      validateName(firstname) && 
-      validateName(lastname) && 
-      validateEmail(email) && 
-      validatePassword(password)
-    )
-      createUser({
-      email,
-      firstname,
-      lastname,
-      password
-      })
+    if (validateName(firstname) && validateName(lastname) && validateEmail(email) && validatePassword(password)) {
+      dispatch(createUser({email, firstname, lastname, password}));
     }
+  };
 
   const classes = useStyles();
   return (
@@ -199,7 +216,7 @@ const SignUp = () => {
         </form>
       </div>
     </Container>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;
