@@ -42,7 +42,7 @@ const userStyles = makeStyles((theme) => ({
       justifyContent: "center", /* horizontally center */
       alignItems: "center",    /* vertically center */
       align : "center",
-      height: "400px",
+      height: "410px",
       alignContent: "center",
       textAlign : "center",
     },
@@ -110,7 +110,7 @@ export default function homePage () {
             <Grid item xs = {2} />
 
             <Grid item xs = {8}>
-                <Grid item container >
+                <Grid item container spacing = {3}>
                     <Grid item xs = {6} alignItems="center" justify="center" >
                         <img src = {uploadPic} className = {classes.uploadPic}/>
                     </Grid>
@@ -137,7 +137,7 @@ export default function homePage () {
             <Grid item xs = {2} />
             
             <Grid item xs = {8}>
-                <Grid item container >
+                <Grid item container spacing = {3}>
                     <Grid item xs = {6} alignItems="center" justify="center" >
                         <Paper className = {classes.paper} >
                         <Typography  variant =  "h3" align = 'center' >
@@ -156,6 +156,10 @@ export default function homePage () {
             </Grid>
 
             <Grid item xs = {2} />    
+
+        </Grid>
+
+        <Grid item container>
 
         </Grid>
         </Grid>
