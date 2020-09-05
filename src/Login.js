@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container, Grid, makeStyles, Typography, TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { loginUser } from './actions/user';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,14 +37,8 @@ function validatePassword(password) {
   );
 };
 
-const mapState = ({user}) => ({
-  loginSuccess: user.loginSuccess,
-  loginError: user.loginError
-});
-
 const Login = () => {
   const dispatch = useDispatch();
-  const { loginSuccess, loginError } = useSelector(mapState);
   const[email, setEmail] = useState("")
   const[password, setPassword] = useState("")
 
@@ -70,22 +63,6 @@ const Login = () => {
     }
   }
 
-  useEffect(() => {
-    if (loginSuccess) {
-      console.log(loginSuccess);
-      console.log("Successful logged in! Redirect me!");
-      // Feedback and redirect
-    }
-  }, [loginSuccess]);
-
-  useEffect(() => {
-    if (loginError !== "") {
-      console.log(loginError);
-      console.log("Display feedback for user!");
-      // Feedback
-    }
-  }, [loginError]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -93,6 +70,7 @@ const Login = () => {
       email: validateEmail(email),
       password: validatePassword(password)
     })
+
     if (validateEmail(email) && validatePassword(password)) {
       dispatch(loginUser({email, password}));
     }
@@ -116,7 +94,7 @@ const Login = () => {
               autoFocus
               error={!isValid.email}
               fullWidth
-              helperText={isValid.email ? "" : "This field can't be empty"}
+              helperText={isValid.email ? "" : "Enter an email"}
               label="Email"
               name="email"
               onChange={handleEmailChange}
@@ -128,7 +106,7 @@ const Login = () => {
               <TextField
               error={!isValid.password}
               fullWidth
-              helperText={isValid.password ? "" : "This field can't be empty"}
+              helperText={isValid.password ? "" : "Enter a password"}
               label="Password"
               name="password"
               onChange={handlePasswordChange}

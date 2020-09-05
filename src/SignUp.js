@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container, Grid, makeStyles, Typography, TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
@@ -52,14 +52,8 @@ function validatePassword(password) {
   );
 };
 
-const mapState = ({user}) => ({
-  signUpSuccess: user.signUpSuccess,
-  signUpError: user.signUpError
-});
-
 const SignUp = () => {
   const dispatch = useDispatch();
-  const { signUpSuccess, signUpError } = useSelector(mapState);
   const[firstname, setFirstname] = useState("");
   const[lastname, setLastname] = useState("");
   const[email, setEmail] = useState("");
@@ -97,22 +91,6 @@ const SignUp = () => {
       handleSubmit(e);
     }
   };
-
-  useEffect(() => {
-    if (signUpSuccess) {
-      console.log(signUpSuccess);
-      console.log("Successful registered! Redirect me!");
-      // Feedback and redirect
-    }
-  }, [signUpSuccess]);
-
-  useEffect(() => {
-    if (signUpError !== "") {
-      console.log(signUpError);
-      console.log("Display feedback for user!");
-      // Feedback
-    }
-  }, [signUpError]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

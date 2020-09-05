@@ -4,11 +4,13 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Login from './login';
 import SignUp from './signUp';
 import Header from './header.js';
+import Snackbar from './snackbar';
 
 function App() {
   return (
     <Router>
       <div className="App">
+      <Snackbar/>
       <Header/>
         <Switch>
           <Route path="/login">
