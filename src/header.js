@@ -80,8 +80,8 @@ export default function MenuAppBar() {
       <AppBar position="static"  elevation={0} >
         <Toolbar className={classes.root}>
           <div className={classes.title}> 
-            <Link>
-             <img src={NavLogo} alt='logo' className={classes.logo} component={Link} to='/'/>
+            <Link to='/'>
+             <img src={NavLogo} alt='logo' className={classes.logo}/>
             </Link>
           </div>
           { user.isAuthenticated ? authLinks : vistorLinks }

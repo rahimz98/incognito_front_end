@@ -1,17 +1,20 @@
 import { SET_CURRENT_USER, SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../types/user';
 
-
+// logoutSuccess is only used to check whether an authorizated user tries to access private pages which then redirects them to login with a prompt
+// The prompt's condition to appear relies on the logoutSuccess boolean
 const currentUser = localStorage.getItem('jwt');
 const initialState = currentUser ? {
   isAuthenticated: true,
   currentUser: currentUser,
-  loginSuccess: false,
+  loginSuccess: true,
   signUpSuccess: false,
+  logoutSuccess: false
 } : {
   isAuthenticated: false,
   currentUser: {},
   loginSuccess: false,
   signUpSuccess: false,
+  logoutSuccess: false
 };
 
 const user = (state=initialState, action) => {
@@ -25,7 +28,8 @@ const user = (state=initialState, action) => {
     case LOGIN_SUCCESS:
       return {
         ...state,
-        loginSuccess: true
+        loginSuccess: true,
+        logoutSuccess: false
       };
     case SIGNUP_SUCCESS:
       return {
@@ -36,7 +40,9 @@ const user = (state=initialState, action) => {
       return {
         ...state,
         isAuthenticated: false,
-        currentUser: {}
+        currentUser: {},
+        loginSuccess: false,
+        logoutSuccess: true,
       }
     default:
       return state;
