@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Login from './Login';
-import SignUp from './SignUp';
-import Snackbar from './snackbar';
+import { Router, Switch, Route } from 'react-router-dom';
+import history from './history';
 import {Paper, Switch as SW} from "@material-ui/core";
 import {ThemeProvider , createMuiTheme} from "@material-ui/core/styles";
+import Snackbar from './snackbar';
 import Header from './header.js';
 import Footer2 from './new_footer.js';
+import PrivateRoute from './privateRoute';
+// Pages
+import Login from './login';
+import SignUp from './signUp';
 import HomePage from './home.js';
+import AboutMe from './aboutMe';
 
 function App() {
-
   const [darkMode, setDarkmode] = useState(false);
 
   const darkTheme = createMuiTheme ({
@@ -22,22 +25,17 @@ function App() {
 
   const lightTheme = createMuiTheme ({});
   return (
-    <Router>
+    <Router history={history}>
       <div className="App">
       <Snackbar/>
       <ThemeProvider theme = {darkMode ? darkTheme : lightTheme}>  
       <Paper elevation = '0'>
         <Header/>
         <Switch>
-          <Route path="/login">
-            <Login/>
-          </Route>
-          <Route path="/signup">
-            <SignUp/>
-          </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
+          <Route exact path="/" component={HomePage}/>
+          <Route exact path="/login" component={Login}/>
+          <Route exact path="/signup" component={SignUp}/> 
+          <PrivateRoute exact path="/aboutme" component={AboutMe}/>
          </Switch>
         <Footer2/>
         <SW checked={darkMode} onChange={() => setDarkmode(!darkMode)}/> 

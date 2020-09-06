@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container, Grid, makeStyles, Typography, TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { loginUser } from './actions/user';
+import history from './history';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,29 +40,36 @@ function validatePassword(password) {
 
 const Login = () => {
   const dispatch = useDispatch();
-  const[email, setEmail] = useState("")
-  const[password, setPassword] = useState("")
+  const user = useSelector(store => store.user);
+  const[email, setEmail] = useState("");
+  const[password, setPassword] = useState("");
 
   const[isValid, setIsValid] = useState({
     email: true,
     password: true
-  })
+  });
+
+  useEffect(() => {
+    if (user.isAuthenticated) {
+      history.push('/aboutme');
+    }
+  }, [user.isAuthenticated]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     setIsValid({...isValid, email: true});
-  }
+  };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     setIsValid({...isValid, password: true});
-  }
+  };
 
   const onEnterPress = (e) => {
     if(e.key === "Enter") {
       handleSubmit(e);
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();

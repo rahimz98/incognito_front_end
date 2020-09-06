@@ -1,6 +1,12 @@
 import { SNACKBAR_SUCCESS, SNACKBAR_INFO, SNACKBAR_WARNING, SNACKBAR_ERROR, SNACKBAR_CLEAR } from "../types/snackbar";
 
-const snackbar = (state={}, action) => {
+const initialState = {
+  open: false,
+  type: '',
+  text: ''
+};
+
+const snackbar = (state=initialState, action) => {
   switch (action.type) {
     case SNACKBAR_SUCCESS: 
       return {

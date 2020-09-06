@@ -1,7 +1,36 @@
-import { SIGNUP_SUCCESS, LOGIN_SUCCESS, SIGNUP_ERROR, LOGIN_ERROR } from '../types/user';
+import { SET_CURRENT_USER, SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../types/user';
 import { successSnackbar, errorSnackbar } from '../actions/snackbar';
+import jwt from 'jsonwebtoken';
+import history from '../history';
 
 const BASE_URL = "http://localhost:5000/api/";
+
+export const logout = () => {
+  const token = localStorage.getItem("jwt");
+  const endpoint = BASE_URL + 'users/logOutUser';
+  return dispatch => {
+    fetch(endpoint, {
+      method: "POST",
+      headers: {
+        Authorization: `${token}`
+      }
+    })
+    .then(res => res.json()
+    .then(data => {
+      if (res.status === 200) {
+        dispatch({ type: LOGOUT_SUCCESS });
+        // Remove token from local storage
+        localStorage.removeItem('jwt');
+        // Redirect to log out page
+        history.push('/login');
+      }
+      else {
+        dispatch(errorSnackbar(data.message));
+      }
+    }));
+    
+  }
+}
 
 export const createUser = (user) => {
   const { email, firstname, lastname, password } = user;
@@ -27,13 +56,9 @@ export const createUser = (user) => {
         // Display success feedback to user
         dispatch(successSnackbar(data.message));
         // Redirect to login page
+        history.push('/login');
       }
       else {
-        dispatch({ 
-          type: SIGNUP_ERROR,
-          payload: data.message
-        });
-        // Display success feedback to user
         dispatch(errorSnackbar(data.message));
       }
     }));
@@ -58,18 +83,21 @@ export const loginUser = (user) => {
     .then(res => res.json()
     .then(data => {
       if (data.login) {
+        const token = data["auth-token"];
         dispatch({
           type: LOGIN_SUCCESS,
-          token: data["auth-token"]
+          token: token
+        });
+        // Save to local storage
+        localStorage.setItem('jwt', token);
+        dispatch({
+          type: SET_CURRENT_USER,
+          user: jwt.decode(token)
         });
         // Redirect to About page
+        history.push('/aboutme');
       }
       else {
-        dispatch({ 
-          type: LOGIN_ERROR,
-          payload: data.message
-        });
-        // Display error feedback to user
         dispatch(errorSnackbar(data.message));
       }
     }));

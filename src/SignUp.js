@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container, Grid, makeStyles, Typography, TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { createUser } from './actions/user';
-
+import history from './history';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,6 +54,7 @@ function validatePassword(password) {
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const user = useSelector(store => store.user);
   const[firstname, setFirstname] = useState("");
   const[lastname, setLastname] = useState("");
   const[email, setEmail] = useState("");
@@ -65,6 +66,12 @@ const SignUp = () => {
     email: true, 
     password: true
   });
+
+  useEffect(() => {
+    if (user.isAuthenticated) {
+      history.push('/aboutme');
+    }
+  }, [user.isAuthenticated]);
 
   const handleFirstnameChange = (e) => {
     setFirstname(e.target.value);
