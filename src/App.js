@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Login from './login';
-import SignUp from './signUp';
+import Login from './Login';
+import SignUp from './SignUp';
 import Snackbar from './snackbar';
 import {Paper, Switch as SW} from "@material-ui/core";
 import {ThemeProvider , createMuiTheme} from "@material-ui/core/styles";

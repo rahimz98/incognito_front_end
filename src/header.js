@@ -5,6 +5,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import logoName from './logoName.png';      
+import IconButton from '@material-ui/core/IconButton';
+import { Avatar } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import Image from "react-image-resizer"; 
+
 
 
 
@@ -13,17 +19,15 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor : '#6D7993',
-    boxShadow : 'none',
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
+ 
   title: {
     flexGrow: 1,
+    marginRight : theme.spacing(2),
   },
   button: {
       textTransform : 'none',
-      color: '#FFFFFF'
+      color: '#FFFFFF',
      
   },
   signInButton: {
@@ -50,12 +54,11 @@ export default function MenuAppBar() {
   return (
     <div className={classes.root}>
 
-      <AppBar position="static"  elevation={0} >
+      <AppBar position="static"   elevation={0}>
         <Toolbar className={classes.root}>
-          <Typography variant="h6" className={classes.title} href = '/'>
-            Memento
-          </Typography>
-         
+            <Link to = '/' className = {classes.title}>
+              <img src = {logoName} alt = "logoName.png" />
+            </Link>
           <Button className  = {classes.button} href = '/signup'>
               Get Started
           </Button>
