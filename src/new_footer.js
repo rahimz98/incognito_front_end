@@ -4,13 +4,15 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import uniMelbLogo from './unimelb_logo.jpg';
+import gitHubLogo from './githubLogo.png'; 
 
 function Copyright() {
   return (
     <React.Fragment>
       {'© '}
       <Link color="inherit" href="/">
-        Our Website
+        Memento.com
       </Link>{' '}
       {new Date().getFullYear()}
     </React.Fragment>
@@ -83,11 +85,11 @@ export default function AppFooter() {
               spacing={2}
             >
               <Grid item className={classes.icons}>
-                <a href="/" className={classes.icon}>
-                  <img src="/Facebook.png" alt="Facebook" />
+                <a href="https://handbook.unimelb.edu.au/2020/subjects/comp30022" className={classes.icon}>
+                  <img src={uniMelbLogo} alt="Unimelb" className={classes.icon}/>
                 </a>
-                <a href="/" className={classes.icon}>
-                  <img src="/Twitter.png" alt="Twitter" />
+                <a href="https://github.com/rahimz98/incognito_front_end" className={classes.icon}>
+                  <img src={gitHubLogo} alt="Github Repo" className={classes.icon}/>
                 </a>
               </Grid>
               <Grid item>
@@ -110,12 +112,13 @@ export default function AppFooter() {
           </Grid>
           <Grid item xs={6} sm={8} md={4}>
             <Typography variant="h6" marked="left" gutterBottom>
-              Language
+              About Us Page
+              (Page not made yet)
             </Typography>
           </Grid>
           <Grid item>
             <Typography variant="caption">
-              Still working on this part, sorry its so bland right now, or maybe not idk 
+              Made by Team Incognito as part of our Univeristy of Melbourne Capstone IT project
             </Typography>
           </Grid>
         </Grid>

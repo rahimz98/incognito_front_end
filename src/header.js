@@ -4,8 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import logoName from './logoName.png';      
+import IconButton from '@material-ui/core/IconButton';
+import { Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import NavLogo from './memento.png';
+import Image from "react-image-resizer"; 
 import { logout } from './actions/user';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,13 +17,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor : '#6D7993',
-    boxShadow : 'none',
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
+ 
   title: {
     flexGrow: 1,
+    marginRight : theme.spacing(2),
   },
   logo: {
     maxWidth: '100%',
@@ -27,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
       textTransform : 'none',
-      color: '#FFFFFF'
+      color: '#FFFFFF',
      
   },
   signInButton: {
@@ -35,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
     color : '#FFFFFF',
   },
 }));
-
 
 export default function MenuAppBar() {
   const dispatch = useDispatch();
@@ -77,13 +78,11 @@ export default function MenuAppBar() {
   return (
     <div className={classes.root}>
 
-      <AppBar position="static"  elevation={0} >
+      <AppBar position="static"   elevation={0}>
         <Toolbar className={classes.root}>
-          <div className={classes.title}> 
-            <Link to='/'>
-             <img src={NavLogo} alt='logo' className={classes.logo}/>
-            </Link>
-          </div>
+          <Link to = '/' className = {classes.title}>
+              <img src = {logoName} alt = "logoName.png" />
+          </Link>
           { user.isAuthenticated ? authLinks : vistorLinks }
         </Toolbar>
       </AppBar>
