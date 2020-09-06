@@ -1,35 +1,43 @@
-import { SIGNUP_SUCCESS, LOGIN_SUCCESS, SIGNUP_ERROR, LOGIN_ERROR } from '../types/user';
+import { SET_CURRENT_USER, SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../types/user';
 
-const initialState = {
-  currentUser: null,
+
+const currentUser = localStorage.getItem('jwt');
+const initialState = currentUser ? {
+  isAuthenticated: true,
+  currentUser: currentUser,
   loginSuccess: false,
-  loginError: "",
   signUpSuccess: false,
-  signUpError: "",
-}
+} : {
+  isAuthenticated: false,
+  currentUser: {},
+  loginSuccess: false,
+  signUpSuccess: false,
+};
 
 const user = (state=initialState, action) => {
   switch (action.type) {
+    case SET_CURRENT_USER:
+      return {
+        ...state,
+        isAuthenticated: true,
+        currentUser: action.user
+      }
     case LOGIN_SUCCESS:
       return {
         ...state,
         loginSuccess: true
-      };
-    case LOGIN_ERROR:
-      return {
-        ...state,
-        loginError: action.payload
       };
     case SIGNUP_SUCCESS:
       return {
         ...state,
         signUpSuccess: true
       };
-    case SIGNUP_ERROR:
+    case LOGOUT_SUCCESS:
       return {
         ...state,
-        signUpError: action.payload
-      };
+        isAuthenticated: false,
+        currentUser: {}
+      }
     default:
       return state;
   }

@@ -9,7 +9,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 export default function DisplaySnackbar() {
   const dispatch = useDispatch();
-  const props = useSelector(state => state.snackbar);
+  const props = useSelector(store => store.snackbar);
  
   function handleClose() {
     dispatch(clearSnackbar());

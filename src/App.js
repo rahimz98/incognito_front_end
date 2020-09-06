@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from './login';
 import SignUp from './signUp';
 import Snackbar from './snackbar';
@@ -9,9 +9,10 @@ import {ThemeProvider , createMuiTheme} from "@material-ui/core/styles";
 import Header from './header.js';
 import Footer2 from './new_footer.js';
 import HomePage from './home.js';
+import AboutMe from './aboutMe';
 
 function App() {
-
+  
   const [darkMode, setDarkmode] = useState(false);
 
   const darkTheme = createMuiTheme ({
@@ -29,15 +30,10 @@ function App() {
       <Paper elevation = '0'>
         <Header/>
         <Switch>
-          <Route path="/login">
-            <Login/>
-          </Route>
-          <Route path="/signup">
-            <SignUp/>
-          </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
+          <Route exact path="/" component={HomePage}/>
+          <Route exact path="/aboutme" component={AboutMe}/>
+          <Route exact path="/login" component={Login}/>
+          <Route exact path="/signup" component={SignUp}/> 
          </Switch>
         <Footer2/>
         <SW checked={darkMode} onChange={() => setDarkmode(!darkMode)}/> 
