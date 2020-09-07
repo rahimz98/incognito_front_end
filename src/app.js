@@ -6,7 +6,7 @@ import {Paper, Switch as SW} from "@material-ui/core";
 import {ThemeProvider , createMuiTheme} from "@material-ui/core/styles";
 import Snackbar from './snackbar';
 import Header from './header.js';
-import Footer2 from './new_footer.js';
+import Footer from './footer.js';
 import PrivateRoute from './privateRoute';
 // Pages
 import Login from './login';
@@ -37,7 +37,7 @@ function App() {
           <Route exact path="/signup" component={SignUp}/> 
           <PrivateRoute exact path="/aboutme" component={AboutMe}/>
          </Switch>
-        <Footer2/>
+        <Footer/>
         <SW checked={darkMode} onChange={() => setDarkmode(!darkMode)}/> 
 
       </Paper>
