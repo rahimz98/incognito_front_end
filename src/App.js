@@ -6,7 +6,7 @@ import {Paper, Switch as SW} from "@material-ui/core";
 import {ThemeProvider , createMuiTheme} from "@material-ui/core/styles";
 import Snackbar from './snackbar';
 import Header from './header.js';
-import Footer2 from './new_footer.js';
+import Footer2 from './newFooter.js';
 import PrivateRoute from './privateRoute';
 // Pages
 import Login from './login';
