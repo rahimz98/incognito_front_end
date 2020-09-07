@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import './app.css';
 import { Router, Switch, Route } from 'react-router-dom';
 import history from './history';
 import {Paper, Switch as SW} from "@material-ui/core";
