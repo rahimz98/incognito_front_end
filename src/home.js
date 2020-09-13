@@ -85,11 +85,6 @@ export default function homePage () {
             </Hidden>
             <Grid item xs={8}>
                 
-                    
-                    
-                         
-
-
                         <Grid item container direction = "column" alignItems="center" justify = "space-evenly">
 
                             <Grid item >
@@ -101,11 +96,7 @@ export default function homePage () {
                             <Grid item >
                                 <Button variant = "outlined" size = "large" className  = {classes.registerButton} href = "/signup">Register YourSelf</Button>
                             </Grid>
-                        </Grid>
-                    
-                    
-
-                       
+                        </Grid>         
             </Grid>
             
             <Hidden only = {["xs", "sm"]}>
