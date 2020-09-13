@@ -1,4 +1,4 @@
-import { SNACKBAR_SUCCESS, SNACKBAR_INFO, SNACKBAR_WARNING, SNACKBAR_ERROR, SNACKBAR_CLEAR } from "../types/snackbar";
+import { SNACKBAR_SUCCESS, SNACKBAR_INFO, SNACKBAR_WARNING, SNACKBAR_ERROR, SNACKBAR_CLEAR } from '../types';
 
 const initialState = {
   open: false,

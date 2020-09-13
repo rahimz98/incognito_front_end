@@ -1,9 +1,17 @@
-import { SET_CURRENT_USER, SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../types/user';
+import { SET_CURRENT_USER, SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../types';
 import { successSnackbar, errorSnackbar } from '../actions/snackbar';
 import jwt from 'jsonwebtoken';
 import history from '../history';
 
 const BASE_URL = "http://localhost:5000/api/";
+
+// export const editProfile = () => {
+
+// }
+
+// export const uploadImage = () => {
+
+// }
 
 export const logout = () => {
   const token = localStorage.getItem("jwt");
@@ -25,7 +33,7 @@ export const logout = () => {
         history.push('/login');
       }
       else {
-        dispatch(errorSnackbar(data.message));
+        dispatch(errorSnackbar(data.msg));
       }
     }));
     

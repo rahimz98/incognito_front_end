@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Redirect, useLocation } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { errorSnackbar } from './actions/snackbar';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const location = useLocation();
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
 
@@ -14,7 +13,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     if (!user.isAuthenticated && !user.logoutSuccess) {
       dispatch(errorSnackbar("Login is required to access this page"));
     }
-  }, [location, user, dispatch]);
+  }, [user, dispatch]);
 
   return (
     <Route {...rest} render={(props) => (

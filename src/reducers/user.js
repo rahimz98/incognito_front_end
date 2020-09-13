@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../types/user';
+import { SET_CURRENT_USER, SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../types';
 
 // logoutSuccess is only used to check whether an authorizated user tries to access private pages which then redirects them to login with a prompt
 // The prompt's condition to appear relies on the logoutSuccess boolean
