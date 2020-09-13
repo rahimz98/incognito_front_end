@@ -117,6 +117,7 @@ const SignUp = () => {
 
   const classes = useStyles();
   return (
+    
     <Container maxWidth="xs">
       <div className={classes.root}>
         <Typography variant="h5">
@@ -201,6 +202,7 @@ const SignUp = () => {
         </form>
       </div>
     </Container>
+    
   );
 };
 

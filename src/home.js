@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import {Paper, Hidden} from "@material-ui/core";
+import {Paper, Hidden, Card, CardMedia, CardActionArea} from "@material-ui/core";
 import Image1 from './eportfolio6.png';
 import logo from './logo.png';
 import blueCurve from './curveLine.png';
@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Image from "react-image-resizer"; 
 import Box from '@material-ui/core/Box';
 import Grow from '@material-ui/core/Grow';
+
 
 
 
@@ -65,6 +66,9 @@ const userStyles = makeStyles((theme) => ({
         textAlign: 'center',
         color: theme.palette.text.primary,
       },
+    media : {
+        height : 300,
+    },
   }));
 
 export default function homePage () {
@@ -73,7 +77,7 @@ export default function homePage () {
     return (
         
     <div >
-        <Grid container direction = "column" spacing = "5" justify="center">  
+        <Grid container direction = "column" spacing = "5" >  
         <div style = {{backgroundImage: `url(${Image1})`, backgroundRepeat : "no-repeat", backgroundColor : "#D5D5D5"}}>
         <Grid item container justify = "center">  
             <Hidden only = {["xs", "sm"]}>
@@ -82,13 +86,11 @@ export default function homePage () {
             <Grid item xs={8}>
                 
                     
-                    <Grid item container>
-                        <Hidden only = {["xs", "sm" ]}>
-                        <Grid item xs = {6} />
-                        </Hidden>    
+                    
+                         
 
 
-                        <Grid item xs = {6} container direction = "column" alignItems="center" justify = "space-evenly">
+                        <Grid item container direction = "column" alignItems="center" justify = "space-evenly">
 
                             <Grid item >
                                  
@@ -100,7 +102,7 @@ export default function homePage () {
                                 <Button variant = "outlined" size = "large" className  = {classes.registerButton} href = "/signup">Register YourSelf</Button>
                             </Grid>
                         </Grid>
-                    </Grid>
+                    
                     
 
                        
@@ -123,22 +125,29 @@ export default function homePage () {
 
             <Grid item xs = {8} >
                 <Grid item container spacing = {3}>
-                    <Hidden only = {["xs", "sm" , "md"]}>
-
-                    <Grid item xs = {6} alignItems="center" justify="center" >
-                        <img src = {uploadPic} className = {classes.uploadPic}/>
-                    </Grid>
+                    <Hidden only = {["xs", "sm" ]}>
+                    
+                        <Grid item xs = {6} alignItems="center" justify="center" >
+                            <Card>
+                                <CardMedia
+                                    className = {classes.media} 
+                                    image = {uploadPic} 
+                                    alt = "laptop" 
+                                    title = "laptopPicture" 
+                                />
+                            </Card> 
+                        </Grid>
                     </Hidden>
                     <Grid item xs = {6} textAlign = "center">
                         <Box display = "flex">
-                        <Box  m = "auto">
-                        <Typography  variant =  "h3" align = 'center' >
-                            Upload your Projects
-                        </Typography>
-                        <Typography align = 'center'>
-                            Start uploading your projects so you can show it to the public with a professional manner. Have Control on how your project will look like and show the world what your really capable of! 
-                        </Typography>
-                        </Box>
+                            <Box  m = "auto">
+                                <Typography  variant =  "h3" align = 'center' >
+                                    Upload your Projects
+                                </Typography>
+                                <Typography align = 'center'>
+                                    Start uploading your projects so you can show it to the public with a professional manner. Have Control on how your project will look like and show the world what your really capable of! 
+                                </Typography>
+                            </Box>
                         </Box>
                     </Grid>    
                 </Grid>
@@ -160,20 +169,26 @@ export default function homePage () {
                 <Grid item container spacing = {3}>
                     <Grid item xs = {6} alignItems="center" justify="center" >
                         <Box display = "flex" >
-                        <Box m = "auto">
-                        <Typography  variant =  "h3" align = 'center' >
-                            Look up your colleague's projects                         
-                        </Typography>
-                        <Typography align = 'center'>
-                            Start uploading your projects so you can show it to the public with a professional manner. Have Control on how your project will look like and show the world what your really capable of! 
-                        </Typography>
-                        </Box>
+                            <Box m = "auto">
+                                <Typography  variant =  "h3" align = 'center' >
+                                    Look up your colleague's projects                         
+                                </Typography>
+                                <Typography align = 'center'>
+                                    Start uploading your projects so you can show it to the public with a professional manner. Have Control on how your project will look like and show the world what your really capable of! 
+                                </Typography>
+                            </Box>
                         </Box>
                     </Grid>
                     <Hidden only = {["xs", "sm"]}>
                     <Grid item xs = {6} textAlign = "center">
-                        <img src = {uploadPic} className = {classes.uploadPic}/>
-
+                        <Card>
+                            <CardMedia
+                                className = {classes.media} 
+                                image = {uploadPic} 
+                                alt = "laptop" 
+                                title = "laptopPicture" 
+                            />
+                        </Card>
                     </Grid>    
                     </Hidden>
                 </Grid>
