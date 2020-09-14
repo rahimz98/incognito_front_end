@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     color : '#ffffff',
     padding: theme.spacing(3, 2),
-    marginTop: 'auto',
+    marginTop: theme.spacing(8),
+
   },
   container: {
     marginTop: theme.spacing(8),

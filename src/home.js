@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import {Paper, Hidden, Card, CardMedia, CardActionArea} from "@material-ui/core";
-import Image1 from './eportfolio6.png';
+import { Hidden, Card, CardMedia} from "@material-ui/core";
 import logo from './logo.png';
-import blueCurve from './curveLine.png';
 import uploadPic from './uploadProjectPic.png';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import Image from "react-image-resizer"; 
 import Box from '@material-ui/core/Box';
 import Grow from '@material-ui/core/Grow';
+import Zoom from '@material-ui/core/Zoom';
+import { ColorLensOutlined } from '@material-ui/icons';
+
 
 
 
@@ -21,28 +21,29 @@ const userStyles = makeStyles((theme) => ({
     registerButton: {
         //textTransform : 'none',
         //color: '#96858F',
-        //color : '#ffffff'
+        color : '#192231',
+        borderColor : '#192231',
        
     },
     signInButton: {
-      backgroundColor : '#96858F',
+      backgroundColor : '#192231',
       color : '#FFFFFF',
       textTransform : 'none',
       
     },
     centerImage : {
-      display: "flex",
-      justifyContent: "center", /* horizontally center */
-      alignItems: "center",    /* vertically center */
+      //display: "flex",
+      //justifyContent: "center", /* horizontally center */
+      //alignItems: "center",    /* vertically center */
       minHeight: "100px",
       minwidth: "100px",
-      align : "center",
-      alignContent: "center",
-      textAlign : "center",
+      //align : "center",
+      //alignContent: "center",
+      //textAlign : "center",
       maxWidth : "300px",
       maxHeight : "300px",
-      height : '300px',
-      weight : '300px'
+      height : '250px',
+      weight : '250px'
      
    
     },
@@ -71,32 +72,35 @@ const userStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function homePage () {
+export default function HomePage () {
     const classes = userStyles();
+    const [checked] = React.useState(true);
+
 
     return (
         
     <div >
         <Grid container direction = "column" spacing = "5" >  
-        <div style = {{backgroundImage: `url(${Image1})`, backgroundRepeat : "no-repeat", backgroundColor : "#D5D5D5"}}>
+        <div style = {{ backgroundRepeat : "no-repeat", backgroundColor : "#D5D5D5"}}>
         <Grid item container justify = "center">  
             <Hidden only = {["xs", "sm"]}>
                 <Grid item xs={2} />
             </Hidden>
             <Grid item xs={8}>
-                
+                <Grow in={checked}>    
                         <Grid item container direction = "column" alignItems="center" justify = "space-evenly">
 
                             <Grid item >
                                  
-                                <img src = {logo} className = {classes.centerImage}/>
+                                <img src = {logo} alt = "logo.png" className = {classes.centerImage}/>
             
                             </Grid>
                             
                             <Grid item >
                                 <Button variant = "outlined" size = "large" className  = {classes.registerButton} href = "/signup">Register YourSelf</Button>
                             </Grid>
-                        </Grid>         
+                        </Grid> 
+                </Grow>                
             </Grid>
             
             <Hidden only = {["xs", "sm"]}>
@@ -106,8 +110,6 @@ export default function homePage () {
         </Grid>  
         </div>  
 
-
-       
         <Grid item container justify = "center">
             
             <Hidden only = {["xs", "sm"]}>
@@ -119,6 +121,7 @@ export default function homePage () {
                     <Hidden only = {["xs", "sm" ]}>
                     
                         <Grid item xs = {6} alignItems="center" justify="center" >
+                            <Zoom in = {checked}>
                             <Card>
                                 <CardMedia
                                     className = {classes.media} 
@@ -127,6 +130,7 @@ export default function homePage () {
                                     title = "laptopPicture" 
                                 />
                             </Card> 
+                            </Zoom>
                         </Grid>
                     </Hidden>
                     <Grid item xs = {6} textAlign = "center">
@@ -172,6 +176,7 @@ export default function homePage () {
                     </Grid>
                     <Hidden only = {["xs", "sm"]}>
                     <Grid item xs = {6} textAlign = "center">
+                    <Zoom in = {checked}> 
                         <Card>
                             <CardMedia
                                 className = {classes.media} 
@@ -180,6 +185,7 @@ export default function homePage () {
                                 title = "laptopPicture" 
                             />
                         </Card>
+                    </Zoom>
                     </Grid>    
                     </Hidden>
                 </Grid>
@@ -191,9 +197,7 @@ export default function homePage () {
 
         </Grid>
         
-        <Grid item container>
-
-        </Grid>
+      
         </Grid>
 
     </div>
