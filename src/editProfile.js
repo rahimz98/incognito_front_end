@@ -50,10 +50,6 @@ const EditProfile = (props) => {
     });
   }
 
-  // useEffect(() => {
-  //   mapDetailsToState(profile);
-  // });
-
   const handleClickOpen = () => {
     setOpen(true);
     mapDetailsToState(profile);
@@ -79,6 +75,7 @@ const EditProfile = (props) => {
       education: details.education,
       achievements: details.achievements
     }
+    console.log(userData);
     dispatch(editProfile(userData));
     handleClose();
   }

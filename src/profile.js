@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import EditProfile from './editProfile';
 import { uploadImage } from './actions/user';
+import jwtDecode from 'jwt-decode';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -69,15 +70,18 @@ const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
   const profile = user.profile;
+  
   console.log(user.image)
   console.log(user.profile)
   
-  // useEffect for re-rendering image and profile update
-
   const handleChangeImage = (e) => {
-    console.log(e.target.files[0])
+    const token = localStorage.getItem("jwt");
+    const decodedToken = jwtDecode(token);
     const image = e.target.files[0];
-    dispatch(uploadImage(image));
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('userId', decodedToken.id)
+    dispatch(uploadImage(formData));
   };
 
   const handleEditImage = () => {

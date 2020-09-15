@@ -3,9 +3,8 @@ import { successSnackbar, errorSnackbar } from '../actions/snackbar';
 import history from '../history';
 import axios from 'axios';
 
-const token = localStorage.getItem("jwt");
-
 export const editProfile = (userData) => (dispatch) => {
+  const token = localStorage.getItem("jwt");
   axios
     .post('http://localhost:5000/about/updateContact', userData, {
       headers: {
@@ -21,6 +20,7 @@ export const editProfile = (userData) => (dispatch) => {
 }
 
 export const uploadImage = (imageData) => (dispatch) => {
+  const token = localStorage.getItem("jwt");
   axios
     .post('http://localhost:5000/about/uploadImage', imageData, {
       headers: {
@@ -36,6 +36,7 @@ export const uploadImage = (imageData) => (dispatch) => {
 }
 
 export const getUserProfile = () => (dispatch) => {
+  const token = localStorage.getItem("jwt");
   axios
     .get('http://localhost:5000/about/getContact', {
       headers: {
@@ -47,7 +48,7 @@ export const getUserProfile = () => (dispatch) => {
         type: SET_USER,
         payload: res.data
       })
-      // dispatch(getProfilePic());
+      dispatch(getProfilePic());
     })
     .catch((err) => {
       console.log(err.response);
@@ -55,6 +56,7 @@ export const getUserProfile = () => (dispatch) => {
 }
 
 export const getProfilePic = () => (dispatch) => {
+  const token = localStorage.getItem("jwt");
   axios
     .get('http://localhost:5000/about/getProfilePic', {
       headers: {
@@ -74,7 +76,7 @@ export const getProfilePic = () => (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  // const token = localStorage.getItem("jwt");
+  const token = localStorage.getItem("jwt");
   const body = {};
   axios
     .post('http://localhost:5000/api/users/logOutUser', body, {
@@ -91,38 +93,11 @@ export const logout = () => (dispatch) => {
       history.push('/login');
     })
     .catch((err) => {
-      // console.log(err.response)
-      // dispatch(errorSnackbar(err.response.data.msg));
+      console.log(err.response)
+      dispatch(errorSnackbar(err.response.data.msg));
     });
 };
-/*
-export const logout = () => {
-  const token = localStorage.getItem("jwt");
-  const endpoint = BASE_URL + 'users/logOutUser';
-  return dispatch => {
-    fetch(endpoint, {
-      method: "POST",
-      headers: {
-        Authorization: `${token}`
-      }
-    })
-    .then(res => res.json()
-    .then(data => {
-      if (res.status === 200) {
-        dispatch({ type: LOGOUT_SUCCESS });
-        // Remove token from local storage
-        localStorage.removeItem('jwt');
-        // Redirect to log out page
-        history.push('/login');
-      }
-      else {
-        dispatch(errorSnackbar(data.msg));
-      }
-    }));
-    
-  }
-}
-*/
+
 export const createUser = (user) => (dispatch) => {
   axios
     .post('http://localhost:5000/api/users/createUser', user)
@@ -134,40 +109,6 @@ export const createUser = (user) => (dispatch) => {
       dispatch(errorSnackbar(err.response.data.message));
     });
 };
-/*
-export const createUser = (user) => {
-  const { email, firstname, lastname, password } = user;
-  const endpoint = BASE_URL + 'users/createUser';
-
-  return dispatch => {
-    fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email, 
-        firstname, 
-        lastname, 
-        password
-      })
-    })
-    .then(res => res.json()
-    .then(data => {
-      if (res.status === 200) {
-        dispatch({ type: SIGNUP_SUCCESS });
-        // Display success feedback to user
-        dispatch(successSnackbar(data.message));
-        // Redirect to login page
-        history.push('/login');
-      }
-      else {
-        dispatch(errorSnackbar(data.message));
-      }
-    }));
-  };
-};
-*/
 
 export const loginUser = (user) => (dispatch) => {
   axios
@@ -175,10 +116,9 @@ export const loginUser = (user) => (dispatch) => {
     .then((res) => {
       console.log(res);
       if (res.data.login) {
-        const token = res.data['auth-token'];
-        localStorage.setItem('jwt', token);
-        dispatch({type: SET_AUTHENTICATED});
+        localStorage.setItem('jwt', res.data['auth-token']);
         dispatch({type: SET_USER_ID, payload: res.data.id});
+        dispatch({type: SET_AUTHENTICATED});
         dispatch(getUserProfile());
         history.push(`/users/${res.data.id}`);
       }
@@ -190,44 +130,3 @@ export const loginUser = (user) => (dispatch) => {
       console.log(err);
     });
 };
-/*
-export const loginUser = (user) => {
-  const { email, password } = user;
-  const endpoint = BASE_URL + 'users/loginUser';
-
-  return dispatch => {
-    fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        email,
-        password
-      })
-    })
-    .then(res => res.json()
-    .then(data => {
-      if (data.login) {
-        const token = data["auth-token"];
-        dispatch({
-          type: LOGIN_SUCCESS,
-          token: token
-        });
-        // Save to local storage
-        localStorage.setItem('jwt', token);
-        dispatch({
-          type: SET_CURRENT_USER,
-          user: jwt.decode(token)
-        });
-        // Redirect to About page
-        history.push('/profile');
-      }
-      else {
-        dispatch(errorSnackbar(data.message));
-      }
-    }));
-  };
-};
-*/
-
