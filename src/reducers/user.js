@@ -1,49 +1,37 @@
-import { SET_CURRENT_USER, SIGNUP_SUCCESS, LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../types';
+import { SET_AUTHENTICATED, SET_USER_ID, SET_USER, SET_USER_IMAGE, LOGOUT_SUCCESS } from '../types';
 
-// logoutSuccess is only used to check whether an authorizated user tries to access private pages which then redirects them to login with a prompt
-// The prompt's condition to appear relies on the logoutSuccess boolean
-const currentUser = localStorage.getItem('jwt');
-const initialState = currentUser ? {
-  isAuthenticated: true,
-  currentUser: currentUser,
-  loginSuccess: true,
-  signUpSuccess: false,
-  logoutSuccess: false
-} : {
-  isAuthenticated: false,
-  currentUser: {},
-  loginSuccess: false,
-  signUpSuccess: false,
+const initialState = {
+  isAuth: false,
+  id: '',
+  profile: {},
+  image: '',
   logoutSuccess: false
 };
 
 const user = (state=initialState, action) => {
   switch (action.type) {
-    case SET_CURRENT_USER:
+    case SET_AUTHENTICATED:
       return {
         ...state,
-        isAuthenticated: true,
-        currentUser: action.user
-      }
-    case LOGIN_SUCCESS:
-      return {
-        ...state,
-        loginSuccess: true,
-        logoutSuccess: false
+        isAuth: true
       };
-    case SIGNUP_SUCCESS:
+    case SET_USER_ID:
       return {
         ...state,
-        signUpSuccess: true
+        id: action.payload
+      }
+    case SET_USER:
+      return {
+        ...state,
+        profile: action.payload
+      };
+    case SET_USER_IMAGE:
+      return {
+        ...state,
+        image: action.payload
       };
     case LOGOUT_SUCCESS:
-      return {
-        ...state,
-        isAuthenticated: false,
-        currentUser: {},
-        loginSuccess: false,
-        logoutSuccess: true,
-      }
+      return initialState;
     default:
       return state;
   }

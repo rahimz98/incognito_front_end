@@ -68,10 +68,10 @@ const SignUp = () => {
   });
 
   useEffect(() => {
-    if (user.isAuthenticated) {
-      history.push('/aboutme');
+    if (user.isAuth) {
+      history.push(`/users/${user.id}`);
     }
-  }, [user.isAuthenticated]);
+  }, [user.isAuth, user.id]);
 
   const handleFirstnameChange = (e) => {
     setFirstname(e.target.value);

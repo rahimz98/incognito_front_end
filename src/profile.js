@@ -1,5 +1,7 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import EditProfile from './editProfile';
+import { uploadImage } from './actions/user';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -16,6 +18,9 @@ import Typography from '@material-ui/core/Typography';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
+import AddIcon from '@material-ui/icons/Add';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
   contacts: {
     marginTop: theme.spacing(5),
   },
+  icon: {
+    marginRight: theme.spacing(1)
+  },
   bodyText: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(3),
@@ -58,20 +66,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Profile = () => {
-  // just for testing TODO: remove later
-  const phoneNumber = true;
+  const dispatch = useDispatch();
+  const user = useSelector(store => store.user);
+  const profile = user.profile;
+  console.log(user.image)
+  console.log(user.profile)
   
+  // useEffect for re-rendering image and profile update
+
   const handleChangeImage = (e) => {
     console.log(e.target.files[0])
-    // const image = e.target.files[0];
-    // uploadImage action
-  }
+    const image = e.target.files[0];
+    dispatch(uploadImage(image));
+  };
 
   const handleEditImage = () => {
     const fileInput = document.getElementById('fileInput')
     console.log(fileInput);
     fileInput.click();
-  }
+  };
 
   const classes = useStyles();
   return (
@@ -83,19 +96,20 @@ const Profile = () => {
         <Box clone order={{xs:2, sm:1}}>
           <Grid item xs={12} sm={6}>
             
-            <Typography className={classes.name} variant='h4'>Firstname Lastname</Typography>
+            <Typography className={classes.name} variant='h4'>{profile.name}</Typography>
             <Typography className={classes.contacts} variant='h5'>Contact Details</Typography>
             <List>
               <ListItem>
-                <EmailOutlinedIcon/>
-                email@something.com
+                <EmailOutlinedIcon className={classes.icon}/>
+                {profile.email}
+              </ListItem> 
+              <ListItem>
+                <PhoneOutlinedIcon className={classes.icon}/>
+                {profile.phone
+                ? <>{profile.phone}</>
+                : <EditProfile icon={AddIcon} title={'Add phone number'}/>
+                }
               </ListItem>
-              {phoneNumber &&
-                <ListItem>
-                  <PhoneOutlinedIcon/>
-                  0123-456-789
-                </ListItem>
-              }
             </List>
             {/* <Typography variant='body2'>Email</Typography>
             <Typography variant='body2'>Contact Number</Typography> */}
@@ -128,20 +142,26 @@ const Profile = () => {
                 </>
               }
             >
-              <Avatar className='profileImage' alt='Name' src='https://cdn.pixabay.com/photo/2020/08/14/09/12/penguin-5487301_960_720.png'/>
+              <Avatar className='profileImage' alt='profileImage' src={user.image}/>
             </Badge>
-            <EditProfile/>
+            <EditProfile icon={EditOutlinedIcon} title={'Edit profile'}/>
           </Grid>
         </Box>
         
         <Box clone order={{xs:3, sm:3}}>
           <Grid item xs={12}>
             <Typography variant='h5'>Experience</Typography>
-            <Typography className={classes.bodyText} variant='body1'>Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile devices, desktops/laptops, or other type of compatible computer. Text messages may be sent over a cellular network, or may also be sent via an Internet connection.</Typography>
+            {profile.experience
+            ? <Typography className={classes.bodyText} variant='body1'>{profile.experience}</Typography>
+            : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
             <Typography variant='h5'>Education</Typography>
-            <Typography className={classes.bodyText} variant='body1'>Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile devices, desktops/laptops, or other type of compatible computer. Text messages may be sent over a cellular network, or may also be sent via an Internet connection.</Typography>
-            <Typography variant='h5'>Accomplishments</Typography>
-            <Typography className={classes.bodyText} variant='body1'>Text messaging, or texting, is the act of composing and sending electronic messages, typically consisting of alphabetic and numeric characters, between two or more users of mobile devices, desktops/laptops, or other type of compatible computer. Text messages may be sent over a cellular network, or may also be sent via an Internet connection.</Typography>
+            {profile.education 
+            ? <Typography className={classes.bodyText} variant='body1'>{profile.education}</Typography>
+            : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
+            <Typography variant='h5'>Achievements</Typography>
+            {profile.achievements 
+            ? <Typography className={classes.bodyText} variant='body1'>{profile.achievements}</Typography>
+            : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
           </Grid>
         </Box>
         

@@ -7,17 +7,16 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
 
-  // Check whether we were redirected and display message for user
-  // Only do so when user is not authenticated
+  // Display message if user is not authenticated
   useEffect(() => {
-    if (!user.isAuthenticated && !user.logoutSuccess) {
+    if (!user.isAuth && !user.logoutSuccess) {
       dispatch(errorSnackbar("Login is required to access this page"));
     }
   }, [user, dispatch]);
 
   return (
     <Route {...rest} render={(props) => (
-      user.isAuthenticated 
+      user.isAuth 
         ? <Component {...props}/>
         : <Redirect to='/login'/>
     )}/>

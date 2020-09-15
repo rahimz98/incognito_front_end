@@ -83,7 +83,7 @@ export default function MenuAppBar() {
           <Link to = '/' className = {classes.title}>
               <img src = {logoName} alt = "logoName.png" />
           </Link>
-          { user.isAuthenticated ? authLinks : vistorLinks }
+          { user.isAuth ? authLinks : vistorLinks }
         </Toolbar>
       </AppBar>
     </div>

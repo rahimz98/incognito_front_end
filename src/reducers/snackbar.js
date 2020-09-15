@@ -37,10 +37,7 @@ const snackbar = (state=initialState, action) => {
         text: action.text
       };
     case SNACKBAR_CLEAR: 
-      return {
-        ...state,
-        open: false
-      };
+      return initialState;
     default:
       return state;
   }
