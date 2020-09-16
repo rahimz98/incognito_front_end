@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Container, Grid, makeStyles, Typography, TextField } from '@material-ui/core';
+import { Container, Grid, makeStyles, Typography, TextField, Card, CardContent } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { loginUser } from './actions/user';
 import history from './history';
+import logo from './logoOwl.png';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginTop: theme.spacing(12),
+    marginTop: theme.spacing(6),
+    minWidth: 275,
   },
   form: {
     marginTop: theme.spacing(3),
@@ -19,11 +22,18 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     marginTop: theme.spacing(3),
     float: "right",
+    backgroundColor : "#192231",
+    color: '#FFFFFF',
   },
   signup: {
     marginTop: theme.spacing(3),
     float: "left",
   },
+  button: {
+    backgroundColor : "#192231",
+    color: '#FFFFFF',
+  }
+  
 }))
 
 function validateEmail(email) {
@@ -87,7 +97,10 @@ const Login = () => {
   const classes = useStyles();
   return (
     <Container maxWidth="xs">
+      <Card variant = "outlined" className={classes.root}>
+        <CardContent>
       <div className={classes.root}>
+        <img src = {logo} alt = "logoOwl"/>
         <Typography variant="h5">
           Welcome
         </Typography>
@@ -142,6 +155,8 @@ const Login = () => {
           </Button>
         </form>
       </div>
+      </CardContent>
+      </Card>
     </Container>
   );
 };
