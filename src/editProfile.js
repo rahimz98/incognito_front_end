@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function validateInput(input) {
+  return (
+    input.length > 0
+  );
+};
+
 const EditProfile = (props) => {
   const dispatch = useDispatch();
 
@@ -34,6 +40,11 @@ const EditProfile = (props) => {
     experience: '',
     education: '',
     achievements: '',
+  });
+
+  const[isValid, setIsValid] = useState({
+    name: true,
+    email: true
   });
 
   // Assign props icon
@@ -64,20 +75,30 @@ const EditProfile = (props) => {
       ...details,
       [e.target.name]: e.target.value
     });
+    setIsValid({...isValid, name: true, email: true});
   };
 
   const handleSubmit = () => {
-    const userData = {
-      name: details.name,
-      email: details.email,
-      phone: details.phone,
-      experience: details.experience,
-      education: details.education,
-      achievements: details.achievements
+    setIsValid({
+      name: validateInput(details.name),
+      email: validateInput(details.email)
+    })
+
+    if (validateInput(details.name) && validateInput(details.email)) {
+      const userData = {
+        name: details.name,
+        email: details.email,
+        phone: details.phone,
+        experience: details.experience,
+        education: details.education,
+        achievements: details.achievements
+      }
+      
+  
+      console.log(userData);
+      dispatch(editProfile(userData));
+      handleClose();
     }
-    console.log(userData);
-    dispatch(editProfile(userData));
-    handleClose();
   }
 
   const classes = useStyles();
@@ -100,8 +121,10 @@ const EditProfile = (props) => {
             <Grid container spacing={1}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                error={!isValid.name}
                 className={classes.textField}
                 fullWidth
+                helperText={isValid.name ? "" : "This field cannot be empty"}
                 label='Full Name'
                 name='name'
                 onChange={handleChange}
@@ -112,8 +135,10 @@ const EditProfile = (props) => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                error={!isValid.email}
                 className={classes.textField}
                 fullWidth
+                helperText={isValid.email ? "" : "This field cannot be empty"}
                 label='Email'
                 name='email'
                 onChange={handleChange}
