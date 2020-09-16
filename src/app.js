@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './app.css';
 import { Router, Switch, Route } from 'react-router-dom';
 import history from './history';
-import {Paper, Switch as SW} from "@material-ui/core";
-import {ThemeProvider , createMuiTheme} from "@material-ui/core/styles";
+import { Paper } from "@material-ui/core";
 // Redux
 import { Provider } from 'react-redux';
 import jwtDecode from 'jwt-decode';
@@ -36,21 +35,13 @@ if (token) {
 }
 
 function App() {
-  const [darkMode, setDarkmode] = useState(false);
+ 
 
-  const darkTheme = createMuiTheme ({
-    palette : {
-      type:"dark",
-    }
-  });
-
-  const lightTheme = createMuiTheme ({});
   return (
     <Provider store={store}>
       <Router history={history}>
         <div className="App">
         <Snackbar/>
-        <ThemeProvider theme = {darkMode ? darkTheme : lightTheme}>  
         <Paper elevation = '0'>
           <Header/>
           <Switch>
@@ -62,10 +53,8 @@ function App() {
             <PrivateRoute exact path="/profile" component={Profile}/>
           </Switch>
           <Footer/>
-          <SW checked={darkMode} onChange={() => setDarkmode(!darkMode)}/> 
 
         </Paper>
-        </ThemeProvider>  
         </div>
       </Router>
     </Provider>

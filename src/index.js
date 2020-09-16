@@ -4,11 +4,15 @@ import './index.css';
 import App from './app';
 import * as serviceWorker from './serviceWorker';
 import 'fontsource-roboto';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import CustomThemeProvider from './themes/CustomThemeProvider'
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <CustomThemeProvider>
+      <CssBaseline />
+      <App />
+    </CustomThemeProvider>,
   document.getElementById('root')
 );
 
