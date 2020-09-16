@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+function validateInput(input) {
+  return (
+    input.length > 0
+  );
+};
+
 const EditProfile = (props) => {
   const dispatch = useDispatch();
 
@@ -34,6 +40,11 @@ const EditProfile = (props) => {
     experience: '',
     education: '',
     achievements: '',
+  });
+
+  const[isValid, setIsValid] = useState({
+    name: true,
+    email: true
   });
 
   // Assign props icon
@@ -64,20 +75,31 @@ const EditProfile = (props) => {
       ...details,
       [e.target.name]: e.target.value
     });
+    setIsValid({...isValid, name: true, email: true});
   };
 
   const handleSubmit = () => {
-    const userData = {
-      name: details.name,
-      email: details.email,
-      phone: details.phone,
-      experience: details.experience,
-      education: details.education,
-      achievements: details.achievements
+    setIsValid({
+      name: validateInput(details.name),
+      email: validateInput(details.email)
+    })
+
+    if (validateInput(details.name) && validateInput(details.email)) {
+      const formatName = details.name.replace(/(^\w{1})|(\s+\w{1})/g, match => match.toUpperCase());
+      const userData = {
+        name: formatName,
+        email: details.email,
+        phone: details.phone,
+        experience: details.experience,
+        education: details.education,
+        achievements: details.achievements
+      }
+      
+  
+      console.log(userData);
+      dispatch(editProfile(userData));
+      handleClose();
     }
-    console.log(userData);
-    dispatch(editProfile(userData));
-    handleClose();
   }
 
   const classes = useStyles();
@@ -100,8 +122,10 @@ const EditProfile = (props) => {
             <Grid container spacing={1}>
               <Grid item xs={12} sm={6}>
                 <TextField
+                error={!isValid.name}
                 className={classes.textField}
                 fullWidth
+                helperText={isValid.name ? "" : "This field cannot be empty"}
                 label='Full Name'
                 name='name'
                 onChange={handleChange}
@@ -112,8 +136,10 @@ const EditProfile = (props) => {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                error={!isValid.email}
                 className={classes.textField}
                 fullWidth
+                helperText={isValid.email ? "" : "This field cannot be empty"}
                 label='Email'
                 name='email'
                 onChange={handleChange}
@@ -142,7 +168,7 @@ const EditProfile = (props) => {
                 multiline
                 name='experience'
                 onChange={handleChange}
-                rows='3'
+                rows='6'
                 type='text'
                 value={details.experience}
                 variant='outlined'
@@ -156,7 +182,7 @@ const EditProfile = (props) => {
                 multiline
                 name='education'
                 onChange={handleChange}
-                rows='3'
+                rows='6'
                 type='text'
                 value={details.education}
                 variant='outlined'
@@ -170,7 +196,7 @@ const EditProfile = (props) => {
                 multiline
                 name='achievements'
                 onChange={handleChange}
-                rows='3'
+                rows='6'
                 type='text'
                 value={details.achievements}
                 variant='outlined'

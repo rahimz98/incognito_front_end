@@ -192,7 +192,6 @@ const SignUp = () => {
           </Typography>
           <Button 
             className={classes.login}
-            color="primary"
             component={Link} 
             to="/login"
           >
@@ -200,7 +199,6 @@ const SignUp = () => {
           </Button>
           <Button 
             className={classes.submit}
-            color="primary"
             onClick={handleSubmit}
             type="submit"
             variant="contained" 

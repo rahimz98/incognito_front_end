@@ -138,7 +138,6 @@ const Login = () => {
           </Grid>
           <Button
             className={classes.signup}
-            color="primary"
             component={Link} 
             to="/signup"
           >
@@ -146,7 +145,6 @@ const Login = () => {
           </Button>
           <Button 
             className={classes.submit}
-            color="primary"
             onClick={handleSubmit}
             type="submit"
             variant="contained" 
