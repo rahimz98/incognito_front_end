@@ -10,6 +10,9 @@ import Box from '@material-ui/core/Box';
 import Grow from '@material-ui/core/Grow';
 import Zoom from '@material-ui/core/Zoom';
 import { ColorLensOutlined } from '@material-ui/icons';
+import BubbleImage from './bubbleImage.png';
+import PeopleWorking from './peopleWorking.png';
+
 
 
 
@@ -81,13 +84,13 @@ export default function HomePage () {
         
     <div >
         <Grid container direction = "column" spacing = "5" >  
-        <div style = {{ backgroundRepeat : "no-repeat", backgroundColor : "#D5D5D5"}}>
-        <Grid item container justify = "center">  
+        <div style = {{ backgroundRepeat : "no-repeat", backgroundImage:`url(${BubbleImage})`}}>
+        <Grid item container justify = "center" height = '100%'>  
             <Hidden only = {["xs", "sm"]}>
                 <Grid item xs={2} />
             </Hidden>
             <Grid item xs={8}>
-                <Grow in={checked}>    
+                    <Grow in={checked}>    
                         <Grid item container direction = "column" alignItems="center" justify = "space-evenly">
 
                             <Grid item >
@@ -98,9 +101,11 @@ export default function HomePage () {
                             
                             <Grid item >
                                 <Button variant = "outlined" size = "large" className  = {classes.registerButton} href = "/signup">Register YourSelf</Button>
+                                
                             </Grid>
                         </Grid> 
-                </Grow>                
+                    </Grow> 
+                                 
             </Grid>
             
             <Hidden only = {["xs", "sm"]}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -17,6 +17,15 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import Brightness4Icon from '@material-ui/icons/Brightness4';
+import SwitchUI from '@material-ui/core/Switch'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import { CustomThemeContext } from './themes/CustomThemeProvider';
+import { logout } from './actions/user';
+import { Link } from 'react-router-dom';
+import logoName from './logoName.png'; 
+import Button from '@material-ui/core/Button';
+import { useDispatch, useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -81,6 +90,42 @@ export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector(store => store.user);
+  const { currentTheme, setTheme } = useContext(CustomThemeContext);
+  const isDark = Boolean(currentTheme === 'dark')
+
+  const handleThemeChange = (event) => {
+    const { checked } = event.target
+    if (checked) {
+      setTheme('dark')
+    } else {
+      setTheme('normal')
+    }
+  }
+
+  const handleLogout = () => {
+    dispatch(logout());
+    
+  }
+
+  const authLinks = (
+    <Button onClick={handleLogout} className={classes.signInButton}>
+        Logout
+    </Button>
+  );
+
+  const vistorLinks = (
+    <React.Fragment>
+      <Button className={classes.button} component={Link} to='/signup'>
+          Get Started
+      </Button>
+      <Button variant="contained" className={classes.signInButton} component={Link} to="/login">
+          Sign In
+      </Button>
+    </React.Fragment>
+  );
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -98,6 +143,7 @@ export default function PersistentDrawerLeft() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open
         })}
+        elevation = {0}
       >
         <Toolbar>
           <IconButton
@@ -109,9 +155,14 @@ export default function PersistentDrawerLeft() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Persistent drawer
-          </Typography>
+          <Link to = '/' className = {classes.title}>
+              <img src = {logoName} alt = "logoName.png" />
+          </Link>
+          <Brightness4Icon className = {classes.icon}/>
+          <FormControlLabel
+            control={<SwitchUI checked={isDark} onChange={handleThemeChange} />}
+          />
+          { user.isAuth ? authLinks : vistorLinks }
         </Toolbar>
       </AppBar>
       <Drawer

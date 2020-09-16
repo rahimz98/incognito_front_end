@@ -1,37 +1,88 @@
-import React, {useContext} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import logoName from './logoName.png';      
-import { Link } from 'react-router-dom';
-import { logout } from './actions/user';
-import { CustomThemeContext } from './themes/CustomThemeProvider';
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import SwitchUI from '@material-ui/core/Switch'
+import React, {useContext} from "react";
+import clsx from "clsx";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import SwitchUI from '@material-ui/core/Switch'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import { CustomThemeContext } from './themes/CustomThemeProvider';
+import { logout } from './actions/user';
+import { Link } from 'react-router-dom';
+import logoName from './logoName.png'; 
+import Button from '@material-ui/core/Button';
+import { useDispatch, useSelector } from 'react-redux';
 
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-  
   root: {
-    flexGrow: 1,
+     
+    flexGrow : 1,
     backgroundColor : '#6D7993',
   },
- 
-  title: {
+  appBar: {
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    })
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  },
+  menuButton: {
+    marginRight: theme.spacing(2)
+  },
+  hide: {
+    display: "none"
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0
+  },
+  drawerPaper: {
+    width: drawerWidth
+  },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end"
+  },
+  content: {
     flexGrow: 1,
-    marginRight : theme.spacing(2),
+    padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    marginLeft: -drawerWidth
   },
-  logo: {
-    maxWidth: '100%',
-    verticalAlign: 'middle'
-  },
-  button: {
-      textTransform : 'none',
-      color: '#FFFFFF',
-     
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    marginLeft: 0
   },
   signInButton: {
     backgroundColor : '#192231',
@@ -40,12 +91,23 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
   },
+  button: {
+    textTransform : 'none',
+    color: '#FFFFFF',
+   
+},
+title: {
+  flexGrow: 1,
+  marginRight : theme.spacing(2),
+},
 }));
 
-export default function MenuAppBar() {
+export default function PersistentDrawerLeft() {
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
-  const classes = useStyles();
   const { currentTheme, setTheme } = useContext(CustomThemeContext);
   const isDark = Boolean(currentTheme === 'dark')
 
@@ -58,14 +120,11 @@ export default function MenuAppBar() {
     }
   }
 
+  const handleLogout = () => {
+    dispatch(logout());
+    
+  }
 
-  
-
- const handleLogout = () => {
-   dispatch(logout());
-   
- }
-  
   const authLinks = (
     <Button onClick={handleLogout} className={classes.signInButton}>
         Logout
@@ -82,12 +141,36 @@ export default function MenuAppBar() {
       </Button>
     </React.Fragment>
   );
-  
-  return (
-    <div className={classes.root}>
 
-      <AppBar position="static"   elevation={0}>
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div >
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open
+        })}
+        elevation = {0}
+      >
         <Toolbar className={classes.root}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
           <Link to = '/' className = {classes.title}>
               <img src = {logoName} alt = "logoName.png" />
           </Link>
@@ -98,6 +181,54 @@ export default function MenuAppBar() {
           { user.isAuth ? authLinks : vistorLinks }
         </Toolbar>
       </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {["Project 1", "Project 2", "Project 3", "Project 4"].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          {["Project 6", "Project 7", "Project 8"].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open
+        })}
+      >
+        <div className={classes.drawerHeader} />
+      </main>
     </div>
   );
 }
