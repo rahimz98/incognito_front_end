@@ -1,7 +1,8 @@
 // User types
-export const SET_CURRENT_USER = 'SET_CURRENT_USER';
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
+export const SET_USER_ID = 'SET_USER_ID';
+export const SET_USER = 'SET_USER';
+export const SET_USER_IMAGE = 'SET_USER_IMAGE';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 // Snackbar types
 export const SNACKBAR_SUCCESS = "SNACKBAR_SUCCESS";
