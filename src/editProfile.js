@@ -85,8 +85,9 @@ const EditProfile = (props) => {
     })
 
     if (validateInput(details.name) && validateInput(details.email)) {
+      const formatName = details.name.replace(/(^\w{1})|(\s+\w{1})/g, match => match.toUpperCase());
       const userData = {
-        name: details.name,
+        name: formatName,
         email: details.email,
         phone: details.phone,
         experience: details.experience,
@@ -167,7 +168,7 @@ const EditProfile = (props) => {
                 multiline
                 name='experience'
                 onChange={handleChange}
-                rows='3'
+                rows='6'
                 type='text'
                 value={details.experience}
                 variant='outlined'
@@ -181,7 +182,7 @@ const EditProfile = (props) => {
                 multiline
                 name='education'
                 onChange={handleChange}
-                rows='3'
+                rows='6'
                 type='text'
                 value={details.education}
                 variant='outlined'
@@ -195,7 +196,7 @@ const EditProfile = (props) => {
                 multiline
                 name='achievements'
                 onChange={handleChange}
-                rows='3'
+                rows='6'
                 type='text'
                 value={details.achievements}
                 variant='outlined'
