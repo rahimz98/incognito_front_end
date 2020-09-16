@@ -60,10 +60,10 @@ const Login = () => {
   });
 
   useEffect(() => {
-    if (user.isAuthenticated) {
-      history.push('/aboutme');
+    if (user.isAuth) {
+      history.push(`/users/${user.id}`);
     }
-  }, [user.isAuthenticated]);
+  }, [user.isAuth, user.id]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -115,7 +115,7 @@ const Login = () => {
               autoFocus
               error={!isValid.email}
               fullWidth
-              helperText={isValid.email ? "" : "Enter an email"}
+              helperText={isValid.email ? "" : "Please enter a valid email address"}
               label="Email"
               name="email"
               onChange={handleEmailChange}
@@ -127,7 +127,7 @@ const Login = () => {
               <TextField
               error={!isValid.password}
               fullWidth
-              helperText={isValid.password ? "" : "Enter a password"}
+              helperText={isValid.password ? "" : "Please enter your password"}
               label="Password"
               name="password"
               onChange={handlePasswordChange}

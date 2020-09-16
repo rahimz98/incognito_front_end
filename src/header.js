@@ -95,7 +95,7 @@ export default function MenuAppBar() {
           <FormControlLabel
             control={<SwitchUI checked={isDark} onChange={handleThemeChange} />}
           />
-          { user.isAuthenticated ? authLinks : vistorLinks }
+          { user.isAuth ? authLinks : vistorLinks }
         </Toolbar>
       </AppBar>
     </div>
