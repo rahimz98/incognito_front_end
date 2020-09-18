@@ -12,11 +12,21 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography'
 
 
 const useStyles = makeStyles((theme) => ({
+  title: {
+    backgroundColor: '#6D7993',
+    color: 'white',
+    marginBottom: theme.spacing(3)
+  },
   textField: {
     margin: '5px auto 5px auto'
+  },
+  submit: {
+    backgroundColor : "#192231",
+    color: '#FFFFFF'
   }
 }));
 
@@ -116,7 +126,9 @@ const EditProfile = (props) => {
         fullWidth
         maxWidth='md'
       > 
-        <DialogTitle>Edit Profile</DialogTitle>
+        <DialogTitle className={classes.title} disableTypography>
+          <Typography variant='h5'>Edit Profile</Typography>
+        </DialogTitle>
         <DialogContent>
           <form>
             <Grid container spacing={1}>
@@ -209,7 +221,12 @@ const EditProfile = (props) => {
           <Button onClick={handleClose}>
             Cancel
           </Button>
-          <Button onClick={handleSubmit}>
+          <Button 
+            className={classes.submit}
+            onClick={handleSubmit}
+            type="submit"
+            variant="contained"
+          >
             Save
           </Button>
         </DialogActions>
