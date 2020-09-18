@@ -1,8 +1,8 @@
 import React from 'react';
-import './app.css';
 import { Router, Switch, Route } from 'react-router-dom';
 import history from './history';
-import { Paper } from "@material-ui/core";
+import { Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 // Redux
 import { Provider } from 'react-redux';
 import jwtDecode from 'jwt-decode';
@@ -19,10 +19,16 @@ import Login from './login';
 import SignUp from './signUp';
 import HomePage from './home.js';
 import Profile from './profile';
+import NotFound from './notFound';
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    margin: 0,
+  }
+}));
 
 // Check if session has expired
-const token = localStorage.getItem("jwt");
+const token = localStorage.getItem('jwt');
 if (token) {
   const decodedToken = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) {
@@ -32,28 +38,28 @@ if (token) {
     store.dispatch({type: SET_USER_ID, payload: decodedToken.id});
     store.dispatch({type: SET_AUTHENTICATED});
     store.dispatch(getUserProfile());
-    history.push(`/users/${decodedToken.id}`);
+    // history.push(`/users/${decodedToken.id}`);
   }
 }
 
 function App() {
  
-
+  const classes = useStyles();
   return (
     <Provider store={store}>
       <Router history={history}>
-        <div className="App">
+        <div className={classes.root}>
         <Snackbar/>
         <Paper elevation = '0'>
           <Header/>
-          <Switch>
-            <Route exact path="/" component={HomePage}/>
-            <Route exact path="/login" component={Login}/>
-            <Route exact path="/signup" component={SignUp}/> 
-            <Route exact path="/users/:id" component={Profile}/>
-          </Switch>
+            <Switch>
+              <Route exact path='/' component={HomePage}/>
+              <Route exact path='/login' component={Login}/>
+              <Route exact path='/signup' component={SignUp}/> 
+              <Route exact path='/users/:id' component={Profile}/>
+              <Route path='*' component={NotFound} />
+            </Switch>
           <Footer/>
-
         </Paper>
         </div>
       </Router>

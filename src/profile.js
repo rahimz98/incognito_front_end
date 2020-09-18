@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom'; 
 import EditProfile from './editProfile';
+import ViewProfile from './viewProfile';
 import { uploadImage } from './actions/user';
 import jwtDecode from 'jwt-decode';
 // MUI
@@ -70,12 +72,14 @@ const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
   const profile = user.profile;
+  const token = localStorage.getItem('jwt');
+  const {id} = useParams();
   
   console.log(user.image)
   console.log(user.profile)
   
   const handleChangeImage = (e) => {
-    const token = localStorage.getItem("jwt");
+    // This assumes that a token exists as user is able to edit...
     const decodedToken = jwtDecode(token);
     const image = e.target.files[0];
     const formData = new FormData();
@@ -92,85 +96,90 @@ const Profile = () => {
 
   const classes = useStyles();
   return (
-    <Container>
-      <Grid container spacing={3} className={classes.root}>
-        {/* <Grid item xs={12}>
-          <Typography variant='h3'>About me</Typography>
-        </Grid> */}
-        <Box clone order={{xs:2, sm:1}}>
-          <Grid item xs={12} sm={6}>
-            
-            <Typography className={classes.name} variant='h4'>{profile.name}</Typography>
-            <Typography className={classes.contacts} variant='h5'>Contact Details</Typography>
-            <List>
-              <ListItem>
-                <EmailOutlinedIcon className={classes.icon}/>
-                {profile.email}
-              </ListItem> 
-              <ListItem>
-                <PhoneOutlinedIcon className={classes.icon}/>
-                {profile.phone
-                ? <>{profile.phone}</>
-                : <EditProfile icon={AddIcon} title={'Add phone number'}/>
-                }
-              </ListItem>
-            </List>
-            {/* <Typography variant='body2'>Email</Typography>
-            <Typography variant='body2'>Contact Number</Typography> */}
-          </Grid>
-        </Box>
+    <>
+      {(token === null || parseInt(id) !== user.id) ? (
+        <ViewProfile id={parseInt(id)}/>
+      ) : (
+        <Container>
+        <Grid container spacing={3} className={classes.root}>
+          {/* <Grid item xs={12}>
+            <Typography variant='h3'>About me</Typography>
+          </Grid> */}
+          <Box clone order={{xs:2, sm:1}}>
+            <Grid item xs={12} sm={6}>
+              
+              <Typography className={classes.name} variant='h4'>{profile.name}</Typography>
+              <Typography className={classes.contacts} variant='h5'>Contact Details</Typography>
+              <List>
+                <ListItem>
+                  <EmailOutlinedIcon className={classes.icon}/>
+                  {profile.email}
+                </ListItem> 
+                <ListItem>
+                  <PhoneOutlinedIcon className={classes.icon}/>
+                  {profile.phone
+                  ? <>{profile.phone}</>
+                  : <EditProfile icon={AddIcon} title={'Add phone number'}/>
+                  }
+                </ListItem>
+              </List>
+              {/* <Typography variant='body2'>Email</Typography>
+              <Typography variant='body2'>Contact Number</Typography> */}
+            </Grid>
+          </Box>
 
-        <Box className={classes.avatar} clone order={{xs:1, sm:2}}>
-          <Grid item xs={12} sm={6}>
-            <Badge
-              overlap="circle"
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              badgeContent={
-                <>
-                  <Input
-                  accept='image/*'
-                  className={classes.input}
-                  style={{display:'none'}}
-                  id='fileInput'
-                  type='file'
-                  onChange={handleChangeImage}
-                  />
-                  <Tooltip title='Change profile picture' placement='top'>
-                    <IconButton onClick={handleEditImage}>
-                      <CameraAltOutlinedIcon/>
-                    </IconButton>
-                  </Tooltip>
-                </>
-              }
-            >
-              <Avatar className='profileImage' alt='profileImage' src={user.image}/>
-            </Badge>
-            <EditProfile icon={EditOutlinedIcon} title={'Edit profile'}/>
-          </Grid>
-        </Box>
-        
-        <Box clone order={{xs:3, sm:3}}>
-          <Grid item xs={12}>
-            <Typography variant='h5'>Experience</Typography>
-            {profile.experience
-            ? <Typography className={classes.bodyText} variant='body1'>{profile.experience}</Typography>
-            : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
-            <Typography variant='h5'>Education</Typography>
-            {profile.education 
-            ? <Typography className={classes.bodyText} variant='body1'>{profile.education}</Typography>
-            : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
-            <Typography variant='h5'>Achievements</Typography>
-            {profile.achievements 
-            ? <Typography className={classes.bodyText} variant='body1'>{profile.achievements}</Typography>
-            : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
-          </Grid>
-        </Box>
-        
-      </Grid>
-    </Container>
+          <Box className={classes.avatar} clone order={{xs:1, sm:2}}>
+            <Grid item xs={12} sm={6}>
+              <Badge
+                overlap="circle"
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
+                badgeContent={
+                  <>
+                    <Input
+                    accept='image/*'
+                    className={classes.input}
+                    style={{display:'none'}}
+                    id='fileInput'
+                    type='file'
+                    onChange={handleChangeImage}
+                    />
+                    <Tooltip title='Change profile picture' placement='top'>
+                      <IconButton onClick={handleEditImage}>
+                        <CameraAltOutlinedIcon/>
+                      </IconButton>
+                    </Tooltip>
+                  </>
+                }
+              >
+                <Avatar className='profileImage' alt='profileImage' src={user.image}/>
+              </Badge>
+              <EditProfile icon={EditOutlinedIcon} title={'Edit profile'}/>
+            </Grid>
+          </Box>
+          
+          <Box clone order={{xs:3, sm:3}}>
+            <Grid item xs={12}>
+              <Typography variant='h5'>Experience</Typography>
+              {profile.experience
+              ? <Typography className={classes.bodyText} variant='body1'>{profile.experience}</Typography>
+              : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
+              <Typography variant='h5'>Education</Typography>
+              {profile.education 
+              ? <Typography className={classes.bodyText} variant='body1'>{profile.education}</Typography>
+              : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
+              <Typography variant='h5'>Achievements</Typography>
+              {profile.achievements 
+              ? <Typography className={classes.bodyText} variant='body1'>{profile.achievements}</Typography>
+              : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
+            </Grid>
+          </Box>
+        </Grid>
+        </Container>
+      )}
+    </>
   );
 }
 

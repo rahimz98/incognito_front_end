@@ -28,12 +28,7 @@ const useStyles = makeStyles((theme) => ({
   signup: {
     marginTop: theme.spacing(3),
     float: "left",
-  },
-  button: {
-    backgroundColor : "#192231",
-    color: '#FFFFFF',
   }
-  
 }))
 
 function validateEmail(email) {

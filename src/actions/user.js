@@ -90,7 +90,7 @@ export const logout = () => (dispatch) => {
       delete axios.defaults.headers.common['Authorization'];
       dispatch({ type: LOGOUT_SUCCESS });
       dispatch(successSnackbar(res.data.msg));
-      history.push('/login');
+      history.push('/');
     })
     .catch((err) => {
       console.log(err.response)
