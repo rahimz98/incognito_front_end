@@ -14,9 +14,9 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     marginTop: theme.spacing(8),
     marginBottom: theme.spacing(8),
   },
@@ -27,8 +27,6 @@ const useStyles = makeStyles((theme) => ({
     align: 'center'
   },
   button: {
-    minWidth: '200px', 
-    minHeight: '50px', 
     backgroundColor: '#192231',
     color: '#FFFFFF',
   }
@@ -49,12 +47,13 @@ const NotFound = () => {
             </ListItem>
           </List>
         </Grid>
-        <Grid item xs={12}  align="center">
+        <Grid item xs={12}  align='center'>
           <Button
             className={classes.button}
             component={Link} 
-            to="/"
-            variant="contained" 
+            size = 'large'
+            to='/'
+            variant='contained' 
           >
             <Typography variant='h5'>HOME PAGE</Typography>
           </Button>
