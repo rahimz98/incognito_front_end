@@ -24,7 +24,6 @@ import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
 import AddIcon from '@material-ui/icons/Add';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex'
@@ -74,9 +73,6 @@ const Profile = () => {
   const profile = user.profile;
   const token = localStorage.getItem('jwt');
   const {id} = useParams();
-  
-  console.log(user.image)
-  console.log(user.profile)
   
   const handleChangeImage = (e) => {
     // This assumes that a token exists as user is able to edit...
