@@ -21,10 +21,10 @@ import HomePage from './home.js';
 import Profile from './profile';
 import NotFound from './notFound';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     margin: 0,
-  }
+  },
 }));
 
 // Check if session has expired
@@ -33,34 +33,33 @@ if (token) {
   const decodedToken = jwtDecode(token);
   if (decodedToken.exp * 1000 < Date.now()) {
     store.dispatch(logout());
-  }
-  else {
-    store.dispatch({type: SET_USER_ID, payload: decodedToken.id});
-    store.dispatch({type: SET_AUTHENTICATED});
+  } else {
+    store.dispatch({ type: SET_USER_ID, payload: decodedToken.id });
+    store.dispatch({ type: SET_AUTHENTICATED });
     store.dispatch(getUserProfile());
     // history.push(`/users/${decodedToken.id}`);
   }
 }
 
 function App() {
- 
   const classes = useStyles();
   return (
     <Provider store={store}>
       <Router history={history}>
         <div className={classes.root}>
-        <Snackbar/>
-        <Paper elevation = '0'>
-          <Header/>
+          <Snackbar />
+          <Paper elevation='0'>
+            <Header />
             <Switch>
-              <Route exact path='/' component={HomePage}/>
-              <Route exact path='/login' component={Login}/>
-              <Route exact path='/signup' component={SignUp}/> 
-              <Route exact path='/users/:id' component={Profile}/>
+              <Route exact path='/' component={HomePage} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/signup' component={SignUp} />
+              <Route exact path='/users/:id' component={Profile} />
+              {/* <Route exact path='/search' component={}/> */}
               <Route path='*' component={NotFound} />
             </Switch>
-          <Footer/>
-        </Paper>
+            <Footer />
+          </Paper>
         </div>
       </Router>
     </Provider>

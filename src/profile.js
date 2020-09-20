@@ -86,7 +86,6 @@ const Profile = () => {
 
   const handleEditImage = () => {
     const fileInput = document.getElementById('fileInput')
-    console.log(fileInput);
     fileInput.click();
   };
 
@@ -98,9 +97,6 @@ const Profile = () => {
       ) : (
         <Container>
         <Grid container spacing={3} className={classes.root}>
-          {/* <Grid item xs={12}>
-            <Typography variant='h3'>About me</Typography>
-          </Grid> */}
           <Box clone order={{xs:2, sm:1}}>
             <Grid item xs={12} sm={6}>
               
@@ -119,8 +115,6 @@ const Profile = () => {
                   }
                 </ListItem>
               </List>
-              {/* <Typography variant='body2'>Email</Typography>
-              <Typography variant='body2'>Contact Number</Typography> */}
             </Grid>
           </Box>
 
@@ -150,7 +144,7 @@ const Profile = () => {
                   </>
                 }
               >
-                <Avatar className='profileImage' alt='profileImage' src={user.image}/>
+                <Avatar className='profileImage' alt={profile.name} src={user.image}/>
               </Badge>
               <EditProfile icon={EditOutlinedIcon} title={'Edit profile'}/>
             </Grid>

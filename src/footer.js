@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
   listItem: {
     paddingTop: theme.spacing(0.5),
     paddingBottom: theme.spacing(0.5),
+    '& >*': {
+      color: '#192231',
+    }
   },
   language: {
     marginTop: theme.spacing(1),
