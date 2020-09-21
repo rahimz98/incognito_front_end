@@ -2,7 +2,6 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Hidden, Card, CardMedia} from "@material-ui/core";
 import logo from './logo.png';
-import uploadPic from './uploadProjectPic.png';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,7 +9,8 @@ import Box from '@material-ui/core/Box';
 import Grow from '@material-ui/core/Grow';
 import Zoom from '@material-ui/core/Zoom';
 import { ColorLensOutlined } from '@material-ui/icons';
-import BubbleImage from './bubbleImage.png';
+import flatOfficePic from './images/flatOffice.png';
+import projectLaptop from './images/projectLaptop.jpg';
 
 
 
@@ -21,8 +21,6 @@ import BubbleImage from './bubbleImage.png';
 const userStyles = makeStyles((theme) => ({
   
     registerButton: {
-        //textTransform : 'none',
-        //color: '#96858F',
         color : '#192231',
         borderColor : '#192231',
        
@@ -34,14 +32,10 @@ const userStyles = makeStyles((theme) => ({
       
     },
     centerImage : {
-      //display: "flex",
-      //justifyContent: "center", /* horizontally center */
-      //alignItems: "center",    /* vertically center */
+      
       minHeight: "100px",
       minwidth: "100px",
-      //align : "center",
-      //alignContent: "center",
-      //textAlign : "center",
+      
       maxWidth : "300px",
       maxHeight : "300px",
       height : '250px',
@@ -127,7 +121,7 @@ export default function HomePage () {
                                 <Card>
                                     <CardMedia
                                         className = {classes.media} 
-                                        image = {uploadPic} 
+                                        image = {flatOfficePic} 
                                         alt = "laptop" 
                                         title = "laptopPicture" 
                                     />
@@ -182,7 +176,7 @@ export default function HomePage () {
                             <Card>
                                 <CardMedia
                                     className = {classes.media} 
-                                    image = {uploadPic} 
+                                    image = {projectLaptop} 
                                     alt = "laptop" 
                                     title = "laptopPicture" 
                                 />

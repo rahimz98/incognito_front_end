@@ -8,6 +8,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -24,13 +25,12 @@ import { Link } from 'react-router-dom';
 import logoName from './logoName.png'; 
 import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from 'react-redux';
+import logInPic from './images/logInPic.png';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-     
-  
     backgroundColor : '#6D7993',
   },
   appBar: {
@@ -100,6 +100,10 @@ title: {
   flexGrow: 1,
   marginRight : theme.spacing(2),
 },
+logInPic : {
+  height: "200px",
+  marginTop : theme.spacing(1),
+},
 }));
 
 export default function PersistentDrawerLeft() {
@@ -125,6 +129,15 @@ export default function PersistentDrawerLeft() {
     
   }
 
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+
   const authLinks = (
     <Button onClick={handleLogout} className={classes.signInButton}>
         Logout
@@ -142,46 +155,35 @@ export default function PersistentDrawerLeft() {
     </React.Fragment>
   );
 
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <div >
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open
-        })}
-        elevation = {0}
+  const vistorDrawer = (
+    <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper
+        }}
       >
-        <Toolbar className={classes.root}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
           </IconButton>
-          <Link to = '/' className = {classes.title}>
-              <img src = {logoName} alt = "logoName.png" />
-          </Link>
-          <Brightness4Icon className = {classes.icon}/>
-          <FormControlLabel
-            control={<SwitchUI checked={isDark} onChange={handleThemeChange} />}
-          />
-          { user.isAuth ? authLinks : vistorLinks }
-        </Toolbar>
-      </AppBar>
-      <Drawer
+        </div>
+        <Divider />
+        <img src = {logInPic} className = {classes.logInPic}/>
+        <Typography variant = 'body' align = 'center'>
+          Log in to view your projects ^_^
+        </Typography>
+    </Drawer>
+  );
+
+  const authDrawer = (
+    <Drawer
         className={classes.drawer}
         variant="persistent"
         anchor="left"
@@ -221,7 +223,42 @@ export default function PersistentDrawerLeft() {
             </ListItem>
           ))}
         </List>
-      </Drawer>
+    </Drawer>
+  );
+
+
+  return (
+    <div >
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open
+        })}
+        elevation = {0}
+      >
+        <Toolbar className={classes.root}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Link to = '/' className = {classes.title}>
+              <img src = {logoName} alt = "logoName.png" />
+          </Link>
+          <Brightness4Icon className = {classes.icon}/>
+          <FormControlLabel
+            control={<SwitchUI checked={isDark} onChange={handleThemeChange} />}
+          />
+          { user.isAuth ? authLinks : vistorLinks }
+        </Toolbar>
+      </AppBar>
+      {user.isAuth ? authDrawer : vistorDrawer }
+      
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open

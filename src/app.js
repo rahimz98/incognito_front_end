@@ -50,7 +50,7 @@ function App() {
       <Router history={history}>
         <div className={classes.root}>
         <Snackbar/>
-        <Paper elevation = '0'>
+      
           <Header/>
             <Switch>
               <Route exact path='/' component={HomePage}/>
@@ -60,7 +60,7 @@ function App() {
               <Route path='*' component={NotFound} />
             </Switch>
           <Footer/>
-        </Paper>
+          
         </div>
       </Router>
     </Provider>
