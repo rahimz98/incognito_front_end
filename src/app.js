@@ -20,6 +20,7 @@ import SignUp from './signUp';
 import HomePage from './home.js';
 import Profile from './profile';
 import NotFound from './notFound';
+import SearchPage from './searchPage.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,7 +56,7 @@ function App() {
               <Route exact path='/login' component={Login} />
               <Route exact path='/signup' component={SignUp} />
               <Route exact path='/users/:id' component={Profile} />
-              {/* <Route exact path='/search' component={}/> */}
+              <Route exact path='/search' component={SearchPage} />
               <Route path='*' component={NotFound} />
             </Switch>
             <Footer />

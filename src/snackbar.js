@@ -21,7 +21,9 @@ export default function DisplaySnackbar() {
   const props = useSelector((store) => store.snackbar);
 
   function handleClose() {
-    dispatch(clearSnackbar());
+    if (props.open) {
+      dispatch(clearSnackbar());
+    }
   }
 
   const SlideTransition = (e) => <Slide {...e} direction='left' />;

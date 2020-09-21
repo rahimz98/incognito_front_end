@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import history from 'history';
+import history from './history';
+import { getSearchResult } from './actions/search';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Search() {
-  const [input, setInput] = useState('');
+  const [query, setQuery] = useState('');
 
   const onEnterPress = (e) => {
     if (e.key === 'Enter') {
@@ -50,15 +51,15 @@ function Search() {
   };
 
   const handleSearchChange = (e) => {
-    setInput(e.target.value);
+    setQuery(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (input) {
-      console.log('entered');
-      // Dispatch search
-      // history.push('/search');
+    if (query) {
+      console.log(query);
+      // dispatch(getSearchResult(query));
+      history.push(`/search?q=${query}`);
     }
   };
 
@@ -72,7 +73,7 @@ function Search() {
           onChange={handleSearchChange}
           placeholder='Search Memento'
           type='text'
-          value={input}
+          value={query}
         />
         <SearchIcon className={classes.icon} onClick={handleSubmit} />
       </div>

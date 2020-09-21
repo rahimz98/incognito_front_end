@@ -1,7 +1,7 @@
 import { SET_SEARCH_RESULT } from '../types';
 
 export const initialState = {
-  result: '',
+  results: null,
 };
 
 const search = (state = initialState, action) => {
@@ -9,7 +9,7 @@ const search = (state = initialState, action) => {
     case SET_SEARCH_RESULT:
       return {
         ...state,
-        result: action.payload,
+        results: action.payload,
       };
     default:
       return state;
