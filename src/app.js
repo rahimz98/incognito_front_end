@@ -44,7 +44,7 @@ if (token) {
     store.dispatch({ type: SET_USER_ID, payload: decodedToken.id });
     store.dispatch({ type: SET_AUTHENTICATED });
     store.dispatch(getUserProfile());
-    // history.push(`/users/${decodedToken.id}`);
+    // history.push(`/${decodedToken.id}`);
   }
 }
 
@@ -61,8 +61,9 @@ function App() {
               <Route exact path='/' component={HomePage} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/signup' component={SignUp} />
-              <Route exact path='/users/:id' component={Profile} />
               <Route exact path='/search' component={SearchPage} />
+              <Route exact path='/:id' component={Profile} />
+              <Route exact path='/:id/projects/:projectId' component={HomePage} />
               <Route path='*' component={NotFound} />
             </Switch>
           </div>

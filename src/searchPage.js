@@ -14,6 +14,7 @@ import Link from '@material-ui/core/Link';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 
 import mockData from './mockData';
 
@@ -52,6 +53,14 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: 'row',
       justifyContent: 'space-between',
     },
+    '& .date': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      '& .icon': {
+        marginRight: theme.spacing(0.5),
+      },
+    },
   },
   noResults: {
     marginTop: theme.spacing(3),
@@ -71,7 +80,7 @@ const PeopleTab = (props) => {
     <div id={index} hidden={value !== index} {...other}>
       {value === index && person ? (
         <>
-          <Link href={`/users/${person.id}`} style={{ textDecoration: 'none' }}>
+          <Link href={`/${person.id}`} style={{ textDecoration: 'none' }}>
             <Card className={classes.card}>
               <CardActionArea disableRipple className={classes.cardActionArea}>
                 <CardContent className={classes.personCardContent}>
@@ -81,7 +90,7 @@ const PeopleTab = (props) => {
                     src={person.pic}
                   />
                   <Typography variant='h6'>
-                    <Link href={`/users/${person.id}`} color='inherit'>
+                    <Link href={`/${person.id}`} color='inherit'>
                       {person.name}
                     </Link>
                   </Typography>
@@ -106,31 +115,40 @@ const ProjectTab = (props) => {
   return (
     <div id={index} hidden={value !== index} {...other}>
       {value === index && project ? (
-        <Link
-          href={`/users/id/projects/${project.id}`} // need to add owner id
-          style={{ textDecoration: 'none' }}
-        >
-          <Card className={classes.card}>
-            <CardActionArea disableRipple className={classes.cardActionArea}>
-              <CardContent className={classes.projectCardContent}>
-                <div className='cardHeader'>
-                  <Typography variant='h6'>
-                    <Link
-                      href={`/users/id/projects/${project.id}`} // need to add owner id
-                      color='inherit'
-                    >
-                      {project.title}
-                    </Link>
+        <>
+          <Link
+            href={`/${project.owner}/projects/${project.id}`} // need to add owner id
+            style={{ textDecoration: 'none' }}
+          >
+            <Card className={classes.card}>
+              <CardActionArea disableRipple className={classes.cardActionArea}>
+                <CardContent className={classes.projectCardContent}>
+                  <div className='cardHeader'>
+                    <Typography variant='h6'>
+                      <Link
+                        href={`/${project.owner}/projects/${project.id}`} // need to add owner id
+                        color='inherit'
+                      >
+                        {project.name}
+                      </Link>
+                    </Typography>
+                    <Button onclick>View project</Button>
+                  </div>
+                  <Typography variant='body2' color='textSecondary'>
+                    {project.description}
                   </Typography>
-                  <Button onclick>View project</Button>
-                </div>
-                <Typography variant='body2' color='textSecondary'>
-                  {project.description}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Link>
+                  <div className='date'>
+                    <ScheduleIcon className='icon' fontSize='small' />
+                    <Typography variant='caption' color='textSecondary'>
+                      Created on {project.creationDate}
+                    </Typography>
+                  </div>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Link>
+          <Divider />
+        </>
       ) : (
         <Typography className={classes.noResults}>
           No results were found. Try searching something else.
@@ -144,7 +162,7 @@ const SearchPage = () => {
   const [value, setValue] = useState(0);
   // const results = useSelector(store => store.search);
   const peopleResults = mockData.people;
-  const projectResults = null; //mockData.projects;
+  const projectResults = mockData.projects;
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
