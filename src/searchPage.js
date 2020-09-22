@@ -4,15 +4,11 @@ import history from './history';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import Container from '@material-ui/core/Container';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
@@ -36,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     borderRadius: 0,
   },
-  cardContent: {
+  personCardContent: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -44,6 +40,15 @@ const useStyles = makeStyles((theme) => ({
       width: theme.spacing(6),
       height: theme.spacing(6),
       marginRight: theme.spacing(2),
+    },
+  },
+  projectCardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    '& .cardHeader': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
     },
   },
   noResults: {
@@ -57,22 +62,61 @@ function a11yProps(index) {
   };
 }
 
-const TabContent = (props) => {
-  const { data, value, index, ...other } = props;
-
+const PeopleTab = (props) => {
+  const { person, value, index, ...other } = props;
   const classes = useStyles();
   return (
     <div id={index} hidden={value !== index} {...other}>
-      {value === index && data ? (
-        <Link href={`/users/${data.id}`} style={{ textDecoration: 'none' }}>
+      {value === index && person ? (
+        <Link href={`/users/${person.id}`} style={{ textDecoration: 'none' }}>
           <Card className={classes.card}>
-            <CardActionArea className={classes.cardActionArea}>
-              <CardContent className={classes.cardContent}>
-                <Avatar className='avatar' alt={data.name} src={data.pic} />
+            <CardActionArea disableRipple className={classes.cardActionArea}>
+              <CardContent className={classes.personCardContent}>
+                <Avatar className='avatar' alt={person.name} src={person.pic} />
                 <Typography variant='h6'>
-                  <Link href={`/users/${data.id}`} color='inherit'>
-                    {data.name}
+                  <Link href={`/users/${person.id}`} color='inherit'>
+                    {person.name}
                   </Link>
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Link>
+      ) : (
+        <Typography className={classes.noResults}>
+          No results were found. Try searching something else.
+        </Typography>
+      )}
+    </div>
+  );
+};
+
+const ProjectTab = (props) => {
+  const { project, value, index, ...other } = props;
+  const classes = useStyles();
+  return (
+    <div id={index} hidden={value !== index} {...other}>
+      {value === index && project ? (
+        <Link
+          href={`/users/id/projects/${project.id}`} // need to add owner id
+          style={{ textDecoration: 'none' }}
+        >
+          <Card className={classes.card}>
+            <CardActionArea disableRipple className={classes.cardActionArea}>
+              <CardContent className={classes.projectCardContent}>
+                <div className='cardHeader'>
+                  <Typography variant='h6'>
+                    <Link
+                      href={`/users/id/projects/${project.id}`} // need to add owner id
+                      color='inherit'
+                    >
+                      {project.title}
+                    </Link>
+                  </Typography>
+                  <Button onclick>View project</Button>
+                </div>
+                <Typography variant='body2' color='textSecondary'>
+                  {project.description}
                 </Typography>
               </CardContent>
             </CardActionArea>
@@ -90,14 +134,8 @@ const TabContent = (props) => {
 const SearchPage = () => {
   const [value, setValue] = useState(0);
   // const results = useSelector(store => store.search);
-  const data = mockData;
-  const projectData = mockData;
-
-  const listItems = []; //data.map((d) => <li key={d.name}>{d.name}</li>);
-  console.log(listItems);
-  if (listItems.length > 0) {
-    console.log(data);
-  }
+  const peopleResults = mockData.people;
+  const projectResults = mockData.projects;
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -117,19 +155,19 @@ const SearchPage = () => {
         <Tab label='People' {...a11yProps(0)} />
         <Tab label='Projects' {...a11yProps(1)} />
       </Tabs>
-      {data ? (
-        data.map((data) => (
-          <TabContent value={value} index={0} data={data}></TabContent>
+      {peopleResults ? (
+        peopleResults.map((person) => (
+          <PeopleTab value={value} index={0} person={person}></PeopleTab>
         ))
       ) : (
-        <TabContent value={value} index={0} data={null}></TabContent>
+        <PeopleTab value={value} index={0} data={null}></PeopleTab>
       )}
-      {projectData ? (
-        projectData.map((projectData) => (
-          <TabContent value={value} index={1} data={projectData}></TabContent>
+      {projectResults ? (
+        projectResults.map((project) => (
+          <ProjectTab value={value} index={1} project={project}></ProjectTab>
         ))
       ) : (
-        <TabContent value={value} index={1} data={null}></TabContent>
+        <ProjectTab value={value} index={1} data={null}></ProjectTab>
       )}
     </Container>
   );
