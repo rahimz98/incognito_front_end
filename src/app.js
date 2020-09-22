@@ -25,6 +25,12 @@ import SearchPage from './searchPage.js';
 const useStyles = makeStyles((theme) => ({
   root: {
     margin: 0,
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  container: {
+    flex: 1,
   },
 }));
 
@@ -45,11 +51,11 @@ if (token) {
 function App() {
   const classes = useStyles();
   return (
-    <Provider store={store}>
-      <Router history={history}>
-        <div className={classes.root}>
+    <div className={classes.root}>
+      <Provider store={store}>
+        <Router history={history}>
           <Snackbar />
-          <Paper elevation='0'>
+          <div className={classes.container}>
             <Header />
             <Switch>
               <Route exact path='/' component={HomePage} />
@@ -59,11 +65,11 @@ function App() {
               <Route exact path='/search' component={SearchPage} />
               <Route path='*' component={NotFound} />
             </Switch>
-            <Footer />
-          </Paper>
-        </div>
-      </Router>
-    </Provider>
+          </div>
+          <Footer />
+        </Router>
+      </Provider>
+    </div>
   );
 }
 

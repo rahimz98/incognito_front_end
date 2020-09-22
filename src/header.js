@@ -165,6 +165,7 @@ export default function PersistentDrawerLeft() {
   };
 
   const handleLogout = () => {
+    handleDropdownClose();
     dispatch(logout());
   };
 
@@ -185,10 +186,12 @@ export default function PersistentDrawerLeft() {
   };
 
   const handleLogin = () => {
+    handleDropdownClose();
     history.push('/login');
   };
 
   const handleRegister = () => {
+    handleDropdownClose();
     history.push('/signup');
   };
 

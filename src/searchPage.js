@@ -9,6 +9,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Container from '@material-ui/core/Container';
 import CardContent from '@material-ui/core/CardContent';
+import Divider from '@material-ui/core/Divider';
 import Link from '@material-ui/core/Link';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
@@ -27,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
     top: '45px',
   },
   card: {
-    border: '1px solid #C0C0C0',
+    backgroundColor: 'inherit',
+    // border: '1px solid #C0C0C0',
     marginBottom: '-1px',
     boxShadow: 'none',
     borderRadius: 0,
@@ -68,20 +70,27 @@ const PeopleTab = (props) => {
   return (
     <div id={index} hidden={value !== index} {...other}>
       {value === index && person ? (
-        <Link href={`/users/${person.id}`} style={{ textDecoration: 'none' }}>
-          <Card className={classes.card}>
-            <CardActionArea disableRipple className={classes.cardActionArea}>
-              <CardContent className={classes.personCardContent}>
-                <Avatar className='avatar' alt={person.name} src={person.pic} />
-                <Typography variant='h6'>
-                  <Link href={`/users/${person.id}`} color='inherit'>
-                    {person.name}
-                  </Link>
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        </Link>
+        <>
+          <Link href={`/users/${person.id}`} style={{ textDecoration: 'none' }}>
+            <Card className={classes.card}>
+              <CardActionArea disableRipple className={classes.cardActionArea}>
+                <CardContent className={classes.personCardContent}>
+                  <Avatar
+                    className='avatar'
+                    alt={person.name}
+                    src={person.pic}
+                  />
+                  <Typography variant='h6'>
+                    <Link href={`/users/${person.id}`} color='inherit'>
+                      {person.name}
+                    </Link>
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Link>
+          <Divider />
+        </>
       ) : (
         <Typography className={classes.noResults}>
           No results were found. Try searching something else.
@@ -135,7 +144,7 @@ const SearchPage = () => {
   const [value, setValue] = useState(0);
   // const results = useSelector(store => store.search);
   const peopleResults = mockData.people;
-  const projectResults = mockData.projects;
+  const projectResults = null; //mockData.projects;
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
