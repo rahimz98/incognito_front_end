@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Container from '@material-ui/core/Container';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
-import Link from '@material-ui/core/Link';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
@@ -63,6 +62,21 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
+  listItem: {
+    paddingTop: theme.spacing(0.5),
+    paddingBottom: theme.spacing(0.5),
+    '& >*': {
+      textDecoration: 'inherit',
+      color: '#192231',
+    },
+  },
+  typoLink: {
+    textDecoration: 'none',
+    color: 'inherit',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
   noResults: {
     marginTop: theme.spacing(3),
   },
@@ -81,23 +95,23 @@ const PeopleTab = (props) => {
     <div id={index} hidden={value !== index} {...other}>
       {value === index && user ? (
         <>
-          <Link href={`/${user.userId}`} style={{ textDecoration: 'none' }}>
+          <Link to={`/${user.userId}`} style={{ textDecoration: 'none' }}>
             <Card className={classes.card}>
               <CardActionArea disableRipple className={classes.cardActionArea}>
                 <CardContent className={classes.userCardContent}>
                   <Avatar className='avatar' alt={user.name} src={user.pic} />
                   <div>
-                    <Typography variant='h6'>
-                      <Link href={`/${user.userId}`} color='inherit'>
-                        {user.name}
-                      </Link>
+                    <Typography className={classes.typoLink} variant='h6'>
+                      {user.name}
                     </Typography>
                     <Typography variant='body2' color='textSecondary'>
                       {user.email}
                     </Typography>
                   </div>
                   <div className='profileButton'>
-                    <Button>View profile</Button>
+                    <Typography className={classes.typoLink}>
+                      View profile
+                    </Typography>
                   </div>
                 </CardContent>
               </CardActionArea>
@@ -122,22 +136,19 @@ const ProjectTab = (props) => {
       {value === index && project ? (
         <>
           <Link
-            href={`/${project.owner}/projects/${project.id}`} // need to add owner id
+            to={`/${project.owner}/projects/${project.id}`} // need to add owner id
             style={{ textDecoration: 'none' }}
           >
             <Card className={classes.card}>
               <CardActionArea disableRipple className={classes.cardActionArea}>
                 <CardContent className={classes.projectCardContent}>
                   <div className='cardTop'>
-                    <Typography variant='h6'>
-                      <Link
-                        href={`/${project.owner}/projects/${project.id}`} // need to add owner id
-                        color='inherit'
-                      >
-                        {project.name}
-                      </Link>
+                    <Typography className={classes.typoLink} variant='h6'>
+                      {project.name}
                     </Typography>
-                    <Button>View project</Button>
+                    <Typography className={classes.typoLink}>
+                      View project
+                    </Typography>
                   </div>
                   <Typography variant='body2' color='textSecondary'>
                     {project.description}
@@ -194,17 +205,23 @@ const SearchPage = () => {
       ) : (
         <>
           {userResults.length > 0 ? (
-            userResults.map((user) => (
-              <PeopleTab value={value} index={0} user={user}></PeopleTab>
+            userResults.map((user, i) => (
+              <PeopleTab
+                value={value}
+                index={0}
+                key={i}
+                user={user}
+              ></PeopleTab>
             ))
           ) : (
             <PeopleTab value={value} index={0} user={null}></PeopleTab>
           )}
           {projectResults.length > 0 ? (
-            projectResults.map((project) => (
+            projectResults.map((project, i) => (
               <ProjectTab
                 value={value}
                 index={1}
+                key={i}
                 project={project}
               ></ProjectTab>
             ))
