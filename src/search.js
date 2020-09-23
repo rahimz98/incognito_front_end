@@ -45,13 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Search() {
   const dispatch = useDispatch();
-  const [query, setQuery] = useState();
-  const queryParams = new URLSearchParams(useLocation().search);
-
-  useEffect(() => {
-    setQuery(queryParams.get('q'));
-    dispatch(getSearchResult(queryParams.get('q')));
-  }, [queryParams, dispatch]);
+  const [query, setQuery] = useState('');
 
   const onEnterPress = (e) => {
     if (e.key === 'Enter') {
