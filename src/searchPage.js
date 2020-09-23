@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import history from './history';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -35,20 +34,22 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     borderRadius: 0,
   },
-  personCardContent: {
+  userCardContent: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
     '& .avatar': {
-      width: theme.spacing(6),
-      height: theme.spacing(6),
+      width: theme.spacing(8),
+      height: theme.spacing(8),
       marginRight: theme.spacing(2),
+    },
+    '& .profileButton': {
+      marginLeft: 'auto',
     },
   },
   projectCardContent: {
     display: 'flex',
     flexDirection: 'column',
-    '& .cardHeader': {
+    '& .cardTop': {
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -74,26 +75,30 @@ function a11yProps(index) {
 }
 
 const PeopleTab = (props) => {
-  const { person, value, index, ...other } = props;
+  const { user, value, index, ...other } = props;
   const classes = useStyles();
   return (
     <div id={index} hidden={value !== index} {...other}>
-      {value === index && person ? (
+      {value === index && user ? (
         <>
-          <Link href={`/${person.id}`} style={{ textDecoration: 'none' }}>
+          <Link href={`/${user.userId}`} style={{ textDecoration: 'none' }}>
             <Card className={classes.card}>
               <CardActionArea disableRipple className={classes.cardActionArea}>
-                <CardContent className={classes.personCardContent}>
-                  <Avatar
-                    className='avatar'
-                    alt={person.name}
-                    src={person.pic}
-                  />
-                  <Typography variant='h6'>
-                    <Link href={`/${person.id}`} color='inherit'>
-                      {person.name}
-                    </Link>
-                  </Typography>
+                <CardContent className={classes.userCardContent}>
+                  <Avatar className='avatar' alt={user.name} src={user.pic} />
+                  <div>
+                    <Typography variant='h6'>
+                      <Link href={`/${user.userId}`} color='inherit'>
+                        {user.name}
+                      </Link>
+                    </Typography>
+                    <Typography variant='body2' color='textSecondary'>
+                      {user.email}
+                    </Typography>
+                  </div>
+                  <div className='profileButton'>
+                    <Button>View profile</Button>
+                  </div>
                 </CardContent>
               </CardActionArea>
             </Card>
@@ -123,7 +128,7 @@ const ProjectTab = (props) => {
             <Card className={classes.card}>
               <CardActionArea disableRipple className={classes.cardActionArea}>
                 <CardContent className={classes.projectCardContent}>
-                  <div className='cardHeader'>
+                  <div className='cardTop'>
                     <Typography variant='h6'>
                       <Link
                         href={`/${project.owner}/projects/${project.id}`} // need to add owner id
@@ -132,7 +137,7 @@ const ProjectTab = (props) => {
                         {project.name}
                       </Link>
                     </Typography>
-                    <Button onclick>View project</Button>
+                    <Button>View project</Button>
                   </div>
                   <Typography variant='body2' color='textSecondary'>
                     {project.description}
@@ -160,8 +165,10 @@ const ProjectTab = (props) => {
 
 const SearchPage = () => {
   const [value, setValue] = useState(0);
-  // const results = useSelector(store => store.search);
-  const peopleResults = mockData.people;
+  const results = useSelector((store) => store.search.results);
+  // console.log(results);
+  const userResults = results; //? results : [];
+  // const userResults = mockData.user;
   const projectResults = mockData.projects;
 
   const handleChange = (e, newValue) => {
@@ -182,19 +189,29 @@ const SearchPage = () => {
         <Tab label='People' {...a11yProps(0)} />
         <Tab label='Projects' {...a11yProps(1)} />
       </Tabs>
-      {peopleResults ? (
-        peopleResults.map((person) => (
-          <PeopleTab value={value} index={0} person={person}></PeopleTab>
-        ))
+      {userResults === null || projectResults == null ? (
+        <Typography>Loading...</Typography>
       ) : (
-        <PeopleTab value={value} index={0} data={null}></PeopleTab>
-      )}
-      {projectResults ? (
-        projectResults.map((project) => (
-          <ProjectTab value={value} index={1} project={project}></ProjectTab>
-        ))
-      ) : (
-        <ProjectTab value={value} index={1} data={null}></ProjectTab>
+        <>
+          {userResults.length > 0 ? (
+            userResults.map((user) => (
+              <PeopleTab value={value} index={0} user={user}></PeopleTab>
+            ))
+          ) : (
+            <PeopleTab value={value} index={0} user={null}></PeopleTab>
+          )}
+          {projectResults.length > 0 ? (
+            projectResults.map((project) => (
+              <ProjectTab
+                value={value}
+                index={1}
+                project={project}
+              ></ProjectTab>
+            ))
+          ) : (
+            <ProjectTab value={value} index={1} project={null}></ProjectTab>
+          )}
+        </>
       )}
     </Container>
   );

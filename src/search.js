@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import history from './history';
 import { getSearchResult } from './actions/search';
 // MUI
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '1px 6px',
     width: '35vw',
     maxWidth: '600px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('xs')]: {
       width: '100%',
     },
     '& .MuiInput-input': {
@@ -42,7 +44,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Search() {
-  const [query, setQuery] = useState('');
+  const dispatch = useDispatch();
+  const [query, setQuery] = useState();
+  const queryParams = new URLSearchParams(useLocation().search);
+
+  useEffect(() => {
+    setQuery(queryParams.get('q'));
+    dispatch(getSearchResult(queryParams.get('q')));
+  }, [queryParams, dispatch]);
 
   const onEnterPress = (e) => {
     if (e.key === 'Enter') {
@@ -57,8 +66,7 @@ function Search() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (query) {
-      console.log(query);
-      // dispatch(getSearchResult(query));
+      dispatch(getSearchResult(query));
       history.push(`/search?q=${query}`);
     }
   };

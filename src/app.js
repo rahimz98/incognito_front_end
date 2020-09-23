@@ -1,7 +1,6 @@
 import React from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
 import history from './history';
-import { Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 // Redux
 import { Provider } from 'react-redux';
@@ -63,7 +62,11 @@ function App() {
               <Route exact path='/signup' component={SignUp} />
               <Route exact path='/search' component={SearchPage} />
               <Route exact path='/:id' component={Profile} />
-              <Route exact path='/:id/projects/:projectId' component={HomePage} />
+              <Route
+                exact
+                path='/:id/projects/:projectId'
+                component={HomePage}
+              />
               <Route path='*' component={NotFound} />
             </Switch>
           </div>

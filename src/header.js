@@ -51,13 +51,13 @@ const useStyles = makeStyles((theme) => ({
   },
   rightExpanded: {
     float: 'right',
-    [theme.breakpoints.between(0, 1280)]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
   },
   rightReduced: {
     display: 'none',
-    [theme.breakpoints.between(0, 1280)]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'flex',
       float: 'right',
       marginLeft: theme.spacing(2),
@@ -138,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     verticalAlign: 'middle',
     marginRight: theme.spacing(2),
-    [theme.breakpoints.between(0, 750)]: {
+    [theme.breakpoints.between(0, 650)]: {
       display: 'none',
     },
   },

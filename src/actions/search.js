@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const getSearchResult = (query) => (dispatch) => {
   axios
-    .post('http://localhost:5000/search/getSearchResult', { query: query })
+    .post('http://localhost:5000/api/search', { query: query })
     .then((res) => {
       dispatch({
         type: SET_SEARCH_RESULT,

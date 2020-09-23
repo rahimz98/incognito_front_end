@@ -70,7 +70,7 @@ export const getProfilePic = () => (dispatch) => {
       },
     })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       dispatch({
         type: SET_USER_IMAGE,
         payload: res.data.url,
@@ -91,7 +91,7 @@ export const logout = () => (dispatch) => {
       },
     })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       localStorage.removeItem('jwt');
       delete axios.defaults.headers.common['Authorization'];
       dispatch({ type: LOGOUT_SUCCESS });
@@ -120,7 +120,7 @@ export const loginUser = (user) => (dispatch) => {
   axios
     .post('http://localhost:5000/api/users/loginUser', user)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.data.login) {
         localStorage.setItem('jwt', res.data['auth-token']);
         dispatch({ type: SET_USER_ID, payload: res.data.id });
