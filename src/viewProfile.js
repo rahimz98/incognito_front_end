@@ -127,6 +127,16 @@ const ViewProfile = (props) => {
 
               <Box clone order={{ xs: 3, sm: 3 }}>
                 <Grid item xs={12}>
+                  <Typography variant='h5'>Bio</Typography>
+                  {profile.bio ? (
+                    <Typography className={classes.bodyText} variant='body1'>
+                      {profile.bio}
+                    </Typography>
+                  ) : (
+                    <Typography className={classes.bodyText} variant='body1'>
+                      This section is empty.
+                    </Typography>
+                  )}
                   <Typography variant='h5'>Experience</Typography>
                   {profile.experience ? (
                     <Typography className={classes.bodyText} variant='body1'>

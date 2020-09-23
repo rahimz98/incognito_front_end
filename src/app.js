@@ -62,11 +62,7 @@ function App() {
               <Route exact path='/signup' component={SignUp} />
               <Route exact path='/search' component={SearchPage} />
               <Route exact path='/:id' component={Profile} />
-              <Route
-                exact
-                path='/:id/projects/:projectId'
-                component={HomePage}
-              />
+              <Route exact path='/:id/:projectId' component={HomePage} />
               <Route path='*' component={NotFound} />
             </Switch>
           </div>
