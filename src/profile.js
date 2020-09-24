@@ -92,8 +92,8 @@ const Profile = () => {
   const classes = useStyles();
   return (
     <>
-      {token === null || parseInt(id) !== user.id ? (
-        <ViewProfile id={parseInt(id)} />
+      {token === null || id !== user.id ? (
+        <ViewProfile id={id} />
       ) : (
         <Container>
           <Grid container spacing={3} className={classes.root}>
