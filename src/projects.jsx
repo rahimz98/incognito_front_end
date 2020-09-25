@@ -1,9 +1,11 @@
-import React from 'react';
-import { Grid, Paper, makeStyles, Typography, Button, Box } from '@material-ui/core';
+import React, { useEffect, useState, setState } from 'react';
+import { Grid, Paper, makeStyles, Typography, Button, Box, Container } from '@material-ui/core';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import ProjectContent from './projectContent.jsx';
+import axios from 'axios';
+import ProjectHeading from './projectHeading.jsx'; 
 //Dummy API
-import project1 from './dummyAPI/project1.json';
+import { useParams } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,8 +26,6 @@ const useStyles = makeStyles((theme) => ({
     },
     editButton : {
         marginTop: theme.spacing(5), 
-        //backgroundColor : '#192231',
-        //color : '#FFFFFF',
         textTransform : 'none',
         
     },
@@ -34,60 +34,48 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const proj = [project1];
-console.log(project1.Blog);
 
-export default function Project() {
-const classes = useStyles();
+
+const Project = () => {
+    const classes = useStyles();
+    const {projectid} = useParams();
+    const [project,setProject] = useState({});
+    console.log("ProjectID id is " + projectid);
+    
+
+    useEffect(() => {
+        console.log("HEllo Word 2.0");
+        const token = localStorage.getItem("jwt");
+        axios
+        .get(`http://localhost:5000/api/project/open/${projectid}`,{
+            headers: {
+                'Authorization': token
+              }
+        })
+        .then(res =>{
+            console.log(typeof(res));
+            setProject(res.data);
+        })
+    }, [projectid]);
+
 
     return (
         <div className = {classes.root}>
-            <Grid container >
-                <Grid item xs = {1} />
-                
-                <Grid item container direction = "column" xs = {10} spacing = {2} >
-                    
+            <Container >
+                <Grid item container direction = "column"  spacing = {2} >
                     <Grid item />
                     <Grid item container spacing = {1}>
-
-                        <Grid item xs = {6}>
-                            <Typography  className = {classes.projectName}>
-                                {project1.Name}
-                            </Typography>
-                            <Typography variant = "body1" className = {classes.description}>
-                                Owner: {project1.Owner}
-                            </Typography>
-                            <Typography variant = "body1" className = {classes.description}>
-                                Contributors: n/a
-                            </Typography>
-                            <Typography variant = "body1">
-                                Visible: {project1.Visibility}
-                            </Typography>
-                            <Typography variant = "body1">
-                                Date of Creation: {project1["Date of creation"]}
-                            </Typography>
-                            <Typography variant = "h6">
-                                Description: {project1.Description}
-                            </Typography>
+                        <Grid item xs = {12}>
+                            <ProjectHeading content = {project}/> 
                         </Grid>
-                        
-                        
-                        <Grid item container xs = {6} alignItems="flex-start" justify="flex-end" direction="row">
-                            <EditOutlinedIcon  className = {classes.editButton} fontSize = "large"/>
-                        </Grid>   
-                        
-
                     </Grid>
-
                     <Grid item container >
-                        <ProjectContent content = {project1} />
+                        <ProjectContent content = {project} />
                     </Grid>    
-
                 </Grid>
-
-                <Grid item xs = {1} />
-
-            </Grid>
+            </Container>
         </div>
     )
 }
+
+export default Project;

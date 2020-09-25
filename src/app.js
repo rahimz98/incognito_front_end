@@ -57,7 +57,7 @@ function App() {
               <Route exact path='/login' component={Login}/>
               <Route exact path='/signup' component={SignUp}/> 
               <Route exact path='/users/:id' component={Profile}/>
-              <Route exact path='/users/:id/project' component={Project}/>
+              <Route exact path='/users/:id/project/:projectid' component={Project}/>
               <Route path='*' component={NotFound} />
             </Switch>
           <Footer/> 

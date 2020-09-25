@@ -1,4 +1,5 @@
-import React, {useContext} from "react";
+import React, {useContext, useState, useEffect} from "react";
+import axios from 'axios';
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -20,18 +21,22 @@ import Brightness4Icon from '@material-ui/icons/Brightness4';
 import SwitchUI from '@material-ui/core/Switch'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { CustomThemeContext } from './themes/CustomThemeProvider';
-import { logout } from './actions/user';
-import { Link } from 'react-router-dom';
+import { getUserProfile, logout } from './actions/user';
+import { Link, useParams, withRouter } from 'react-router-dom';
 import logoName from './logoName.png'; 
 import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import logInPic from './images/logInPic.png';
+import { useScrollTrigger } from "@material-ui/core";
+import HomeIcon from '@material-ui/icons/Home';
+import history from './history';
+
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor : '#6D7993',
+    //backgroundColor : '#6D7993',
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -85,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0
   },
   signInButton: {
-    backgroundColor : '#192231',
+    backgroundColor : '#2D3E50',
     color : '#FFFFFF',
   },
   icon: {
@@ -104,16 +109,25 @@ logInPic : {
   height: "200px",
   marginTop : theme.spacing(1),
 },
+logoutButton: {
+  backgroundColor : theme.palette.primary.button,
+  color : '#FFFFFF',
+},
+
 }));
 
-export default function PersistentDrawerLeft() {
+const PersistentDrawerLeft = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  //const {history} = props;
   const dispatch = useDispatch();
   const user = useSelector(store => store.user);
   const { currentTheme, setTheme } = useContext(CustomThemeContext);
   const isDark = Boolean(currentTheme === 'dark')
+  const [projectList, setProjectList] = useState({});
+
+  
 
   const handleThemeChange = (event) => {
     const { checked } = event.target
@@ -131,6 +145,24 @@ export default function PersistentDrawerLeft() {
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    console.log("getting the list of projects");
+    //useEffect(() => {
+      const token = localStorage.getItem("jwt");
+      axios
+        .get(`http://localhost:5000/api/project/get-project-list`,{
+          headers: {
+            'Authorization': token
+          }
+        })
+        .then(res => {
+          console.log(res);
+          console.log("Hello world");
+          setProjectList(res.data);
+        })
+    //})
+    
+
+    
   };
 
   const handleDrawerClose = () => {
@@ -138,8 +170,9 @@ export default function PersistentDrawerLeft() {
   };
 
 
+
   const authLinks = (
-    <Button onClick={handleLogout} className={classes.signInButton}>
+    <Button onClick={handleLogout} className={classes.signInButton}  >
         Logout
     </Button>
   );
@@ -203,26 +236,22 @@ export default function PersistentDrawerLeft() {
         </div>
         <Divider />
         <List>
-          {["Project 1", "Project 2", "Project 3", "Project 4"].map((text, index) => (
-            <ListItem button key={text}>
+          {Object.entries(projectList).map(([key, index]) => ( key != 'null' ? (
+            <ListItem button key={index} onClick = {() => {history.push(`/users/${user.id}/project/${key}`)}}  >
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={index} />
             </ListItem>
-          ))}
+          ) : <Divider />))}
         </List>
-        <Divider />
+        
+        
         <List>
-          {["Project 6", "Project 7", "Project 8"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary={text} />
+            <ListItem button onClick = {() => {history.push(`/users/${user.id}`)}}  >
+              <HomeIcon fontSize = "large"/>
             </ListItem>
-          ))}
-        </List>
+        </List> 
     </Drawer>
   );
 
@@ -269,3 +298,5 @@ export default function PersistentDrawerLeft() {
     </div>
   );
 }
+
+export default PersistentDrawerLeft;

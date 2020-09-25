@@ -6,6 +6,8 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import uniMelbLogo from './unimelb_logo.jpg';
 import gitHubLogo from './githubLogo.png'; 
+import CssBaseline from "@material-ui/core/CssBaseline";
+
 
 function Copyright() {
   return (
@@ -22,11 +24,12 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    backgroundColor: '#6D7993',
+    //backgroundColor: 'primary',
     flexDirection: 'column',
     color : '#ffffff',
     padding: theme.spacing(3, 2),
     marginTop: theme.spacing(8),
+    backgroundColor: theme.palette.primary.main,
 
   },
   container: {
@@ -74,7 +77,9 @@ export default function AppFooter() {
   const classes = useStyles();
 
   return (
-    <Typography component="footer" className={classes.root}>
+    <>
+    <CssBaseline />
+    <Typography component="footer" className={classes.root} >
       <Container className={classes.container}>
         <Grid container spacing={5}>
           <Grid item xs={6} sm={4} md={3}>
@@ -125,5 +130,6 @@ export default function AppFooter() {
         </Grid>
       </Container>
     </Typography>
+    </>
   );
 }
