@@ -144,6 +144,7 @@ const SignUp = () => {
                     helperText={
                       isValid.firstname ? '' : 'Must be between 2-50 characters'
                     }
+                    inputProps={{ 'data-testid': 'firstname' }}
                     label='First Name'
                     name='firstname'
                     onChange={handleFirstnameChange}
@@ -158,6 +159,7 @@ const SignUp = () => {
                     helperText={
                       isValid.lastname ? '' : 'Must be between 2-50 characters'
                     }
+                    inputProps={{ 'data-testid': 'lastname' }}
                     label='Last Name'
                     name='lastname'
                     onChange={handleLastnameChange}
@@ -172,6 +174,7 @@ const SignUp = () => {
                     helperText={
                       isValid.email ? '' : 'Please enter a valid email address'
                     }
+                    inputProps={{ 'data-testid': 'email' }}
                     label='Email'
                     name='email'
                     onChange={handleEmailChange}
@@ -186,6 +189,7 @@ const SignUp = () => {
                     helperText={
                       isValid.password ? '' : 'Must be longer than 8 characters'
                     }
+                    inputProps={{ 'data-testid': 'password' }}
                     label='Password'
                     name='password'
                     onChange={handlePasswordChange}

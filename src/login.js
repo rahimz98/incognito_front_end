@@ -110,6 +110,7 @@ const Login = () => {
                     helperText={
                       isValid.email ? '' : 'Please enter a valid email address'
                     }
+                    inputProps={{ 'data-testid': 'email' }}
                     label='Email'
                     name='email'
                     onChange={handleEmailChange}
@@ -124,6 +125,7 @@ const Login = () => {
                     helperText={
                       isValid.password ? '' : 'Please enter your password'
                     }
+                    inputProps={{ 'data-testid': 'password' }}
                     label='Password'
                     name='password'
                     onChange={handlePasswordChange}
