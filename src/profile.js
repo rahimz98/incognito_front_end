@@ -73,7 +73,12 @@ const Profile = () => {
   const profile = user.profile;
   const token = localStorage.getItem('jwt');
   const { id } = useParams();
-
+  console.log(id + '  ' + user.id);
+  if (id === user.id) {
+    console.log('THEY ARE EQUAL');
+  } else {
+    console.log(typeof id + ' ' + typeof user.id);
+  }
   const handleChangeImage = (e) => {
     // This assumes that a token exists as user is able to edit...
     const decodedToken = jwtDecode(token);
@@ -92,7 +97,7 @@ const Profile = () => {
   const classes = useStyles();
   return (
     <>
-      {token === null || id !== user.id ? (
+      {token === null || parseInt(id) !== user.id ? (
         <ViewProfile id={id} />
       ) : (
         <Container>
