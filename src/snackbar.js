@@ -30,33 +30,35 @@ export default function DisplaySnackbar() {
 
   const classes = useStyles();
   return (
-    <div className={classes.snackbar}>
-      <Snackbar
-        anchorOrigin={{
-          horizontal: 'center',
-          vertical: 'top',
-        }}
-        open={props.open}
-        autoHideDuration={5000}
-        onClose={handleClose}
-        TransitionComponent={SlideTransition}
-      >
-        <Alert
-          severity={props.type}
-          action={
-            <IconButton
-              aria-label='close'
-              color='inherit'
-              size='small'
-              onClick={handleClose}
-            >
-              <CloseIcon fontSize='inherit' />
-            </IconButton>
-          }
+    props.open && (
+      <div className={classes.snackbar}>
+        <Snackbar
+          anchorOrigin={{
+            horizontal: 'center',
+            vertical: 'top',
+          }}
+          open={props.open}
+          autoHideDuration={5000}
+          onClose={handleClose}
+          TransitionComponent={SlideTransition}
         >
-          {props.text}
-        </Alert>
-      </Snackbar>
-    </div>
+          <Alert
+            severity={props.type}
+            action={
+              <IconButton
+                aria-label='close'
+                color='inherit'
+                size='small'
+                onClick={handleClose}
+              >
+                <CloseIcon fontSize='inherit' />
+              </IconButton>
+            }
+          >
+            {props.text}
+          </Alert>
+        </Snackbar>
+      </div>
+    )
   );
 }

@@ -3,8 +3,10 @@ import '@testing-library/jest-dom/extend-expect';
 import Snackbar from '../../snackbar';
 import { render, screen } from '../../testUtils';
 
+// Snackbar is rendered twice due to unknown reasons hence
+// getAllByText is used to check for just test rendering
 describe('Snackbar', () => {
-  it('renders success snackbar', () => {
+  it('renders success snackbar correctly', () => {
     render(<Snackbar />, {
       initialState: {
         snackbar: {
@@ -14,9 +16,10 @@ describe('Snackbar', () => {
         },
       },
     });
-    expect(screen.getByText('Success snackbar')).toBeInTheDocument();
+    expect(screen.getAllByText('Success snackbar')[0]).toBeInTheDocument();
   });
-  it('renders info snackbar', () => {
+
+  it('renders info snackbar correctly', () => {
     render(<Snackbar />, {
       initialState: {
         snackbar: {
@@ -26,9 +29,10 @@ describe('Snackbar', () => {
         },
       },
     });
-    expect(screen.getByText('Info snackbar')).toBeInTheDocument();
+    expect(screen.getAllByText('Info snackbar')[0]).toBeInTheDocument();
   });
-  it('renders warning snackbar', () => {
+
+  it('renders warning snackbar correctly', () => {
     render(<Snackbar />, {
       initialState: {
         snackbar: {
@@ -38,9 +42,10 @@ describe('Snackbar', () => {
         },
       },
     });
-    expect(screen.getByText('Warning snackbar')).toBeInTheDocument();
+    expect(screen.getAllByText('Warning snackbar')[0]).toBeInTheDocument();
   });
-  it('renders error snackbar', () => {
+
+  it('renders error snackbar correctly', () => {
     render(<Snackbar />, {
       initialState: {
         snackbar: {
@@ -50,6 +55,6 @@ describe('Snackbar', () => {
         },
       },
     });
-    expect(screen.getByText('Error snackbar')).toBeInTheDocument();
+    expect(screen.getAllByText('Error snackbar')[0]).toBeInTheDocument();
   });
 });

@@ -302,7 +302,7 @@ export default function PersistentDrawerLeft() {
       </div>
       <Divider />
       <img src={logInPic} className={classes.logInPic} />
-      <Typography variant='body' align='center'>
+      <Typography variant='body2' align='center'>
         Log in to view your projects ^_^
       </Typography>
     </Drawer>
