@@ -16,7 +16,7 @@ import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   avatar: {
     position: 'relative',
@@ -30,14 +30,14 @@ const useStyles = makeStyles((theme) => ({
     '& .editIcon': {
       position: 'absolute',
       top: '45px',
-      right: '16px'
-    }
+      right: '16px',
+    },
   },
   contacts: {
     marginTop: theme.spacing(5),
   },
   icon: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   bodyText: {
     marginTop: theme.spacing(1),
@@ -52,95 +52,129 @@ const useStyles = makeStyles((theme) => ({
     },
     name: {
       marginTop: theme.spacing(1),
-      textAlign: 'center'
-    }
-  }
+      textAlign: 'center',
+    },
+  },
 }));
 
 const ViewProfile = (props) => {
   const [profile, setProfile] = useState(null);
   const [found, setFound] = useState(true);
   const userId = props.id;
-  
+
   useEffect(() => {
     axios
-    .post('http://localhost:5000/about/viewUser', {userId: userId})
-    .then(res => {
-      setProfile(res.data);
-    })
-    .catch((err) => {
-      console.log(err.response);
-      setFound(false);
-    })
-  }, [])
-  
+      .post('http://localhost:5000/about/viewUser', { userId: userId })
+      .then((res) => {
+        setProfile(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        setFound(false);
+      });
+  }, [userId]);
+
   const classes = useStyles();
-  
+
   return (
     <>
       {profile === null ? (
-        <>{found ? (<Typography>Loading...</Typography>) : (<NotFound/>)}</>
+        <>{found ? <Typography>Loading...</Typography> : <NotFound />}</>
       ) : (
         <>
           <Container>
             <Grid container spacing={3} className={classes.root}>
-              
-              <Box clone order={{xs:2, sm:1}}>
+              <Box clone order={{ xs: 2, sm: 1 }}>
                 <Grid item xs={12} sm={6}>
-                  <Typography className={classes.name} variant='h4'>{profile.name}</Typography>
-                  <Typography className={classes.contacts} variant='h5'>Contact Details</Typography>
+                  <Typography className={classes.name} variant='h4'>
+                    {profile.name}
+                  </Typography>
+                  <Typography className={classes.contacts} variant='h5'>
+                    Contact Details
+                  </Typography>
                   <List>
                     <ListItem>
-                      <EmailOutlinedIcon className={classes.icon}/>
+                      <EmailOutlinedIcon className={classes.icon} />
                       {profile.email}
-                    </ListItem> 
-                    {profile.phone && 
+                    </ListItem>
+                    {profile.phone && (
                       <ListItem>
-                        <PhoneOutlinedIcon className={classes.icon}/>
+                        <PhoneOutlinedIcon className={classes.icon} />
                         {profile.phone}
                       </ListItem>
-                    }
+                    )}
                   </List>
                 </Grid>
               </Box>
-  
-              <Box className={classes.avatar} clone order={{xs:1, sm:2}}>
+
+              <Box className={classes.avatar} clone order={{ xs: 1, sm: 2 }}>
                 <Grid item xs={12} sm={6}>
                   <Badge
-                    overlap="circle"
+                    overlap='circle'
                     anchorOrigin={{
                       vertical: 'bottom',
                       horizontal: 'right',
                     }}
                   >
-                    <Avatar className='profileImage' alt='profileImage' src={profile.pic}/>
+                    <Avatar
+                      className='profileImage'
+                      alt='profileImage'
+                      src={profile.pic}
+                    />
                   </Badge>
                 </Grid>
               </Box>
-              
-              <Box clone order={{xs:3, sm:3}}>
+
+              <Box clone order={{ xs: 3, sm: 3 }}>
                 <Grid item xs={12}>
+                  <Typography variant='h5'>Bio</Typography>
+                  {profile.bio ? (
+                    <Typography className={classes.bodyText} variant='body1'>
+                      {profile.bio}
+                    </Typography>
+                  ) : (
+                    <Typography className={classes.bodyText} variant='body1'>
+                      This section is empty.
+                    </Typography>
+                  )}
                   <Typography variant='h5'>Experience</Typography>
-                  {profile.experience
-                  ? <Typography className={classes.bodyText} variant='body1'>{profile.experience}</Typography>
-                  : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
+                  {profile.experience ? (
+                    <Typography className={classes.bodyText} variant='body1'>
+                      {profile.experience}
+                    </Typography>
+                  ) : (
+                    <Typography className={classes.bodyText} variant='body1'>
+                      This section is empty.
+                    </Typography>
+                  )}
                   <Typography variant='h5'>Education</Typography>
-                  {profile.education 
-                  ? <Typography className={classes.bodyText} variant='body1'>{profile.education}</Typography>
-                  : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
+                  {profile.education ? (
+                    <Typography className={classes.bodyText} variant='body1'>
+                      {profile.education}
+                    </Typography>
+                  ) : (
+                    <Typography className={classes.bodyText} variant='body1'>
+                      This section is empty.
+                    </Typography>
+                  )}
                   <Typography variant='h5'>Achievements</Typography>
-                  {profile.achievements 
-                  ? <Typography className={classes.bodyText} variant='body1'>{profile.achievements}</Typography>
-                  : <Typography className={classes.bodyText} variant='body1'>This section is empty.</Typography>}
+                  {profile.achievements ? (
+                    <Typography className={classes.bodyText} variant='body1'>
+                      {profile.achievements}
+                    </Typography>
+                  ) : (
+                    <Typography className={classes.bodyText} variant='body1'>
+                      This section is empty.
+                    </Typography>
+                  )}
                 </Grid>
               </Box>
-  
             </Grid>
           </Container>
         </>
-      )}  
+      )}
     </>
   );
-}
+};
 
 export default ViewProfile;
