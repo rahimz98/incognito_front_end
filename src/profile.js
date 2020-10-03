@@ -87,6 +87,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
+  card: {
+    marginBottom: theme.spacing(1),
+  },
   divider: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
@@ -267,9 +270,7 @@ const Profile = () => {
                         .map((exp) => {
                           return (
                             <Card key={generate()} className={classes.card}>
-                              <CardContent
-                                className={classes.projectCardContent}
-                              >
+                              <CardContent className={classes.cardContent}>
                                 <div className='cardTop'>
                                   <Typography variant='h6'>
                                     {exp.title}
@@ -316,9 +317,7 @@ const Profile = () => {
                         .map((edu) => {
                           return (
                             <Card key={generate()} className={classes.card}>
-                              <CardContent
-                                className={classes.projectCardContent}
-                              >
+                              <CardContent className={classes.cardContent}>
                                 <div className='cardTop'>
                                   <Typography variant='h6'>
                                     {edu.title}
@@ -365,9 +364,7 @@ const Profile = () => {
                         .map((achv) => {
                           return (
                             <Card key={generate()} className={classes.card}>
-                              <CardContent
-                                className={classes.projectCardContent}
-                              >
+                              <CardContent className={classes.cardContent}>
                                 <div className='cardTop'>
                                   <Typography variant='h6'>
                                     {achv.title}
