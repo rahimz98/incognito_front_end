@@ -21,6 +21,8 @@ import HomePage from './home.js';
 import Profile from './profile';
 import NotFound from './notFound';
 import Project from './projects';
+import CreateProject from './createProject';
+import EditProject from './editProject';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,8 +58,10 @@ function App() {
               <Route exact path='/' component={HomePage}/>
               <Route exact path='/login' component={Login}/>
               <Route exact path='/signup' component={SignUp}/> 
-              <Route exact path='/users/:id' component={Profile}/>
-              <Route exact path='/users/:id/project/:projectid' component={Project}/>
+              <Route exact path='/:id' component={Profile}/>
+              <Route exact path='/:id/:projectid' component={Project}/>
+              <Route exact path='/:id/createProject' component={CreateProject}/>
+              <Route exact path='/:id/:projectid/edit' component={EditProject}/>
               <Route path='*' component={NotFound} />
             </Switch>
           <Footer/> 

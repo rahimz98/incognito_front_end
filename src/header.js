@@ -27,7 +27,7 @@ import logoName from './logoName.png';
 import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import logInPic from './images/logInPic.png';
-import { useScrollTrigger } from "@material-ui/core";
+import { ButtonGroup, useScrollTrigger } from "@material-ui/core";
 import HomeIcon from '@material-ui/icons/Home';
 import history from './history';
 
@@ -113,6 +113,9 @@ logoutButton: {
   backgroundColor : theme.palette.primary.button,
   color : '#FFFFFF',
 },
+creatProjectButton : {
+  //marginLeft : theme.spacing(2),
+}
 
 }));
 
@@ -237,7 +240,7 @@ const PersistentDrawerLeft = () => {
         <Divider />
         <List>
           {Object.entries(projectList).map(([key, index]) => ( key != 'null' ? (
-            <ListItem button key={index} onClick = {() => {history.push(`/users/${user.id}/project/${key}`)}}  >
+            <ListItem button key={index} onClick = {() => {history.push(`/${user.id}/${key}`)}}  >
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
@@ -248,8 +251,11 @@ const PersistentDrawerLeft = () => {
         
         
         <List>
-            <ListItem button onClick = {() => {history.push(`/users/${user.id}`)}}  >
-              <HomeIcon fontSize = "large"/>
+            <ListItem >
+              <ButtonGroup variant = "text" aria-label = "text primary button group"> 
+                <HomeIcon fontSize = "large" onClick = {() => {history.push(`/${user.id}`)}} />
+                <Button className ={classes.creatProjectButton} size = "large" onClick = {() => {history.push(`/${user.id}/createProject`)}}>Create Project</Button>
+              </ButtonGroup>
             </ListItem>
         </List> 
     </Drawer>

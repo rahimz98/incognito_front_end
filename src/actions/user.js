@@ -120,7 +120,7 @@ export const loginUser = (user) => (dispatch) => {
         dispatch({type: SET_USER_ID, payload: res.data.id});
         dispatch({type: SET_AUTHENTICATED});
         dispatch(getUserProfile());
-        history.push(`/users/${res.data.id}`);
+        history.push(`/${res.data.id}`);
       }
       else {
         dispatch(errorSnackbar(res.data.message));

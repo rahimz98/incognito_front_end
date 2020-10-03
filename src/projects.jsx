@@ -65,10 +65,12 @@ const Project = () => {
                 <Grid item container direction = "column"  spacing = {2} >
                     <Grid item />
                     <Grid item container spacing = {1}>
-                        <Grid item xs = {12}>
-                            <ProjectHeading content = {project}/> 
+                        <Grid item xs ={12} >
+                            <ProjectHeading content = {project} projectId = {projectid}/> 
+                            
                         </Grid>
                     </Grid>
+                    
                     <Grid item container >
                         <ProjectContent content = {project} />
                     </Grid>    
