@@ -50,6 +50,7 @@ export const getUserProfile = () => (dispatch) => {
       },
     })
     .then((res) => {
+      console.log(res);
       dispatch({
         type: SET_USER,
         payload: res.data,
