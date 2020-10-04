@@ -13,8 +13,7 @@ export const SNACKBAR_CLEAR = 'SNACKBAR_CLEAR';
 // Search types
 export const SET_SEARCH_RESULT = 'SET_SEARCH_RESULT';
 // Profile types
-export const SET_NAME_EDIT = 'SET_NAME_EDIT';
-export const SET_CONTACTS_EDIT = 'SET_CONTACTS_EDIT';
+export const SET_BASIC_EDIT = 'SET_BASIC_EDIT';
 export const SET_BIO_EDIT = 'SET_BIO_EDIT';
 export const SET_EXPERIENCE_EDIT = 'SET_EXPERIENCE_EDIT';
 export const SET_EDUCATION_EDIT = 'SET_EDUCATION_EDIT';

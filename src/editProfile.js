@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { editProfile } from './actions/user';
 import {
-  editName,
-  editContacts,
+  editBasic,
   editBio,
   editExperience,
   editEducation,
@@ -51,23 +50,6 @@ const useStyles = makeStyles((theme) => ({
       margin: 'auto 5px auto 5px',
     },
   },
-  nameField: {
-    marginTop: theme.spacing(5),
-  },
-  [theme.breakpoints.down('xs')]: {
-    nameField: {
-      marginTop: theme.spacing(1),
-      textAlign: 'center',
-    },
-  },
-  contactForm: {
-    marginTop: theme.spacing(2),
-  },
-  title: {
-    backgroundColor: '#6D7993',
-    color: 'white',
-    marginBottom: theme.spacing(3),
-  },
   editButtons: {
     display: 'flex',
     justifyContent: 'flex-end',
@@ -103,24 +85,16 @@ export const AddButton = (props) => {
 };
 
 const EditFormButtons = (props) => {
-  const {
-    action,
-    newName,
-    newContact,
-    newBio,
-    newExp,
-    newEdu,
-    newAchv,
-  } = props;
+  const { action, newBasic, newBio, newExp, newEdu, newAchv } = props;
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const profile = user.profile;
 
   const details = {
-    name: newName ? newName.name : profile.name,
-    email: newContact ? newContact.email : profile.email,
-    phone: newContact ? newContact.phone : profile.phone,
+    name: newBasic ? newBasic.name : profile.name,
+    email: newBasic ? newBasic.email : profile.email,
+    phone: newBasic ? newBasic.phone : profile.phone,
     bio: newBio ? newBio.bio : profile.bio,
     experience: newExp ? newExp : profile.experience,
     education: newEdu ? newEdu : profile.education,
@@ -166,87 +140,79 @@ const EditFormButtons = (props) => {
   );
 };
 
-export const NameForm = () => {
-  const classes = useStyles();
-  const user = useSelector((store) => store.user);
-  const profile = user.profile;
-  const [name, setName] = useState(profile.name);
-
-  const handleChange = (e) => {
-    setName(e.target.value);
-  };
-
-  return (
-    <div className={classes.nameForm}>
-      <div className={classes.nameField}>
-        <TextField
-          error={name.length === 0}
-          helperText={name.length > 0 ? '' : 'Please enter your full name'}
-          name='name'
-          onChange={handleChange}
-          placeholder='Enter your name'
-          type='text'
-          value={name}
-          variant='outlined'
-        />
-      </div>
-      <Divider className={classes.divider} />
-      <EditFormButtons action={editName(false)} newName={{ name }} />
-    </div>
-  );
-};
-
-export const ContactForm = () => {
+export const BasicForm = () => {
   const classes = useStyles();
   const user = useSelector((store) => store.user);
   const profile = user.profile;
 
-  const [contact, setContact] = useState({
+  const [basic, setBasic] = useState({
+    name: profile.name,
     email: profile.email,
     phone: profile.phone,
   });
 
   const handleChange = (e) => {
-    setContact({
-      ...contact,
+    setBasic({
+      ...basic,
       [e.target.name]: e.target.value,
     });
   };
 
   return (
-    <div className={classes.contactForm}>
+    <div className={classes.basicForm}>
       <Grid container spacing={1}>
+        <Grid item xs={12}>
+          <Typography variant='subtitle1'>Name</Typography>
+          <TextField
+            error={basic.name.length === 0}
+            fullWidth
+            helperText={
+              basic.name.length > 0 ? '' : 'Please enter your full name'
+            }
+            name='name'
+            onChange={handleChange}
+            placeholder='Enter your name'
+            size='small'
+            type='text'
+            value={basic.name}
+            variant='outlined'
+          />
+        </Grid>
         <Grid item xs={12}>
           <Typography variant='subtitle1'>Email</Typography>
           <TextField
-            error={contact.email.length === 0}
-            className={classes.contactField}
+            error={basic.email.length === 0}
+            className={classes.profileField}
+            fullWidth
             helperText={
-              contact.email.length > 0 ? '' : 'Please enter your email address'
+              basic.email.length > 0 ? '' : 'Please enter your email address'
             }
             name='email'
             onChange={handleChange}
-            placeholder='example@email.com'
+            placeholder='Enter your email'
+            size='small'
             type='text'
-            value={contact.email}
+            value={basic.email}
             variant='outlined'
           />
         </Grid>
         <Grid item xs={12}>
           <Typography variant='subtitle1'>Phone number</Typography>
           <TextField
-            className={classes.contactField}
+            className={classes.profileField}
+            fullWidth
             name='phone'
             onChange={handleChange}
-            placeholder='e.g 555-555-5555'
+            placeholder='Add a phone number'
+            size='small'
             type='text'
-            value={contact.phone}
+            value={basic.phone}
             variant='outlined'
           />
         </Grid>
       </Grid>
       <Divider className={classes.divider} />
-      <EditFormButtons action={editContacts(false)} newContact={contact} />
+      <EditFormButtons action={editBasic(false)} newBasic={basic} />
     </div>
   );
 };
@@ -272,6 +238,7 @@ export const BioForm = () => {
             onChange={handleChange}
             placeholder='Add a Bio'
             rows='3'
+            size='small'
             type='text'
             value={bio}
             variant='outlined'
@@ -364,6 +331,7 @@ export const ExperienceForm = () => {
                     name='title'
                     onChange={(e) => handleChange(e, exp.id)}
                     placeholder='Title of experience'
+                    size='small'
                     type='text'
                     value={exp.title}
                     variant='outlined'
@@ -378,6 +346,7 @@ export const ExperienceForm = () => {
                       name='start_date'
                       onChange={(e) => handleChange(e, exp.id)}
                       placeholder='Jan-2020'
+                      size='small'
                       type='text'
                       value={exp.start_date}
                       variant='outlined'
@@ -390,6 +359,7 @@ export const ExperienceForm = () => {
                       name='end_date'
                       onChange={(e) => handleChange(e, exp.id)}
                       placeholder='Current'
+                      size='small'
                       type='text'
                       value={exp.end_date}
                       variant='outlined'
@@ -405,6 +375,7 @@ export const ExperienceForm = () => {
                     onChange={(e) => handleChange(e, exp.id)}
                     placeholder='A description of your experience'
                     rows='3'
+                    size='small'
                     type='text'
                     value={exp.description}
                     variant='outlined'
@@ -502,6 +473,7 @@ export const EducationForm = () => {
                     name='title'
                     onChange={(e) => handleChange(e, edu.id)}
                     placeholder='Title of education'
+                    size='small'
                     type='text'
                     value={edu.title}
                     variant='outlined'
@@ -516,6 +488,7 @@ export const EducationForm = () => {
                       name='start_date'
                       onChange={(e) => handleChange(e, edu.id)}
                       placeholder='Jan-2020'
+                      size='small'
                       type='text'
                       value={edu.start_date}
                       variant='outlined'
@@ -528,6 +501,7 @@ export const EducationForm = () => {
                       name='end_date'
                       onChange={(e) => handleChange(e, edu.id)}
                       placeholder='Current'
+                      size='small'
                       type='text'
                       value={edu.end_date}
                       variant='outlined'
@@ -543,6 +517,7 @@ export const EducationForm = () => {
                     onChange={(e) => handleChange(e, edu.id)}
                     placeholder='A description of your education'
                     rows='3'
+                    size='small'
                     type='text'
                     value={edu.description}
                     variant='outlined'
@@ -636,6 +611,7 @@ export const AchievementForm = () => {
                     name='title'
                     onChange={(e) => handleChange(e, achv.id)}
                     placeholder='Title of achievement'
+                    size='small'
                     type='text'
                     value={achv.title}
                     variant='outlined'
@@ -650,6 +626,7 @@ export const AchievementForm = () => {
                     onChange={(e) => handleChange(e, achv.id)}
                     placeholder='A description of your achievement'
                     rows='3'
+                    size='small'
                     type='text'
                     value={achv.description}
                     variant='outlined'

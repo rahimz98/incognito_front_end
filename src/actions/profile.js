@@ -1,6 +1,5 @@
 import {
-  SET_NAME_EDIT,
-  SET_CONTACTS_EDIT,
+  SET_BASIC_EDIT,
   SET_BIO_EDIT,
   SET_EXPERIENCE_EDIT,
   SET_EDUCATION_EDIT,
@@ -8,16 +7,9 @@ import {
   SET_CLOSE_EDITS,
 } from '../types';
 
-export const editName = (open) => (dispatch) => {
+export const editBasic = (open) => (dispatch) => {
   dispatch({
-    type: SET_NAME_EDIT,
-    open: open,
-  });
-};
-
-export const editContacts = (open) => (dispatch) => {
-  dispatch({
-    type: SET_CONTACTS_EDIT,
+    type: SET_BASIC_EDIT,
     open: open,
   });
 };

@@ -1,6 +1,5 @@
 import {
-  SET_NAME_EDIT,
-  SET_CONTACTS_EDIT,
+  SET_BASIC_EDIT,
   SET_BIO_EDIT,
   SET_EXPERIENCE_EDIT,
   SET_EDUCATION_EDIT,
@@ -9,6 +8,7 @@ import {
 } from '../types';
 
 export const initialState = {
+  basic: false,
   name: false,
   contacts: false,
   bio: false,
@@ -19,15 +19,10 @@ export const initialState = {
 
 const profile = (state = initialState, action) => {
   switch (action.type) {
-    case SET_NAME_EDIT:
+    case SET_BASIC_EDIT:
       return {
         ...state,
-        name: action.open,
-      };
-    case SET_CONTACTS_EDIT:
-      return {
-        ...state,
-        contacts: action.open,
+        basic: action.open,
       };
     case SET_BIO_EDIT:
       return {
