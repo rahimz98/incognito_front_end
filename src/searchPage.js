@@ -14,7 +14,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 
-import mockData from './mockData';
+// import mockData from './mockData';
 
 const useStyles = makeStyles((theme) => ({
   tabs: {
@@ -177,10 +177,8 @@ const ProjectTab = (props) => {
 const SearchPage = () => {
   const [value, setValue] = useState(0);
   const results = useSelector((store) => store.search.results);
-  // console.log(results);
-  const userResults = results; //? results : [];
-  // const userResults = mockData.user;
-  const projectResults = mockData.projects;
+  const userResults = results.users;
+  const projectResults = results.projects;
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -200,6 +198,7 @@ const SearchPage = () => {
         <Tab label='People' {...a11yProps(0)} />
         <Tab label='Projects' {...a11yProps(1)} />
       </Tabs>
+      <Divider />
       {userResults === null || projectResults == null ? (
         <Typography>Loading...</Typography>
       ) : (

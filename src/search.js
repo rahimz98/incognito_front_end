@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     height: '30px',
     margin: '0 auto',
     padding: '1px 6px',
-    width: '35vw',
+    width: '28vw', // 28vw to account for sidebar and 35vw to ignore
     maxWidth: '600px',
     [theme.breakpoints.down('xs')]: {
       width: '100%',

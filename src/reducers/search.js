@@ -1,7 +1,7 @@
 import { SET_SEARCH_RESULT } from '../types';
 
 export const initialState = {
-  results: null,
+  results: {},
 };
 
 const search = (state = initialState, action) => {
