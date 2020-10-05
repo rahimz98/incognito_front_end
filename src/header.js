@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#6D7993',
+    backgroundColor: theme.palette.primary,
   },
   left: {
     float: 'left',
