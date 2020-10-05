@@ -27,6 +27,21 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
+  resume: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  typoLink: {
+    '& .linkWrap': {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    '&:hover': {
+      textDecoration: 'underline',
+      cursor: 'pointer',
+    },
+  },
   avatar: {
     position: 'relative',
     display: 'flex',
@@ -133,11 +148,11 @@ const AboutTab = (props) => {
                     filteredExp.length > 0 &&
                     filteredExp.map((exp) => {
                       return (
-                        <>
+                        <React.Fragment key={generate()}>
                           <Typography className={classes.headers} variant='h5'>
                             Experience
                           </Typography>
-                          <Card key={generate()} className={classes.card}>
+                          <Card className={classes.card}>
                             <CardContent className={classes.cardContent}>
                               <div className='cardTop'>
                                 <Typography variant='h6'>
@@ -155,18 +170,18 @@ const AboutTab = (props) => {
                               </div>
                             </CardContent>
                           </Card>
-                        </>
+                        </React.Fragment>
                       );
                     })}
                   {filteredEdu &&
                     filteredEdu.length > 0 &&
                     filteredEdu.map((edu) => {
                       return (
-                        <>
+                        <React.Fragment key={generate()}>
                           <Typography className={classes.headers} variant='h5'>
                             Education
                           </Typography>
-                          <Card key={generate()} className={classes.card}>
+                          <Card className={classes.card}>
                             <CardContent className={classes.cardContent}>
                               <div className='cardTop'>
                                 <Typography variant='h6'>
@@ -184,18 +199,18 @@ const AboutTab = (props) => {
                               </div>
                             </CardContent>
                           </Card>
-                        </>
+                        </React.Fragment>
                       );
                     })}
                   {filteredAchv &&
                     filteredAchv.length > 0 &&
                     filteredAchv.map((achv) => {
                       return (
-                        <>
+                        <React.Fragment key={generate()}>
                           <Typography className={classes.headers} variant='h5'>
                             Achievements
                           </Typography>
-                          <Card key={generate()} className={classes.card}>
+                          <Card className={classes.card}>
                             <CardContent className={classes.cardContent}>
                               <div className='cardTop'>
                                 <Typography variant='h6'>
@@ -207,7 +222,7 @@ const AboutTab = (props) => {
                               </div>
                             </CardContent>
                           </Card>
-                        </>
+                        </React.Fragment>
                       );
                     })}
                 </div>
@@ -303,6 +318,23 @@ const ViewProfile = (props) => {
     setValue(newValue);
   };
 
+  const ViewResume = () => {
+    return (
+      <div className={classes.resume}>
+        <Typography className={classes.typoLink} variant='subtitle1'>
+          <a
+            href={profile.resume}
+            className='linkWrap'
+            target='_blank'
+            style={{ textDecoration: 'none' }}
+          >
+            View resume/CV
+          </a>
+        </Typography>
+      </div>
+    );
+  };
+
   const classes = useStyles();
   return (
     <>
@@ -336,31 +368,12 @@ const ViewProfile = (props) => {
                             </>
                           </ListItem>
                         )}
-
-                        <ListItem>
-                          {/* {profile.cv ? (
-                                <>
-                                  <DescriptionOutlinedIcon
-                                className={classes.icon}
-                              />
-                                  {profile.phone}
-                                </>
-                              ) : (
-                                <>
-                                  <<DescriptionOutlinedIcon
-                                className={classes.icon}
-                              />
-                                  <AddButton
-                                    add={}
-                                    section={'cv'}
-                                  />
-                                </>
-                              )} */}
-                          <DescriptionOutlinedIcon className={classes.icon} />
-                          <Typography variant='subtitle1'>
-                            Resume / CV (WIP)
-                          </Typography>
-                        </ListItem>
+                        {profile.resume && (
+                          <ListItem>
+                            <DescriptionOutlinedIcon className={classes.icon} />
+                            <ViewResume />
+                          </ListItem>
+                        )}
                       </List>
                     </div>
                   </Grid>

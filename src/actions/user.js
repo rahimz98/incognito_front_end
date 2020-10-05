@@ -3,11 +3,34 @@ import {
   SET_USER_ID,
   SET_USER,
   SET_USER_IMAGE,
+  SET_USER_RESUME,
   LOGOUT_SUCCESS,
 } from '../types';
 import { successSnackbar, errorSnackbar } from '../actions/snackbar';
 import history from '../history';
 import axios from 'axios';
+
+export const uploadResume = (fileData) => (dispatch) => {
+  const token = localStorage.getItem('jwt');
+  axios
+    .post('http://localhost:5000/about/uploadResume', fileData, {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then((res) => {
+      const validFileType = res.data.fileType;
+      if (!validFileType) {
+        dispatch(
+          errorSnackbar('This file type is not supported, PDF files only.')
+        );
+      }
+      dispatch(getResume());
+    })
+    .catch((err) => {
+      console.log(err.response);
+    });
+};
 
 export const editProfile = (userData) => (dispatch) => {
   const token = localStorage.getItem('jwt');
@@ -33,8 +56,35 @@ export const uploadImage = (imageData) => (dispatch) => {
         Authorization: token,
       },
     })
-    .then(() => {
+    .then((res) => {
+      const validFileType = res.data.fileType;
+      if (!validFileType) {
+        dispatch(
+          errorSnackbar(
+            'This file type is not supported, JPEG or PNG files only.'
+          )
+        );
+      }
       dispatch(getProfilePic());
+    })
+    .catch((err) => {
+      console.log(err.response);
+    });
+};
+
+export const getResume = () => (dispatch) => {
+  const token = localStorage.getItem('jwt');
+  axios
+    .get('http://localhost:5000/about/getResume', {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then((res) => {
+      dispatch({
+        type: SET_USER_RESUME,
+        payload: res.data.url,
+      });
     })
     .catch((err) => {
       console.log(err.response);
@@ -50,12 +100,12 @@ export const getUserProfile = () => (dispatch) => {
       },
     })
     .then((res) => {
-      console.log(res);
       dispatch({
         type: SET_USER,
         payload: res.data,
       });
       dispatch(getProfilePic());
+      dispatch(getResume());
     })
     .catch((err) => {
       console.log(err.response);
@@ -71,7 +121,6 @@ export const getProfilePic = () => (dispatch) => {
       },
     })
     .then((res) => {
-      // console.log(res);
       dispatch({
         type: SET_USER_IMAGE,
         payload: res.data.url,
@@ -92,7 +141,6 @@ export const logout = () => (dispatch) => {
       },
     })
     .then((res) => {
-      // console.log(res);
       localStorage.removeItem('jwt');
       delete axios.defaults.headers.common['Authorization'];
       dispatch({ type: LOGOUT_SUCCESS });
@@ -121,15 +169,13 @@ export const loginUser = (user) => (dispatch) => {
   axios
     .post('http://localhost:5000/api/users/loginUser', user)
     .then((res) => {
-      // console.log(res);
       if (res.data.login) {
         localStorage.setItem('jwt', res.data['auth-token']);
         dispatch({ type: SET_USER_ID, payload: res.data.id });
         dispatch({ type: SET_AUTHENTICATED });
         dispatch(getUserProfile());
         history.push(`/${res.data.id}`);
-      } 
-      else {
+      } else {
         dispatch(errorSnackbar(res.data.message));
       }
     })
