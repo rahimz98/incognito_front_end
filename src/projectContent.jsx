@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Grid, Paper, makeStyles, Typography, Button, Box, Container, Divider, List, ListItem, ListItemText } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import ReactQuill, { Quill } from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import { useSelector } from 'react-redux';
+import history from './history';
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     mainGrid: {
         margintop: theme.spacing(3),
     },
-    
+
     sidebarBlogBox: {
         padding: theme.spacing(2),
         backgroundColor: theme.palette.grey[200],
@@ -23,15 +23,23 @@ const useStyles = makeStyles((theme) => ({
     sidebarSection: {
         marginTop: theme.spacing(3),
     },
-    project : {
+    project: {
         padding: theme.spacing(2),
+    },
+    editButton : {
+        backgroundColor : '#2D3E50',
+        color : '#FFFFFF',
+        '&:hover': {
+            backgroundColor : '#2D3E50',
+        }
     }
 }));
 
 export default function Content(props) {
     const classes = useStyles();
-    const { content } = props;
-    
+    const { content, projectId } = props;
+    const user = useSelector(store => store.user);
+
 
     const linksPrint = () => {
         if (content && Object.keys(content).length && content.links) {
@@ -65,7 +73,7 @@ export default function Content(props) {
                 <>
                     <List>
                         {linksList = links.map((value, index) => {
-                            return <ListItem style={{ fontSize: "15px", textTransform: 'none', color: "" }} ><a style={{ fontSize: "20px", textTransform: 'none', color: "" }} href={value}>{value}</a></ListItem>
+                            return <ListItem style={{ fontSize: "15px", textTransform: 'none', color: "" }} ><a style={{ fontSize: "20px", textTransform: 'none', color: "", display: "table-cell" }} href={value} target="_blank">{value}</a></ListItem>
                         })}
                     </List>
                 </>
@@ -82,35 +90,39 @@ export default function Content(props) {
                         <Typography variant="h6" gutterBottom>
                             Blog
                         </Typography>
-                        <div dangerouslySetInnerHTML={{__html: content.blog}}/>
+                        <div dangerouslySetInnerHTML={{ __html: content.blog }} />
                     </Paper>
                 </>
             )
         }
     }
 
+    const noProject = "<h1>No Project has been entered yet</h1>"
+
     return (
         <div>
-            <Container maxWidth="lg">
-                <Grid container spacing={5} className={classes.mainGrid}>
+            <CssBaseline />
+            <Grid container spacing={5} className={classes.mainGrid}>
                 <Divider />
-                    <Grid item xs={12} md={8}>
-                        <Paper className = {classes.project}>
-                            <div dangerouslySetInnerHTML={{__html: content.project}}/>
-                        </Paper>
+                <Grid item xs={12} md={8}>
+                    <Paper className={classes.project}>
+                        {content.project ? <div dangerouslySetInnerHTML={{ __html: content.project }} /> : <div dangerouslySetInnerHTML={{ __html: noProject }} />}
+                    </Paper>
+                </Grid>
+                <Grid item container direction = "column" xs={12} md={4}>
+                    <Grid item>
+                        {blogPrint()}
                     </Grid>
-                    <Grid item container xs={12} md={4}>
-                        <Grid item>
-                            {blogPrint()}
-                        </Grid>
-                        <Grid item className={classes.sidebarSection}>
-                            {linksPrint()}
-                            {LinksList()}
-                            
-                        </Grid>
+                    <Grid item className={classes.sidebarSection}>
+                        {linksPrint()}
+                        {LinksList()}
+                    </Grid>
+                    <Grid item>
+                        <Button variant='contained' color='primary' onClick = {() => {history.push(`/${user.id}/${projectId}/edit`)}}>Edit Project</Button>
                     </Grid>
                 </Grid>
-            </Container>
+            </Grid>
+
         </div>
     )
 }

@@ -1,6 +1,5 @@
-import { Container, Grid, Hidden, makeStyles, Paper } from '@material-ui/core';
+import { Grid, Hidden, makeStyles, Paper } from '@material-ui/core';
 import * as React from 'react';
-import { render } from 'react-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import history from './history';
@@ -8,40 +7,21 @@ import { useSelector } from 'react-redux';
 import { Formik, Form, Field, FieldArray } from 'formik';
 import {
     Button,
-    LinearProgress,
     MenuItem,
-    FormControl,
-    InputLabel,
-    FormControlLabel,
     Typography,
 } from '@material-ui/core';
 import MuiTextField from '@material-ui/core/TextField';
 import {
-    fieldToTextField,
     TextField,
-    TextFieldProps,
-    Select,
-    Switch,
 } from 'formik-material-ui';
-
-//import {MuiPickersUtilsProvider} from '@material-ui/pickers';
-//import DateFnsUtils from '@date-io/date-fns';
-import {
-    Autocomplete,
-    ToggleButtonGroup,
-    AutocompleteRenderInputParams,
-} from 'formik-material-ui-lab';
 import Box from '@material-ui/core/Box';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
-import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
-import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
-import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Project from './projects';
-import QuillEditor from './editor/QuilEditor'
+import SaveIcon from '@material-ui/icons/Save';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+
 
 
 {/*
@@ -79,7 +59,19 @@ const useStyles = makeStyles((theme) => ({
     },
     edit: {
         marginTop: theme.spacing(2),
+    },
+    delete: {
+        backgroundColor: "#DC004E",
+        color: "#FFFFFF",
+        '&:hover': {
+            backgroundColor: "#DC004E",
+            color: "#FFFFFF"
+        },
+    },
+    submit: {
+        //flexGrow : 1
     }
+
 
 }));
 
@@ -114,24 +106,9 @@ const formats = [
 const EditProject = (props) => {
     const [project, setProject] = React.useState({});
     const { projectid } = useParams();
-    //const [content, setContent] = React.useState("<h3><span style='h1'>START YOUR PROJECT HERE ^_^ ----------------------------------------------------------------------------------</span></h1>");
-    //const [files, setFiles] = React.useState([]);
     const classes = useStyles();
-    const [contentBlog, setContentBlog] = React.useState("");
     const user = useSelector(store => store.user);
-
-    /*
-
-    const onEditorChange = (value) => {
-        setContent(value)
-        console.log(content)
-    }
-
-    const onFilesChange = (files) => {
-        setFiles(files)
-    }
-
-    */
+    const userId = user.id;
 
     const blogContent = {
         projectId: `${projectid}`,
@@ -211,11 +188,26 @@ const EditProject = (props) => {
                     console.log(err);
                 })
         }, 1000);
+    }
 
-
-
-
-
+    const deleteProject = () => {
+        const token = localStorage.getItem("jwt");
+        axios
+        .get(`http://localhost:5000/api/project/delete/${projectid}`, {
+            headers: {
+                'Authorization': token
+            }
+        })
+        .then((res) => {
+            console.log("res:", res);
+            console.log("Project Deleted");
+            setTimeout(() => {
+                history.push(`/${user.id}`);
+            }, 1000);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }
 
 
@@ -420,14 +412,30 @@ const EditProject = (props) => {
                                                     placeholder={"Start typing away ^_^"}
                                                 />
                                             </Paper>
-                                            <Button
-                                                variant='contained'
-                                                color='primary'
-                                                disabled={isSubmitting}
-                                                onClick={submitForm}
-                                            >
-                                                Submit
-                                        </Button>
+                                            <Grid container justify="space-between">
+                                                <Grid item>
+                                                    <Button
+                                                        variant='contained'
+                                                        color='primary'
+                                                        disabled={isSubmitting}
+                                                        onClick={submitForm}
+                                                        startIcon={<SaveIcon />}
+                                                        className={classes.submit}
+                                                    >
+                                                        Submit
+                                                </Button>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Button
+                                                        startIcon={<DeleteIcon />}
+                                                        variant="contained"
+                                                        className={classes.delete}
+                                                        onClick={deleteProject}
+                                                    >
+                                                        Delete project
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
 
                                         </Form>
 
@@ -435,6 +443,7 @@ const EditProject = (props) => {
                                 </Formik>
                             </React.Fragment>
                         ) : <CircularProgress />}
+
                     </Grid>
                 </Grid>
                 <Hidden only={["xs", "sm"]}>

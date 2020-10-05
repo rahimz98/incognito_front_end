@@ -115,6 +115,9 @@ logoutButton: {
 },
 creatProjectButton : {
   //marginLeft : theme.spacing(2),
+}, 
+homeIcon: {
+  marginRight : theme.spacing(4),
 }
 
 }));
@@ -253,7 +256,7 @@ const PersistentDrawerLeft = () => {
         <List>
             <ListItem >
               <ButtonGroup variant = "text" aria-label = "text primary button group"> 
-                <HomeIcon fontSize = "large" onClick = {() => {history.push(`/${user.id}`)}} />
+                <HomeIcon className = {classes.HomeIcon} fontSize = "large" onClick = {() => {history.push(`/${user.id}`)}} />
                 <Button className ={classes.creatProjectButton} size = "large" onClick = {() => {history.push(`/${user.id}/createProject`)}}>Create Project</Button>
               </ButtonGroup>
             </ListItem>

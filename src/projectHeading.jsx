@@ -162,9 +162,6 @@ export default function MainFeaturedPost(props) {
               </Hidden>
             </Card>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Button onClick = {() => {history.push(`/${user.id}/${projectId}/edit`)}}>Edit Project</Button>
-        </Grid>
       </Grid>
 
 
