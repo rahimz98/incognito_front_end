@@ -20,6 +20,7 @@ import SignUp from './signUp';
 import HomePage from './home.js';
 import Profile from './profile';
 import NotFound from './notFound';
+import aboutUs from './aboutUs';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,6 +58,7 @@ function App() {
               <Route exact path='/login' component={Login}/>
               <Route exact path='/signup' component={SignUp}/> 
               <Route exact path='/users/:id' component={Profile}/>
+              <Route exact path='/aboutUs' component={aboutUs}/>
               <Route path='*' component={NotFound} />
             </Switch>
           <Footer/>
