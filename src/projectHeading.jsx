@@ -131,7 +131,7 @@ export default function MainFeaturedPost(props) {
                     onMouseEnter={handlePopoverOpen}
                     onMouseLeave={handlePopoverClose}
                   >
-                    Colloborators
+                    Collaborators
               </Typography>
                   <Popover
                     id="mouse-over-popover"
