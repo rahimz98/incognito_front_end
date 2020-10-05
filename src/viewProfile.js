@@ -97,6 +97,17 @@ function a11yProps(index) {
 
 const AboutTab = (props) => {
   const { about, value, index, ...other } = props;
+
+  const filteredExp =
+    about.experience &&
+    Object.values(about.experience).filter((x) => x !== 'null');
+  const filteredEdu =
+    about.education &&
+    Object.values(about.education).filter((x) => x !== 'null');
+  const filteredAchv =
+    about.achievements &&
+    Object.values(about.achievements).filter((x) => x !== 'null');
+
   const classes = useStyles();
   return (
     <div id={index} hidden={value !== index} {...other}>
@@ -106,31 +117,26 @@ const AboutTab = (props) => {
             <Box clone order={{ xs: 3, sm: 3 }}>
               <Grid item xs={12}>
                 <div className={classes.aboutContent}>
-                  <Typography className={classes.headers} variant='h5'>
-                    Bio
-                  </Typography>
-
-                  {about.bio ? (
-                    <Card className={classes.card}>
-                      <CardContent className={classes.cardContent}>
-                        <Typography variant='body1'>{about.bio}</Typography>
-                      </CardContent>
-                    </Card>
-                  ) : (
-                    <Typography className={classes.bodyText} variant='body1'>
-                      This section is empty.
-                    </Typography>
+                  {about.bio && (
+                    <>
+                      <Typography className={classes.headers} variant='h5'>
+                        Bio
+                      </Typography>
+                      <Card className={classes.card}>
+                        <CardContent className={classes.cardContent}>
+                          <Typography variant='body1'>{about.bio}</Typography>
+                        </CardContent>
+                      </Card>
+                    </>
                   )}
-
-                  <Typography className={classes.headers} variant='h5'>
-                    Experience
-                  </Typography>
-
-                  {about.experience ? (
-                    Object.values(about.experience)
-                      .filter((x) => x !== 'null')
-                      .map((exp) => {
-                        return (
+                  {filteredExp &&
+                    filteredExp.length > 0 &&
+                    filteredExp.map((exp) => {
+                      return (
+                        <>
+                          <Typography className={classes.headers} variant='h5'>
+                            Experience
+                          </Typography>
                           <Card key={generate()} className={classes.card}>
                             <CardContent className={classes.cardContent}>
                               <div className='cardTop'>
@@ -149,23 +155,17 @@ const AboutTab = (props) => {
                               </div>
                             </CardContent>
                           </Card>
-                        );
-                      })
-                  ) : (
-                    <Typography className={classes.bodyText} variant='body1'>
-                      This section is empty.
-                    </Typography>
-                  )}
-
-                  <Typography className={classes.headers} variant='h5'>
-                    Education
-                  </Typography>
-
-                  {about.education ? (
-                    Object.values(about.education)
-                      .filter((x) => x !== 'null')
-                      .map((edu) => {
-                        return (
+                        </>
+                      );
+                    })}
+                  {filteredEdu &&
+                    filteredEdu.length > 0 &&
+                    filteredEdu.map((edu) => {
+                      return (
+                        <>
+                          <Typography className={classes.headers} variant='h5'>
+                            Education
+                          </Typography>
                           <Card key={generate()} className={classes.card}>
                             <CardContent className={classes.cardContent}>
                               <div className='cardTop'>
@@ -184,23 +184,17 @@ const AboutTab = (props) => {
                               </div>
                             </CardContent>
                           </Card>
-                        );
-                      })
-                  ) : (
-                    <Typography className={classes.bodyText} variant='body1'>
-                      This section is empty.
-                    </Typography>
-                  )}
-
-                  <Typography className={classes.headers} variant='h5'>
-                    Achievements
-                  </Typography>
-
-                  {about.achievements ? (
-                    Object.values(about.achievements)
-                      .filter((x) => x !== 'null')
-                      .map((achv) => {
-                        return (
+                        </>
+                      );
+                    })}
+                  {filteredAchv &&
+                    filteredAchv.length > 0 &&
+                    filteredAchv.map((achv) => {
+                      return (
+                        <>
+                          <Typography className={classes.headers} variant='h5'>
+                            Achievements
+                          </Typography>
                           <Card key={generate()} className={classes.card}>
                             <CardContent className={classes.cardContent}>
                               <div className='cardTop'>
@@ -213,13 +207,9 @@ const AboutTab = (props) => {
                               </div>
                             </CardContent>
                           </Card>
-                        );
-                      })
-                  ) : (
-                    <Typography className={classes.bodyText} variant='body1'>
-                      This section is empty.
-                    </Typography>
-                  )}
+                        </>
+                      );
+                    })}
                 </div>
               </Grid>
             </Box>
@@ -297,14 +287,17 @@ const ViewProfile = (props) => {
 
   // useEffect(() => {
   //   axios
-  //     .post('http://localhost:5000/about/getProjects', { userId: userId })
+  //     .post('http://localhost:5000/api/project/get-project-list', {
+  //       userId: userId,
+  //     })
   //     .then((res) => {
+  //       console.log(res.data);
   //       setProjects(res.data);
   //     })
   //     .catch((err) => {
   //       console.log(err.response);
-  //     })
-  // }, [userId])
+  //     });
+  // }, [userId]);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -333,18 +326,17 @@ const ViewProfile = (props) => {
                             {profile.email}
                           </Typography>
                         </ListItem>
-                        <ListItem>
-                          {profile.phone ? (
+                        {profile.phone && (
+                          <ListItem>
                             <>
                               <PhoneOutlinedIcon className={classes.icon} />
                               <Typography variant='subtitle1'>
                                 {profile.phone}
                               </Typography>
                             </>
-                          ) : (
-                            <PhoneOutlinedIcon className={classes.icon} />
-                          )}
-                        </ListItem>
+                          </ListItem>
+                        )}
+
                         <ListItem>
                           {/* {profile.cv ? (
                                 <>

@@ -117,6 +117,16 @@ const Profile = () => {
   const token = localStorage.getItem('jwt');
   const { id } = useParams();
 
+  const filteredExp =
+    profile.experience &&
+    Object.values(profile.experience).filter((x) => x !== 'null');
+  const filteredEdu =
+    profile.education &&
+    Object.values(profile.education).filter((x) => x !== 'null');
+  const filteredAchv =
+    profile.achievements &&
+    Object.values(profile.achievements).filter((x) => x !== 'null');
+
   useEffect(() => {
     dispatch(closeEdits());
   }, [dispatch]);
@@ -318,31 +328,29 @@ const Profile = () => {
                           <EditIcon action={editExperience(true)} />
                         </Typography>
 
-                        {profile.experience ? (
-                          Object.values(profile.experience)
-                            .filter((x) => x !== 'null')
-                            .map((exp) => {
-                              return (
-                                <Card key={generate()} className={classes.card}>
-                                  <CardContent className={classes.cardContent}>
-                                    <div className='cardTop'>
-                                      <Typography variant='h6'>
-                                        {exp.title}
-                                      </Typography>
-                                      <Typography
-                                        variant='subtitle2'
-                                        color='textSecondary'
-                                      >
-                                        {exp.start_date} to {exp.end_date}
-                                      </Typography>
-                                      <Typography variant='body1'>
-                                        {exp.description}
-                                      </Typography>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              );
-                            })
+                        {filteredExp && filteredExp.length > 0 ? (
+                          filteredExp.map((exp) => {
+                            return (
+                              <Card key={generate()} className={classes.card}>
+                                <CardContent className={classes.cardContent}>
+                                  <div className='cardTop'>
+                                    <Typography variant='h6'>
+                                      {exp.title}
+                                    </Typography>
+                                    <Typography
+                                      variant='subtitle2'
+                                      color='textSecondary'
+                                    >
+                                      {exp.start_date} to {exp.end_date}
+                                    </Typography>
+                                    <Typography variant='body1'>
+                                      {exp.description}
+                                    </Typography>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            );
+                          })
                         ) : (
                           <Typography
                             className={classes.bodyText}
@@ -368,31 +376,29 @@ const Profile = () => {
                           <EditIcon action={editEducation(true)} />
                         </Typography>
 
-                        {profile.education ? (
-                          Object.values(profile.education)
-                            .filter((x) => x !== 'null')
-                            .map((edu) => {
-                              return (
-                                <Card key={generate()} className={classes.card}>
-                                  <CardContent className={classes.cardContent}>
-                                    <div className='cardTop'>
-                                      <Typography variant='h6'>
-                                        {edu.title}
-                                      </Typography>
-                                      <Typography
-                                        variant='subtitle2'
-                                        color='textSecondary'
-                                      >
-                                        {edu.start_date} to {edu.end_date}
-                                      </Typography>
-                                      <Typography variant='body1'>
-                                        {edu.description}
-                                      </Typography>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              );
-                            })
+                        {filteredEdu && filteredEdu.length > 0 ? (
+                          filteredEdu.map((edu) => {
+                            return (
+                              <Card key={generate()} className={classes.card}>
+                                <CardContent className={classes.cardContent}>
+                                  <div className='cardTop'>
+                                    <Typography variant='h6'>
+                                      {edu.title}
+                                    </Typography>
+                                    <Typography
+                                      variant='subtitle2'
+                                      color='textSecondary'
+                                    >
+                                      {edu.start_date} to {edu.end_date}
+                                    </Typography>
+                                    <Typography variant='body1'>
+                                      {edu.description}
+                                    </Typography>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            );
+                          })
                         ) : (
                           <Typography
                             className={classes.bodyText}
@@ -418,25 +424,23 @@ const Profile = () => {
                           <EditIcon action={editAchievements(true)} />
                         </Typography>
 
-                        {profile.achievements ? (
-                          Object.values(profile.achievements)
-                            .filter((x) => x !== 'null')
-                            .map((achv) => {
-                              return (
-                                <Card key={generate()} className={classes.card}>
-                                  <CardContent className={classes.cardContent}>
-                                    <div className='cardTop'>
-                                      <Typography variant='h6'>
-                                        {achv.title}
-                                      </Typography>
-                                      <Typography variant='body1'>
-                                        {achv.description}
-                                      </Typography>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              );
-                            })
+                        {filteredAchv && filteredAchv.length > 0 ? (
+                          filteredAchv.map((achv) => {
+                            return (
+                              <Card key={generate()} className={classes.card}>
+                                <CardContent className={classes.cardContent}>
+                                  <div className='cardTop'>
+                                    <Typography variant='h6'>
+                                      {achv.title}
+                                    </Typography>
+                                    <Typography variant='body1'>
+                                      {achv.description}
+                                    </Typography>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            );
+                          })
                         ) : (
                           <Typography
                             className={classes.bodyText}
