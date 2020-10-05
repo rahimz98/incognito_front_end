@@ -1,31 +1,32 @@
-import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useContext, useState, useEffect} from "react";
+import { Link, useParams, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import axios from 'axios';
+import clsx from "clsx";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import SwitchUI from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { CustomThemeContext } from './themes/CustomThemeProvider';
-import { logout } from './actions/user';
 import Search from './search';
-import logoName from './logoName.png';
 import history from './history';
+import { getUserProfile, logout } from './actions/user';
+import logoName from './logoName.png'; 
 import Button from '@material-ui/core/Button';
 import logInPic from './images/logInPic.png';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -33,6 +34,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { ButtonGroup, useScrollTrigger } from "@material-ui/core";
+import HomeIcon from '@material-ui/icons/Home';
 
 const drawerWidth = 240;
 
@@ -121,8 +124,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   signInButton: {
-    backgroundColor: '#192231',
-    color: '#FFFFFF',
+    backgroundColor : '#2D3E50',
+    color : '#FFFFFF',
   },
   icon: {
     verticalAlign: 'middle',
@@ -146,18 +149,30 @@ const useStyles = makeStyles((theme) => ({
     height: '200px',
     marginTop: theme.spacing(1),
   },
+  logoutButton: {
+    backgroundColor : theme.palette.primary.button,
+  color : '#FFFFFF',
+  },
+  creatProjectButton : {
+    //marginLeft : theme.spacing(2),
+  }, 
+  homeIcon: {
+    marginRight : theme.spacing(4),
+  }
 }));
 
-export default function PersistentDrawerLeft() {
+const PersistentDrawerLeft = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [dropdownAnchorE1, setDropdownAnchorE1] = useState(null);
   const isDropdownOpen = Boolean(dropdownAnchorE1);
+
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const { currentTheme, setTheme } = useContext(CustomThemeContext);
-  const isDark = Boolean(currentTheme === 'dark');
+  const isDark = Boolean(currentTheme === 'dark')
+  const [projectList, setProjectList] = useState({});
 
   const handleThemeChange = (event) => {
     const { checked } = event.target;
@@ -175,6 +190,24 @@ export default function PersistentDrawerLeft() {
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    console.log("getting the list of projects");
+    //useEffect(() => {
+      const token = localStorage.getItem("jwt");
+      axios
+        .get(`http://localhost:5000/api/project/get-project-list`,{
+          headers: {
+            'Authorization': token
+          }
+        })
+        .then(res => {
+          console.log(res);
+          console.log("Hello world");
+          setProjectList(res.data);
+        })
+    //})
+    
+
+    
   };
 
   const handleDrawerClose = () => {
@@ -310,47 +343,44 @@ export default function PersistentDrawerLeft() {
 
   const authDrawer = (
     <Drawer
-      className={classes.drawer}
-      variant='persistent'
-      anchor='left'
-      open={open}
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <div className={classes.drawerHeader}>
-        <IconButton onClick={handleDrawerClose}>
-          {theme.direction === 'ltr' ? (
-            <ChevronLeftIcon />
-          ) : (
-            <ChevronRightIcon />
-          )}
-        </IconButton>
-      </div>
-      <Divider />
-      <List>
-        {['Project 1', 'Project 2', 'Project 3', 'Project 4'].map(
-          (text, index) => (
-            <ListItem button key={text}>
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {Object.entries(projectList).map(([key, index]) => ( key != 'null' ? (
+            <ListItem button key={index} onClick = {() => {history.push(`/${user.id}/${key}`)}}  >
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={index} />
             </ListItem>
-          )
-        )}
-      </List>
-      <Divider />
-      <List>
-        {['Project 6', 'Project 7', 'Project 8'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
+          ) : <Divider />))}
+        </List>
+        
+        
+        <List>
+            <ListItem >
+              <ButtonGroup variant = "text" aria-label = "text primary button group"> 
+                <HomeIcon className = {classes.HomeIcon} fontSize = "large" onClick = {() => {history.push(`/${user.id}`)}} />
+                <Button className ={classes.creatProjectButton} size = "large" onClick = {() => {history.push(`/${user.id}/createProject`)}}>Create Project</Button>
+              </ButtonGroup>
+            </ListItem>
+        </List> 
     </Drawer>
   );
 
@@ -412,3 +442,5 @@ export default function PersistentDrawerLeft() {
     </div>
   );
 }
+
+export default PersistentDrawerLeft;

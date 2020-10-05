@@ -20,6 +20,9 @@ import HomePage from './home.js';
 import Profile from './profile';
 import NotFound from './notFound';
 import SearchPage from './searchPage.js';
+import Project from './projects';
+import CreateProject from './createProject';
+import EditProject from './editProject';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,26 +53,29 @@ if (token) {
 function App() {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <Provider store={store}>
-        <Router history={history}>
-          <Snackbar />
+    <Provider store={store}>
+      <Router history={history}>
+        <div className={classes.root}>
+        <Snackbar/>
           <div className={classes.container}>
-            <Header />
+          <Header/>
             <Switch>
-              <Route exact path='/' component={HomePage} />
-              <Route exact path='/login' component={Login} />
-              <Route exact path='/signup' component={SignUp} />
+              <Route exact path='/' component={HomePage}/>
+              <Route exact path='/login' component={Login}/>
+              <Route exact path='/signup' component={SignUp}/> 
               <Route exact path='/search' component={SearchPage} />
-              <Route exact path='/:id' component={Profile} />
-              <Route exact path='/:id/:projectId' component={HomePage} />
+              <Route exact path='/:id' component={Profile}/>
+              <Route exact path='/:id/createProject' component={CreateProject}/>
+              <Route exact path='/:id/:projectid' component={Project}/>
+              
+              <Route exact path='/:id/:projectid/edit' component={EditProject}/>
               <Route path='*' component={NotFound} />
             </Switch>
           </div>
-          <Footer />
-        </Router>
-      </Provider>
-    </div>
+          <Footer/> 
+        </div>
+      </Router>
+    </Provider>
   );
 }
 

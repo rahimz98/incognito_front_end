@@ -128,7 +128,8 @@ export const loginUser = (user) => (dispatch) => {
         dispatch({ type: SET_AUTHENTICATED });
         dispatch(getUserProfile());
         history.push(`/${res.data.id}`);
-      } else {
+      } 
+      else {
         dispatch(errorSnackbar(res.data.message));
       }
     })
