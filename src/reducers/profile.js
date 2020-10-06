@@ -5,6 +5,7 @@ import {
   SET_EDUCATION_EDIT,
   SET_ACHIEVEMENTS_EDIT,
   SET_CLOSE_EDITS,
+  SET_EDIT_ERROR,
 } from '../types';
 
 export const initialState = {
@@ -15,6 +16,9 @@ export const initialState = {
   experience: false,
   education: false,
   achievements: false,
+  expError: false,
+  eduError: false,
+  achvError: false,
 };
 
 const profile = (state = initialState, action) => {
@@ -46,6 +50,13 @@ const profile = (state = initialState, action) => {
       };
     case SET_CLOSE_EDITS:
       return initialState;
+    case SET_EDIT_ERROR:
+      return {
+        ...state,
+        expError: action.expError,
+        eduError: action.eduError,
+        achvError: action.achvError,
+      };
     default:
       return state;
   }

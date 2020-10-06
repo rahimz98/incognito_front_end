@@ -8,8 +8,12 @@ import {
   editExperience,
   editEducation,
   editAchievements,
+  editExpError,
+  editEduError,
+  editAchvError,
 } from './actions/profile';
 import { generate } from 'shortid';
+import { errorSnackbar } from './actions/snackbar';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -20,6 +24,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import MuiPhoneNumber from 'material-ui-phone-number';
 
 const useStyles = makeStyles((theme) => ({
   addButton: {
@@ -89,6 +94,7 @@ const EditFormButtons = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const edit = useSelector((store) => store.profile);
   const profile = user.profile;
 
   const details = {
@@ -106,7 +112,13 @@ const EditFormButtons = (props) => {
   };
 
   const handleSubmit = (action) => {
-    if (details.name.length > 0 && details.email.length > 0) {
+    if (
+      details.name.length > 0 &&
+      details.email.length > 0 &&
+      !edit.expError &&
+      !edit.eduError &&
+      !edit.achvError
+    ) {
       const formatName = details.name.replace(/(^\w{1})|(\s+\w{1})/g, (match) =>
         match.toUpperCase()
       );
@@ -114,7 +126,7 @@ const EditFormButtons = (props) => {
       const userData = {
         name: formatName,
         email: details.email,
-        phone: details.phone,
+        phone: details.phone.length > 10 ? details.phone : '',
         bio: details.bio,
         experience: details.experience,
         education: details.education,
@@ -122,6 +134,8 @@ const EditFormButtons = (props) => {
       };
       dispatch(editProfile(userData));
       handleClose(action);
+    } else {
+      dispatch(errorSnackbar('There was a problem saving changes.'));
     }
   };
 
@@ -156,6 +170,10 @@ export const BasicForm = () => {
       ...basic,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const handlePhoneChange = (e) => {
+    setBasic({ ...basic, phone: e });
   };
 
   return (
@@ -198,17 +216,28 @@ export const BasicForm = () => {
         </Grid>
         <Grid item xs={12}>
           <Typography variant='subtitle1'>Phone number</Typography>
-          <TextField
+          <MuiPhoneNumber
+            className={classes.profileField}
+            fullWidth
+            name='phone'
+            placeholder='Add a phone number'
+            size='small'
+            value={basic.phone}
+            variant='outlined'
+            defaultCountry={'au'}
+            onChange={handlePhoneChange}
+          />
+          {/* <TextField
             className={classes.profileField}
             fullWidth
             name='phone'
             onChange={handleChange}
             placeholder='Add a phone number'
             size='small'
-            type='text'
+            type='number'
             value={basic.phone}
             variant='outlined'
-          />
+          /> */}
         </Grid>
       </Grid>
       <Divider className={classes.divider} />
@@ -252,6 +281,7 @@ export const BioForm = () => {
 };
 
 export const ExperienceForm = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const user = useSelector((store) => store.user);
   const profile = user.profile;
@@ -268,14 +298,23 @@ export const ExperienceForm = () => {
       });
     };
     addIdField();
-    console.log(experience);
-    // console.log();
     setHasId(true);
   }, []);
 
-  const addExperience = () => {
-    // api to add experience
+  useEffect(() => {
+    if (experience.length > 0) {
+      dispatch(editExpError(false));
+      experience.forEach((x) => {
+        if (x.title.length === 0) {
+          dispatch(editExpError(true));
+        }
+      });
+    } else {
+      dispatch(editExpError(false));
+    }
+  }, [experience]);
 
+  const addExperience = () => {
     setExperience((experience) => [
       {
         id: generate(),
@@ -395,6 +434,7 @@ export const ExperienceForm = () => {
 };
 
 export const EducationForm = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const user = useSelector((store) => store.user);
   const profile = user.profile;
@@ -411,13 +451,23 @@ export const EducationForm = () => {
       });
     };
     addIdField();
-    console.log(education);
     setHasId(true);
   }, []);
 
-  const addEducation = () => {
-    // api to add experience
+  useEffect(() => {
+    if (education.length > 0) {
+      dispatch(editEduError(false));
+      education.forEach((x) => {
+        if (x.title.length === 0) {
+          dispatch(editEduError(true));
+        }
+      });
+    } else {
+      dispatch(editEduError(false));
+    }
+  }, [education]);
 
+  const addEducation = () => {
     setEducation((education) => [
       {
         id: generate(),
@@ -537,6 +587,7 @@ export const EducationForm = () => {
 };
 
 export const AchievementForm = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const user = useSelector((store) => store.user);
   const profile = user.profile;
@@ -553,9 +604,21 @@ export const AchievementForm = () => {
       });
     };
     addIdField();
-    console.log(achievements);
     setHasId(true);
   }, []);
+
+  useEffect(() => {
+    if (achievements.length > 0) {
+      dispatch(editAchvError(false));
+      achievements.forEach((x) => {
+        if (x.title.length === 0) {
+          dispatch(editAchvError(true));
+        }
+      });
+    } else {
+      dispatch(editAchvError(false));
+    }
+  }, [achievements]);
 
   const addAchievement = () => {
     setAchievements((achievements) => [

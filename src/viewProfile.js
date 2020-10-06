@@ -158,12 +158,15 @@ const AboutTab = (props) => {
                                 <Typography variant='h6'>
                                   {exp.title}
                                 </Typography>
-                                <Typography
-                                  variant='subtitle2'
-                                  color='textSecondary'
-                                >
-                                  {exp.start_date} to {exp.end_date}
-                                </Typography>
+                                {exp.start_date.length > 0 &&
+                                  exp.end_date.length > 0 && (
+                                    <Typography
+                                      variant='subtitle2'
+                                      color='textSecondary'
+                                    >
+                                      {exp.start_date} to {exp.end_date}
+                                    </Typography>
+                                  )}
                                 <Typography variant='body1'>
                                   {exp.description}
                                 </Typography>
@@ -187,12 +190,15 @@ const AboutTab = (props) => {
                                 <Typography variant='h6'>
                                   {edu.title}
                                 </Typography>
-                                <Typography
-                                  variant='subtitle2'
-                                  color='textSecondary'
-                                >
-                                  {edu.start_date} to {edu.end_date}
-                                </Typography>
+                                {edu.start_date.length > 0 &&
+                                  edu.end_date.length > 0 && (
+                                    <Typography
+                                      variant='subtitle2'
+                                      color='textSecondary'
+                                    >
+                                      {edu.start_date} to {edu.end_date}
+                                    </Typography>
+                                  )}
                                 <Typography variant='body1'>
                                   {edu.description}
                                 </Typography>
@@ -325,6 +331,7 @@ const ViewProfile = (props) => {
           <a
             href={profile.resume}
             className='linkWrap'
+            rel='noopener noreferrer'
             target='_blank'
             style={{ textDecoration: 'none' }}
           >
