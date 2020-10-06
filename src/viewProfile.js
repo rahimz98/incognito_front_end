@@ -154,85 +154,85 @@ const AboutTab = (props) => {
                     </Card>
                   </>
                 )}
+                {filteredExp && filteredExp.length > 0 && (
+                  <Typography className={classes.headers} variant='h5'>
+                    Experience
+                  </Typography>
+                )}
                 {filteredExp &&
                   filteredExp.length > 0 &&
                   filteredExp.map((exp) => {
                     return (
-                      <React.Fragment key={generate()}>
-                        <Typography className={classes.headers} variant='h5'>
-                          Experience
-                        </Typography>
-                        <Card className={classes.card}>
-                          <CardContent className={classes.cardContent}>
-                            <div className='cardTop'>
-                              <Typography variant='h6'>{exp.title}</Typography>
-                              {exp.start_date.length > 0 &&
-                                exp.end_date.length > 0 && (
-                                  <Typography
-                                    variant='subtitle2'
-                                    color='textSecondary'
-                                  >
-                                    {exp.start_date} to {exp.end_date}
-                                  </Typography>
-                                )}
-                              <Typography variant='body1'>
-                                {exp.description}
-                              </Typography>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </React.Fragment>
+                      <Card key={generate()} className={classes.card}>
+                        <CardContent className={classes.cardContent}>
+                          <div className='cardTop'>
+                            <Typography variant='h6'>{exp.title}</Typography>
+                            {exp.start_date.length > 0 &&
+                              exp.end_date.length > 0 && (
+                                <Typography
+                                  variant='subtitle2'
+                                  color='textSecondary'
+                                >
+                                  {exp.start_date} to {exp.end_date}
+                                </Typography>
+                              )}
+                            <Typography variant='body1'>
+                              {exp.description}
+                            </Typography>
+                          </div>
+                        </CardContent>
+                      </Card>
                     );
                   })}
+                {filteredEdu && filteredEdu.length > 0 && (
+                  <Typography className={classes.headers} variant='h5'>
+                    Education
+                  </Typography>
+                )}
                 {filteredEdu &&
                   filteredEdu.length > 0 &&
                   filteredEdu.map((edu) => {
                     return (
-                      <React.Fragment key={generate()}>
-                        <Typography className={classes.headers} variant='h5'>
-                          Education
-                        </Typography>
-                        <Card className={classes.card}>
-                          <CardContent className={classes.cardContent}>
-                            <div className='cardTop'>
-                              <Typography variant='h6'>{edu.title}</Typography>
-                              {edu.start_date.length > 0 &&
-                                edu.end_date.length > 0 && (
-                                  <Typography
-                                    variant='subtitle2'
-                                    color='textSecondary'
-                                  >
-                                    {edu.start_date} to {edu.end_date}
-                                  </Typography>
-                                )}
-                              <Typography variant='body1'>
-                                {edu.description}
-                              </Typography>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </React.Fragment>
+                      <Card key={generate()} className={classes.card}>
+                        <CardContent className={classes.cardContent}>
+                          <div className='cardTop'>
+                            <Typography variant='h6'>{edu.title}</Typography>
+                            {edu.start_date.length > 0 &&
+                              edu.end_date.length > 0 && (
+                                <Typography
+                                  variant='subtitle2'
+                                  color='textSecondary'
+                                >
+                                  {edu.start_date} to {edu.end_date}
+                                </Typography>
+                              )}
+                            <Typography variant='body1'>
+                              {edu.description}
+                            </Typography>
+                          </div>
+                        </CardContent>
+                      </Card>
                     );
                   })}
+                {filteredAchv && filteredAchv.length > 0 && (
+                  <Typography className={classes.headers} variant='h5'>
+                    Achievements
+                  </Typography>
+                )}
                 {filteredAchv &&
                   filteredAchv.length > 0 &&
                   filteredAchv.map((achv) => {
                     return (
-                      <React.Fragment key={generate()}>
-                        <Typography className={classes.headers} variant='h5'>
-                          Achievements
-                        </Typography>
-                        <Card className={classes.card}>
-                          <CardContent className={classes.cardContent}>
-                            <div className='cardTop'>
-                              <Typography variant='h6'>{achv.title}</Typography>
-                              <Typography variant='body1'>
-                                {achv.description}
-                              </Typography>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </React.Fragment>
+                      <Card key={generate()} className={classes.card}>
+                        <CardContent className={classes.cardContent}>
+                          <div className='cardTop'>
+                            <Typography variant='h6'>{achv.title}</Typography>
+                            <Typography variant='body1'>
+                              {achv.description}
+                            </Typography>
+                          </div>
+                        </CardContent>
+                      </Card>
                     );
                   })}
               </div>
@@ -247,7 +247,9 @@ const AboutTab = (props) => {
 const ProjectsTab = (props) => {
   const { projects, userId, value, index, ...other } = props;
   const classes = useStyles();
-
+  const filteredProjects = projects.filter(
+    ([projectId]) => projectId !== 'null'
+  );
   return (
     <div id={index} hidden={value !== index} {...other}>
       {value === index && (
@@ -255,34 +257,35 @@ const ProjectsTab = (props) => {
           <Grid container spacing={3} className={classes.root}>
             <Grid item xs={12}>
               <div className={classes.tabContent}>
-                <Typography className={classes.headers} variant='h5'>
-                  Projects
-                </Typography>
-                {Object.entries(projects).map(
-                  ([projectId, project], i) =>
-                    projectId != 'null' && (
-                      <Link
-                        to={`/${userId}/${projectId}`}
-                        style={{ textDecoration: 'none' }}
+                {filteredProjects && filteredProjects.length > 0 && (
+                  <Typography className={classes.headers} variant='h5'>
+                    Projects
+                  </Typography>
+                )}
+                {filteredProjects.map(([projectId, project], i) => (
+                  <Link
+                    key={i}
+                    to={`/${userId}/${projectId}`}
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <Card className={classes.card}>
+                      <CardActionArea
+                        disableRipple
+                        className={classes.cardActionArea}
                       >
-                        <Card className={classes.card}>
-                          <CardActionArea
-                            disableRipple
-                            className={classes.cardActionArea}
-                          >
-                            <CardContent className={classes.projectCardContent}>
-                              <div className='cardTop'>
-                                <Typography
-                                  className={classes.typoLink}
-                                  variant='h6'
-                                >
-                                  {project}
-                                </Typography>
-                                <Typography className={classes.typoLink}>
-                                  View project
-                                </Typography>
-                              </div>
-                              {/* <>
+                        <CardContent className={classes.projectCardContent}>
+                          <div className='cardTop'>
+                            <Typography
+                              className={classes.typoLink}
+                              variant='h6'
+                            >
+                              {project}
+                            </Typography>
+                            <Typography className={classes.typoLink}>
+                              View project
+                            </Typography>
+                          </div>
+                          {/* <>
                                 <Typography variant='body2' color='textSecondary'>
                                   {project.description}
                                 </Typography>
@@ -292,12 +295,11 @@ const ProjectsTab = (props) => {
                                     Created on {project.creationDate}
                                   </Typography>
                                 </div></> */}
-                            </CardContent>
-                          </CardActionArea>
-                        </Card>
-                      </Link>
-                    )
-                )}
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Link>
+                ))}
               </div>
             </Grid>
           </Grid>
@@ -426,7 +428,7 @@ const ViewProfile = (props) => {
           <ProjectsTab
             value={value}
             index={1}
-            projects={profile.projects}
+            projects={Object.entries(profile.projects)}
             userId={userId}
           ></ProjectsTab>
         </>
