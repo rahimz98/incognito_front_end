@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import {
   AddButton,
   BasicForm,
@@ -10,7 +10,7 @@ import {
   AchievementForm,
 } from './editProfile';
 import ViewProfile from './viewProfile';
-import { uploadImage } from './actions/user';
+import { uploadImage, uploadResume } from './actions/user';
 import {
   editBasic,
   editBio,
@@ -29,25 +29,44 @@ import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Container from '@material-ui/core/Container';
-
-// import Divider from '@material-ui/core/Divider';
-
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
+import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Paper from '@material-ui/core/Paper';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+  },
+  resume: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  typoLink: {
+    '& .linkWrap': {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    '&:hover': {
+      textDecoration: 'underline',
+      cursor: 'pointer',
+    },
+  },
+  infoTooltip: {
+    marginLeft: theme.spacing(2),
   },
   avatar: {
     position: 'relative',
@@ -84,10 +103,6 @@ const useStyles = makeStyles((theme) => ({
   card: {
     marginBottom: theme.spacing(1),
   },
-  // divider: {
-  //   marginTop: theme.spacing(2),
-  //   marginBottom: theme.spacing(2),
-  // },
   profileBase: {
     display: 'flex',
     // color: theme.palette.common.white,
@@ -116,6 +131,17 @@ const Profile = () => {
   const edit = useSelector((store) => store.profile);
   const token = localStorage.getItem('jwt');
   const { id } = useParams();
+  const location = useLocation();
+
+  const filteredExp =
+    profile.experience &&
+    Object.values(profile.experience).filter((x) => x !== 'null');
+  const filteredEdu =
+    profile.education &&
+    Object.values(profile.education).filter((x) => x !== 'null');
+  const filteredAchv =
+    profile.achievements &&
+    Object.values(profile.achievements).filter((x) => x !== 'null');
 
   useEffect(() => {
     dispatch(closeEdits());
@@ -130,14 +156,78 @@ const Profile = () => {
     fileInput.click();
   };
 
+  const handleEditResume = () => {
+    const resumeInput = document.getElementById('resumeInput');
+    resumeInput.click();
+  };
+
   const handleChangeImage = (e) => {
-    // This assumes that a token exists as user is able to edit...
     const decodedToken = jwtDecode(token);
     const image = e.target.files[0];
     const formData = new FormData();
     formData.append('image', image);
     formData.append('userId', decodedToken.id);
     dispatch(uploadImage(formData));
+  };
+
+  const handleAddResume = (e) => {
+    const decodedToken = jwtDecode(token);
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('userId', decodedToken.id);
+    dispatch(uploadResume(formData));
+  };
+
+  const AddResumeButton = () => {
+    return (
+      <div className={classes.resume}>
+        <Typography className={classes.typoLink} variant='subtitle1'>
+          <Input
+            accept='application/pdf'
+            className={classes.input}
+            style={{ display: 'none' }}
+            id='resumeInput'
+            type='file'
+            onChange={handleAddResume}
+          />
+          <Link
+            to={location.pathname}
+            className='linkWrap'
+            onClick={handleEditResume}
+            style={{ color: 'inherit', textDecoration: 'none' }}
+          >
+            <AddIcon />
+            Add resume/CV
+          </Link>
+        </Typography>
+        <Tooltip
+          className={classes.infoTooltip}
+          title='PDF files only'
+          arrow
+          placement='right'
+        >
+          <InfoOutlinedIcon fontSize='small' />
+        </Tooltip>
+      </div>
+    );
+  };
+
+  const ViewResume = () => {
+    return (
+      <div className={classes.resume}>
+        <Typography className={classes.typoLink} variant='subtitle1'>
+          <a
+            href={user.resume}
+            className='linkWrap'
+            target='_blank'
+            style={{ textDecoration: 'none' }}
+          >
+            View resume/CV
+          </a>
+        </Typography>
+      </div>
+    );
   };
 
   const EditIcon = (action) => (
@@ -191,30 +281,21 @@ const Profile = () => {
                               )}
                             </ListItem>
                             <ListItem>
-                              {/* {profile.cv ? (
+                              {user.resume ? (
                                 <>
                                   <DescriptionOutlinedIcon
-                                className={classes.icon}
-                              />
-                                  {profile.phone}
+                                    className={classes.icon}
+                                  />
+                                  <ViewResume />
                                 </>
                               ) : (
                                 <>
-                                  <<DescriptionOutlinedIcon
-                                className={classes.icon}
-                              />
-                                  <AddButton
-                                    add={}
-                                    section={'cv'}
+                                  <DescriptionOutlinedIcon
+                                    className={classes.icon}
                                   />
+                                  <AddResumeButton />
                                 </>
-                              )} */}
-                              <DescriptionOutlinedIcon
-                                className={classes.icon}
-                              />
-                              <Typography variant='subtitle1'>
-                                Resume / CV (WIP)
-                              </Typography>
+                              )}
                             </ListItem>
                           </List>
                         </>
@@ -318,31 +399,29 @@ const Profile = () => {
                           <EditIcon action={editExperience(true)} />
                         </Typography>
 
-                        {profile.experience ? (
-                          Object.values(profile.experience)
-                            .filter((x) => x !== 'null')
-                            .map((exp) => {
-                              return (
-                                <Card key={generate()} className={classes.card}>
-                                  <CardContent className={classes.cardContent}>
-                                    <div className='cardTop'>
-                                      <Typography variant='h6'>
-                                        {exp.title}
-                                      </Typography>
-                                      <Typography
-                                        variant='subtitle2'
-                                        color='textSecondary'
-                                      >
-                                        {exp.start_date} to {exp.end_date}
-                                      </Typography>
-                                      <Typography variant='body1'>
-                                        {exp.description}
-                                      </Typography>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              );
-                            })
+                        {filteredExp && filteredExp.length > 0 ? (
+                          filteredExp.map((exp) => {
+                            return (
+                              <Card key={generate()} className={classes.card}>
+                                <CardContent className={classes.cardContent}>
+                                  <div className='cardTop'>
+                                    <Typography variant='h6'>
+                                      {exp.title}
+                                    </Typography>
+                                    <Typography
+                                      variant='subtitle2'
+                                      color='textSecondary'
+                                    >
+                                      {exp.start_date} to {exp.end_date}
+                                    </Typography>
+                                    <Typography variant='body1'>
+                                      {exp.description}
+                                    </Typography>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            );
+                          })
                         ) : (
                           <Typography
                             className={classes.bodyText}
@@ -368,31 +447,29 @@ const Profile = () => {
                           <EditIcon action={editEducation(true)} />
                         </Typography>
 
-                        {profile.education ? (
-                          Object.values(profile.education)
-                            .filter((x) => x !== 'null')
-                            .map((edu) => {
-                              return (
-                                <Card key={generate()} className={classes.card}>
-                                  <CardContent className={classes.cardContent}>
-                                    <div className='cardTop'>
-                                      <Typography variant='h6'>
-                                        {edu.title}
-                                      </Typography>
-                                      <Typography
-                                        variant='subtitle2'
-                                        color='textSecondary'
-                                      >
-                                        {edu.start_date} to {edu.end_date}
-                                      </Typography>
-                                      <Typography variant='body1'>
-                                        {edu.description}
-                                      </Typography>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              );
-                            })
+                        {filteredEdu && filteredEdu.length > 0 ? (
+                          filteredEdu.map((edu) => {
+                            return (
+                              <Card key={generate()} className={classes.card}>
+                                <CardContent className={classes.cardContent}>
+                                  <div className='cardTop'>
+                                    <Typography variant='h6'>
+                                      {edu.title}
+                                    </Typography>
+                                    <Typography
+                                      variant='subtitle2'
+                                      color='textSecondary'
+                                    >
+                                      {edu.start_date} to {edu.end_date}
+                                    </Typography>
+                                    <Typography variant='body1'>
+                                      {edu.description}
+                                    </Typography>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            );
+                          })
                         ) : (
                           <Typography
                             className={classes.bodyText}
@@ -418,25 +495,23 @@ const Profile = () => {
                           <EditIcon action={editAchievements(true)} />
                         </Typography>
 
-                        {profile.achievements ? (
-                          Object.values(profile.achievements)
-                            .filter((x) => x !== 'null')
-                            .map((achv) => {
-                              return (
-                                <Card key={generate()} className={classes.card}>
-                                  <CardContent className={classes.cardContent}>
-                                    <div className='cardTop'>
-                                      <Typography variant='h6'>
-                                        {achv.title}
-                                      </Typography>
-                                      <Typography variant='body1'>
-                                        {achv.description}
-                                      </Typography>
-                                    </div>
-                                  </CardContent>
-                                </Card>
-                              );
-                            })
+                        {filteredAchv && filteredAchv.length > 0 ? (
+                          filteredAchv.map((achv) => {
+                            return (
+                              <Card key={generate()} className={classes.card}>
+                                <CardContent className={classes.cardContent}>
+                                  <div className='cardTop'>
+                                    <Typography variant='h6'>
+                                      {achv.title}
+                                    </Typography>
+                                    <Typography variant='body1'>
+                                      {achv.description}
+                                    </Typography>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            );
+                          })
                         ) : (
                           <Typography
                             className={classes.bodyText}

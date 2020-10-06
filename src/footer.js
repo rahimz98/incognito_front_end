@@ -136,7 +136,7 @@ export default function AppFooter() {
           </Grid>
           <Grid item>
             <Typography variant='caption'>
-              Made by Team Incognito as part of our Univeristy of Melbourne
+              Made by Team Incognito as part of our University of Melbourne
               Capstone IT project
             </Typography>
           </Grid>

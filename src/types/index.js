@@ -3,6 +3,7 @@ export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
 export const SET_USER_ID = 'SET_USER_ID';
 export const SET_USER = 'SET_USER';
 export const SET_USER_IMAGE = 'SET_USER_IMAGE';
+export const SET_USER_RESUME = 'SET_USER_RESUME';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 // Snackbar types
 export const SNACKBAR_SUCCESS = 'SNACKBAR_SUCCESS';
