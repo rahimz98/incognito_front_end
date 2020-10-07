@@ -136,7 +136,7 @@ const ProjectTab = (props) => {
       {value === index && project ? (
         <>
           <Link
-            to={`/${project.owner}/${project.id}`} // need to add owner id
+            to={`/${project.ownerId}/${project.projectId}`}
             style={{ textDecoration: 'none' }}
           >
             <Card className={classes.card}>
