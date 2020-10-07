@@ -123,6 +123,79 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+export const AddResumeButton = () => {
+  const classes = useStyles();
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const token = localStorage.getItem('jwt');
+
+  const handleEditResume = () => {
+    const resumeInput = document.getElementById('resumeInput');
+    resumeInput.click();
+  };
+
+  const handleAddResume = (e) => {
+    const decodedToken = jwtDecode(token);
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('userId', decodedToken.id);
+    dispatch(uploadResume(formData));
+  };
+
+  return (
+    <div className={classes.resume}>
+      <Typography className={classes.typoLink} variant='subtitle1'>
+        <Input
+          accept='application/pdf'
+          className={classes.input}
+          style={{ display: 'none' }}
+          id='resumeInput'
+          type='file'
+          onChange={handleAddResume}
+        />
+        <Link
+          to={location.pathname}
+          className='linkWrap'
+          onClick={handleEditResume}
+          style={{ color: 'inherit', textDecoration: 'none' }}
+        >
+          <AddIcon />
+          Add resume/CV
+        </Link>
+      </Typography>
+      <Tooltip
+        className={classes.infoTooltip}
+        title='PDF files only'
+        arrow
+        placement='right'
+      >
+        <InfoOutlinedIcon fontSize='small' />
+      </Tooltip>
+    </div>
+  );
+};
+
+export const ViewResume = () => {
+  const classes = useStyles();
+  const user = useSelector((store) => store.user);
+  return (
+    <div className={classes.resume}>
+      <Typography className={classes.typoLink} variant='subtitle1'>
+        <a
+          href={user.resume}
+          className='linkWrap'
+          rel='noopener noreferrer'
+          target='_blank'
+          style={{ textDecoration: 'none' }}
+        >
+          View resume/CV
+        </a>
+      </Typography>
+    </div>
+  );
+};
+
 const Profile = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -131,7 +204,6 @@ const Profile = () => {
   const edit = useSelector((store) => store.profile);
   const token = localStorage.getItem('jwt');
   const { id } = useParams();
-  const location = useLocation();
 
   const filteredExp =
     profile.experience &&
@@ -156,11 +228,6 @@ const Profile = () => {
     fileInput.click();
   };
 
-  const handleEditResume = () => {
-    const resumeInput = document.getElementById('resumeInput');
-    resumeInput.click();
-  };
-
   const handleChangeImage = (e) => {
     const decodedToken = jwtDecode(token);
     const image = e.target.files[0];
@@ -168,67 +235,6 @@ const Profile = () => {
     formData.append('image', image);
     formData.append('userId', decodedToken.id);
     dispatch(uploadImage(formData));
-  };
-
-  const handleAddResume = (e) => {
-    const decodedToken = jwtDecode(token);
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append('image', file);
-    formData.append('userId', decodedToken.id);
-    dispatch(uploadResume(formData));
-  };
-
-  const AddResumeButton = () => {
-    return (
-      <div className={classes.resume}>
-        <Typography className={classes.typoLink} variant='subtitle1'>
-          <Input
-            accept='application/pdf'
-            className={classes.input}
-            style={{ display: 'none' }}
-            id='resumeInput'
-            type='file'
-            onChange={handleAddResume}
-          />
-          <Link
-            to={location.pathname}
-            className='linkWrap'
-            onClick={handleEditResume}
-            style={{ color: 'inherit', textDecoration: 'none' }}
-          >
-            <AddIcon />
-            Add resume/CV
-          </Link>
-        </Typography>
-        <Tooltip
-          className={classes.infoTooltip}
-          title='PDF files only'
-          arrow
-          placement='right'
-        >
-          <InfoOutlinedIcon fontSize='small' />
-        </Tooltip>
-      </div>
-    );
-  };
-
-  const ViewResume = () => {
-    return (
-      <div className={classes.resume}>
-        <Typography className={classes.typoLink} variant='subtitle1'>
-          <a
-            href={user.resume}
-            className='linkWrap'
-            rel='noopener noreferrer'
-            target='_blank'
-            style={{ textDecoration: 'none' }}
-          >
-            View resume/CV
-          </a>
-        </Typography>
-      </div>
-    );
   };
 
   const EditIcon = (action) => (

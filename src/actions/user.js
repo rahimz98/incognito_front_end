@@ -10,6 +10,26 @@ import { successSnackbar, errorSnackbar } from '../actions/snackbar';
 import history from '../history';
 import axios from 'axios';
 
+export const deleteResume = () => (dispatch) => {
+  const token = localStorage.getItem('jwt');
+  const body = {};
+  axios
+    .post('http://localhost:5000/about/deleteResume', body, {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then((res) => {
+      if (res.data.deleteResume) {
+        dispatch(getResume());
+        // dispatch(successSnackbar('Successfully removed resume/CV'));
+      }
+    })
+    .catch((err) => {
+      console.log(err.response);
+    });
+};
+
 export const uploadResume = (fileData) => (dispatch) => {
   const token = localStorage.getItem('jwt');
   axios

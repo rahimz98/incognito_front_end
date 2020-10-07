@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { editProfile } from './actions/user';
+import { editProfile, deleteResume } from './actions/user';
 import {
   editBasic,
   editBio,
   editExperience,
   editEducation,
   editAchievements,
-  editExpError,
-  editEduError,
-  editAchvError,
 } from './actions/profile';
+import { AddResumeButton, ViewResume } from './profile';
 import { generate } from 'shortid';
 import { errorSnackbar } from './actions/snackbar';
 // MUI
@@ -24,6 +22,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import MuiPhoneNumber from 'material-ui-phone-number';
 
 const useStyles = makeStyles((theme) => ({
@@ -67,6 +66,18 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
+  resume: {
+    marginTop: theme.spacing(1),
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    '& .binIcon': {
+      marginLeft: 'auto',
+    },
+  },
+  icon: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
 export const AddButton = (props) => {
@@ -89,72 +100,8 @@ export const AddButton = (props) => {
   );
 };
 
-const EditFormButtons = (props) => {
-  const { action, newBasic, newBio, newExp, newEdu, newAchv } = props;
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  const user = useSelector((store) => store.user);
-  const edit = useSelector((store) => store.profile);
-  const profile = user.profile;
-
-  const details = {
-    name: newBasic ? newBasic.name : profile.name,
-    email: newBasic ? newBasic.email : profile.email,
-    phone: newBasic ? newBasic.phone : profile.phone,
-    bio: newBio ? newBio.bio : profile.bio,
-    experience: newExp ? newExp : profile.experience,
-    education: newEdu ? newEdu : profile.education,
-    achievements: newAchv ? newAchv : profile.achievements,
-  };
-
-  const handleClose = (action) => {
-    dispatch(action);
-  };
-
-  const handleSubmit = (action) => {
-    if (
-      details.name.length > 0 &&
-      details.email.length > 0 &&
-      !edit.expError &&
-      !edit.eduError &&
-      !edit.achvError
-    ) {
-      const formatName = details.name.replace(/(^\w{1})|(\s+\w{1})/g, (match) =>
-        match.toUpperCase()
-      );
-
-      const userData = {
-        name: formatName,
-        email: details.email,
-        phone: details.phone.length > 10 ? details.phone : '',
-        bio: details.bio,
-        experience: details.experience,
-        education: details.education,
-        achievements: details.achievements,
-      };
-      dispatch(editProfile(userData));
-      handleClose(action);
-    } else {
-      dispatch(errorSnackbar('There was a problem saving changes.'));
-    }
-  };
-
-  return (
-    <div className={classes.editButtons}>
-      <Button onClick={() => handleClose(action)}>Cancel</Button>
-      <Button
-        className={classes.submit}
-        onClick={() => handleSubmit(action)}
-        type='submit'
-        variant='contained'
-      >
-        Save
-      </Button>
-    </div>
-  );
-};
-
 export const BasicForm = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const user = useSelector((store) => store.user);
   const profile = user.profile;
@@ -174,6 +121,46 @@ export const BasicForm = () => {
 
   const handlePhoneChange = (e) => {
     setBasic({ ...basic, phone: e });
+  };
+
+  const BasicFormButtons = () => {
+    const handleClose = () => {
+      dispatch(editBasic(false));
+    };
+
+    const handleSubmit = () => {
+      if (basic.name.length > 0 && basic.email.length > 0) {
+        const formatName = basic.name.replace(/(^\w{1})|(\s+\w{1})/g, (match) =>
+          match.toUpperCase()
+        );
+        const formatPhone = basic.phone.length > 10 ? basic.phone : '';
+
+        const userData = {
+          ...profile,
+          name: basic.name ? formatName : profile.name,
+          email: basic.email ? basic.email : profile.email,
+          phone: basic.phone ? formatPhone : profile.phone,
+        };
+        dispatch(editProfile(userData));
+        handleClose();
+      } else {
+        dispatch(errorSnackbar('There was a problem saving changes.'));
+      }
+    };
+
+    return (
+      <div className={classes.editButtons}>
+        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button
+          className={classes.submit}
+          onClick={() => handleSubmit()}
+          type='submit'
+          variant='contained'
+        >
+          Save
+        </Button>
+      </div>
+    );
   };
 
   return (
@@ -227,26 +214,37 @@ export const BasicForm = () => {
             defaultCountry={'au'}
             onChange={handlePhoneChange}
           />
-          {/* <TextField
-            className={classes.profileField}
-            fullWidth
-            name='phone'
-            onChange={handleChange}
-            placeholder='Add a phone number'
-            size='small'
-            type='number'
-            value={basic.phone}
-            variant='outlined'
-          /> */}
         </Grid>
+        {user.resume ? (
+          <Grid item xs={12}>
+            <div className={classes.resume}>
+              <DescriptionOutlinedIcon className={classes.icon} />
+              <ViewResume />
+              <IconButton
+                className='binIcon'
+                onClick={() => dispatch(deleteResume())}
+              >
+                <DeleteOutlineIcon fontSize='small' />
+              </IconButton>
+            </div>
+          </Grid>
+        ) : (
+          <Grid item xs={12}>
+            <div className={classes.resume}>
+              <DescriptionOutlinedIcon className={classes.icon} />
+              <AddResumeButton />
+            </div>
+          </Grid>
+        )}
       </Grid>
       <Divider className={classes.divider} />
-      <EditFormButtons action={editBasic(false)} newBasic={basic} />
+      <BasicFormButtons />
     </div>
   );
 };
 
 export const BioForm = () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const user = useSelector((store) => store.user);
   const profile = user.profile;
@@ -254,6 +252,36 @@ export const BioForm = () => {
 
   const handleChange = (e) => {
     setBio(e.target.value);
+  };
+
+  const BioFormButtons = () => {
+    const handleClose = () => {
+      dispatch(editBio(false));
+    };
+
+    const handleSubmit = () => {
+      const newBio = bio.length > 0 ? bio : '';
+      const userData = {
+        ...profile,
+        bio: newBio,
+      };
+      dispatch(editProfile(userData));
+      handleClose();
+    };
+
+    return (
+      <div className={classes.editButtons}>
+        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button
+          className={classes.submit}
+          onClick={() => handleSubmit()}
+          type='submit'
+          variant='contained'
+        >
+          Save
+        </Button>
+      </div>
+    );
   };
 
   return (
@@ -275,7 +303,7 @@ export const BioForm = () => {
         </Grid>
       </Grid>
       <Divider className={classes.divider} />
-      <EditFormButtons action={editBio(false)} newBio={{ bio }} />
+      <BioFormButtons />
     </>
   );
 };
@@ -285,7 +313,7 @@ export const ExperienceForm = () => {
   const classes = useStyles();
   const user = useSelector((store) => store.user);
   const profile = user.profile;
-
+  const [error, setError] = useState(false);
   const [experience, setExperience] = useState(
     Object.values(profile.experience).filter((x) => x !== 'null')
   );
@@ -303,14 +331,14 @@ export const ExperienceForm = () => {
 
   useEffect(() => {
     if (experience.length > 0) {
-      dispatch(editExpError(false));
+      setError(false);
       experience.forEach((x) => {
         if (x.title.length === 0) {
-          dispatch(editExpError(true));
+          setError(true);
         }
       });
     } else {
-      dispatch(editExpError(false));
+      setError(false);
     }
   }, [experience]);
 
@@ -343,6 +371,41 @@ export const ExperienceForm = () => {
             }
           : x
       )
+    );
+  };
+
+  const ExperienceFormButtons = () => {
+    const newExp = experience.map(({ id, ...rest }) => rest);
+    const handleClose = () => {
+      dispatch(editExperience(false));
+    };
+
+    const handleSubmit = () => {
+      console.log('Exp: ' + error);
+      if (!error) {
+        const userData = {
+          ...profile,
+          experience: newExp ? newExp : profile.experience,
+        };
+        dispatch(editProfile(userData));
+        handleClose();
+      } else {
+        dispatch(errorSnackbar('There was a problem saving changes.'));
+      }
+    };
+
+    return (
+      <div className={classes.editButtons}>
+        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button
+          className={classes.submit}
+          onClick={() => handleSubmit()}
+          type='submit'
+          variant='contained'
+        >
+          Save
+        </Button>
+      </div>
     );
   };
 
@@ -425,10 +488,7 @@ export const ExperienceForm = () => {
           );
         })}
       <Divider className={classes.divider} />
-      <EditFormButtons
-        action={editExperience(false)}
-        newExp={experience.map(({ id, ...rest }) => rest)}
-      />
+      <ExperienceFormButtons />
     </>
   );
 };
@@ -438,6 +498,7 @@ export const EducationForm = () => {
   const classes = useStyles();
   const user = useSelector((store) => store.user);
   const profile = user.profile;
+  const [error, setError] = useState(false);
 
   const [education, setEducation] = useState(
     Object.values(profile.education).filter((x) => x !== 'null')
@@ -456,14 +517,14 @@ export const EducationForm = () => {
 
   useEffect(() => {
     if (education.length > 0) {
-      dispatch(editEduError(false));
+      setError(false);
       education.forEach((x) => {
         if (x.title.length === 0) {
-          dispatch(editEduError(true));
+          setError(true);
         }
       });
     } else {
-      dispatch(editEduError(false));
+      setError(false);
     }
   }, [education]);
 
@@ -496,6 +557,41 @@ export const EducationForm = () => {
             }
           : x
       )
+    );
+  };
+
+  const EducationFormButtons = () => {
+    const newEdu = education.map(({ id, ...rest }) => rest);
+    const handleClose = () => {
+      dispatch(editEducation(false));
+    };
+
+    const handleSubmit = () => {
+      console.log('Edu: ' + error);
+      if (!error) {
+        const userData = {
+          ...profile,
+          education: newEdu ? newEdu : profile.education,
+        };
+        dispatch(editProfile(userData));
+        handleClose();
+      } else {
+        dispatch(errorSnackbar('There was a problem saving changes.'));
+      }
+    };
+
+    return (
+      <div className={classes.editButtons}>
+        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button
+          className={classes.submit}
+          onClick={() => handleSubmit()}
+          type='submit'
+          variant='contained'
+        >
+          Save
+        </Button>
+      </div>
     );
   };
 
@@ -578,10 +674,7 @@ export const EducationForm = () => {
           );
         })}
       <Divider className={classes.divider} />
-      <EditFormButtons
-        action={editEducation(false)}
-        newEdu={education.map(({ id, ...rest }) => rest)}
-      />
+      <EducationFormButtons />
     </>
   );
 };
@@ -591,6 +684,7 @@ export const AchievementForm = () => {
   const classes = useStyles();
   const user = useSelector((store) => store.user);
   const profile = user.profile;
+  const [error, setError] = useState(false);
 
   const [achievements, setAchievements] = useState(
     Object.values(profile.achievements).filter((x) => x !== 'null')
@@ -609,14 +703,14 @@ export const AchievementForm = () => {
 
   useEffect(() => {
     if (achievements.length > 0) {
-      dispatch(editAchvError(false));
+      setError(false);
       achievements.forEach((x) => {
         if (x.title.length === 0) {
-          dispatch(editAchvError(true));
+          setError(true);
         }
       });
     } else {
-      dispatch(editAchvError(false));
+      setError(false);
     }
   }, [achievements]);
 
@@ -647,6 +741,41 @@ export const AchievementForm = () => {
             }
           : x
       )
+    );
+  };
+
+  const AchievementFormButtons = () => {
+    const newAchv = achievements.map(({ id, ...rest }) => rest);
+    const handleClose = () => {
+      dispatch(editAchievements(false));
+    };
+
+    const handleSubmit = () => {
+      console.log('Achv: ' + error);
+      if (!error) {
+        const userData = {
+          ...profile,
+          achievements: newAchv ? newAchv : profile.achievements,
+        };
+        dispatch(editProfile(userData));
+        handleClose();
+      } else {
+        dispatch(errorSnackbar('There was a problem saving changes.'));
+      }
+    };
+
+    return (
+      <div className={classes.editButtons}>
+        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button
+          className={classes.submit}
+          onClick={() => handleSubmit()}
+          type='submit'
+          variant='contained'
+        >
+          Save
+        </Button>
+      </div>
     );
   };
 
@@ -700,10 +829,7 @@ export const AchievementForm = () => {
           );
         })}
       <Divider className={classes.divider} />
-      <EditFormButtons
-        action={editAchievements(false)}
-        newAchv={achievements.map(({ id, ...rest }) => rest)}
-      />
+      <AchievementFormButtons />
     </>
   );
 };

@@ -5,7 +5,6 @@ import {
   SET_EDUCATION_EDIT,
   SET_ACHIEVEMENTS_EDIT,
   SET_CLOSE_EDITS,
-  SET_EDIT_ERROR,
 } from '../types';
 
 export const editBasic = (open) => (dispatch) => {
@@ -45,16 +44,4 @@ export const editAchievements = (open) => (dispatch) => {
 
 export const closeEdits = () => (dispatch) => {
   dispatch({ type: SET_CLOSE_EDITS });
-};
-
-export const editExpError = (error) => (dispatch) => {
-  dispatch({ type: SET_EDIT_ERROR, expError: error });
-};
-
-export const editEduError = (error) => (dispatch) => {
-  dispatch({ type: SET_EDIT_ERROR, eduError: error });
-};
-
-export const editAchvError = (error) => (dispatch) => {
-  dispatch({ type: SET_EDIT_ERROR, achvError: error });
 };
