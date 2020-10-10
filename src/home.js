@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { Hidden, Card, CardMedia} from "@material-ui/core";
+import { Hidden, Card, CardMedia } from "@material-ui/core";
 import logo from './logo.png';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -11,6 +11,7 @@ import Zoom from '@material-ui/core/Zoom';
 import { ColorLensOutlined } from '@material-ui/icons';
 import flatOfficePic from './images/flatOffice.png';
 import projectLaptop from './images/projectLaptop.jpg';
+import Typical from 'react-typical'
 
 
 
@@ -19,182 +20,206 @@ import projectLaptop from './images/projectLaptop.jpg';
 
 
 const userStyles = makeStyles((theme) => ({
-  
+
     registerButton: {
-        color : '#192231',
-        borderColor : '#192231',
-       
+        color: theme.palette.primary.main,
+        borderColor: theme.palette.primary.main,
+        marginBottom : theme.spacing(2)
+
     },
     signInButton: {
-      backgroundColor : '#192231',
-      color : '#FFFFFF',
-      textTransform : 'none',
-      
+        backgroundColor: '#192231',
+        color: '#FFFFFF',
+        textTransform: 'none',
+
     },
-    centerImage : {
-      
-      minHeight: "100px",
-      minwidth: "100px",
-      
-      maxWidth : "300px",
-      maxHeight : "300px",
-      height : '250px',
-      weight : '250px'
-     
-   
+    centerImage: {
+
+        minHeight: "100px",
+        minwidth: "100px",
+
+        maxWidth: "300px",
+        maxHeight: "300px",
+        height: '250px',
+        weight: '250px'
+
+
     },
 
-    uploadPic : {
-      display: "flex",
-      justifyContent: "center", /* horizontally center */
-      alignItems: "center",    /* vertically center */
-      align : "center",
-      height: "410px",
-      alignContent: "center",
-      textAlign : "center",
+    uploadPic: {
+        display: "flex",
+        justifyContent: "center", /* horizontally center */
+        alignItems: "center",    /* vertically center */
+        align: "center",
+        height: "410px",
+        alignContent: "center",
+        textAlign: "center",
     },
 
-    typography : {
-      variant : "h3",
-      align : 'center',
+    typography: {
+        variant: "h3",
+        align: 'center',
     },
     paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
         color: theme.palette.text.primary,
-      },
-    media : {
-        height : 300,
     },
-  }));
+    media: {
+        height: 300,
+    },
+    steps: {
+        color: "#68C2E8"
+    },
+    stepsHeader: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(0),
 
-export default function HomePage () {
+    }
+}));
+
+export default function HomePage() {
     const classes = userStyles();
     const [checked] = React.useState(true);
 
 
     return (
-        
-    <div style={{ padding: 20 }}>
-        <Grid container direction = "column" spacing = "5" >  
-            <div style = {{ backgroundRepeat : "no-repeat", backgroundColor : "#D5D5D5"}}>
-            <Grid item container justify = "center">  
-                <Hidden only = {["xs", "sm"]}>
-                    <Grid item xs={2} />
-                </Hidden>
-                <Grid item xs={8}>
-                    <Grow in={checked}>    
-                            <Grid item container direction = "column" alignItems="center" justify = "space-evenly">
 
-                                <Grid item >
-                                    
-                                    <img src = {logo} alt = "logo.png" className = {classes.centerImage}/>
-                
-                                </Grid>
-                                
-                                <Grid item >
-                                    <Button variant = "outlined" size = "large" className  = {classes.registerButton} href = "/signup">Register YourSelf</Button>
-                                </Grid>
-                            </Grid> 
-                    </Grow>                
-                </Grid>
-                
-                <Hidden only = {["xs", "sm"]}>
-                    <Grid item xs={2} />
-                </Hidden>
+        <div style={{ padding: 20 }}>
+            <Grid container direction="column" spacing="5" >
+                <div style={{ }}>
+                    <Grid item container justify="center">
+                        <Hidden only={["xs", "sm"]}>
+                            <Grid item xs={2} />
+                        </Hidden>
+                        <Grid item container xs={8}>
 
-            </Grid>  
-            </div>  
-
-            <Grid item container justify = "center">
-                
-                <Hidden only = {["xs", "sm"]}>
-                    <Grid item xs={2} />
-                </Hidden>
-
-                <Grid item xs = {8} >
-                    <Grid item container spacing = {3}>
-                        <Hidden only = {["xs", "sm" ]}>
-                        
-                            <Grid item xs = {6} alignItems="center" justify="center" >
-                                <Zoom in = {checked}>
-                                <Card>
-                                    <CardMedia
-                                        className = {classes.media} 
-                                        image = {flatOfficePic} 
-                                        alt = "laptop" 
-                                        title = "laptopPicture" 
+                            <Grid item container xs={6}  justify="flex-start" alignItems="center">
+                                <h1 >
+                                    This is a creative area where anyone can{'  '}
+                                    <Typical
+                                        steps={['upload your projects', 500, 'look up other projects', 500, 'upload your CV', 500, 'write up a retorspective', 500]}
+                                        loop={Infinity}
+                                        className={classes.steps}
+                                        wrapper="b"
                                     />
-                                </Card> 
-                                </Zoom>
+                                </h1>
                             </Grid>
-                        </Hidden>
-                        <Grid item xs = {6} textAlign = "center">
-                            <Box display = "flex">
-                                <Box  m = "auto">
-                                    <Typography  variant =  "h3" align = 'center' >
-                                        Upload your Projects
-                                    </Typography>
-                                    <Typography align = 'center'>
-                                        Start uploading your projects so you can show it to the public with a professional manner. Have Control on how your project will look like and show the world what your really capable of! 
-                                    </Typography>
-                                </Box>
-                            </Box>
-                        </Grid>    
-                    </Grid>
-                    
-                </Grid>
 
-                <Hidden only = {["xs", "sm"]}>
-                    <Grid item xs={2} />
-                </Hidden>
-            </Grid>
+                            <Grid item xs={6}>
+                                <Grow in={checked}>
+                                    <Grid item container direction="column" alignItems="center" justify="space-evenly">
 
-            <Grid item container justify = "center">
-            
-                <Hidden only = {["xs", "sm"]}>
-                    <Grid item xs={2} />
-                </Hidden>
-                
-                <Grid item xs = {8}>
-                    <Grid item container spacing = {3}>
-                        <Grid item xs = {6} alignItems="center" justify="center" >
-                            <Box display = "flex" >
-                                <Box m = "auto">
-                                    <Typography  variant =  "h3" align = 'center' >
-                                        Look up your colleague's projects                         
-                                    </Typography>
-                                    <Typography align = 'center'>
-                                        Start uploading your projects so you can show it to the public with a professional manner. Have Control on how your project will look like and show the world what your really capable of! 
-                                    </Typography>
-                                </Box>
-                            </Box>
+                                        <Grid item >
+
+                                            <img src={logo} alt="logo.png" className={classes.centerImage} />
+
+                                        </Grid>
+
+                                       
+                                        
+                                    </Grid>
+                                </Grow >
+                            </Grid>
+
                         </Grid>
-                        <Hidden only = {["xs", "sm"]}>
-                        <Grid item xs = {6} textAlign = "center">
-                        <Zoom in = {checked}> 
-                            <Card>
-                                <CardMedia
-                                    className = {classes.media} 
-                                    image = {projectLaptop} 
-                                    alt = "laptop" 
-                                    title = "laptopPicture" 
-                                />
-                            </Card>
-                        </Zoom>
-                        </Grid>    
+
+                        <Hidden only={["xs", "sm"]}>
+                            <Grid item xs={2} />
                         </Hidden>
+
                     </Grid>
+                </div>
+
+                <Grid item container justify="center">
+
+                    <Hidden only={["xs", "sm"]}>
+                        <Grid item xs={2} />
+                    </Hidden>
+
+                    <Grid item xs={8} >
+                        <Grid item container spacing={3}>
+                            <Hidden only={["xs", "sm"]}>
+
+                                <Grid item xs={6} alignItems="center" justify="center" >
+                                    <Zoom in={checked}>
+                                        <Card>
+                                            <CardMedia
+                                                className={classes.media}
+                                                image={flatOfficePic}
+                                                alt="laptop"
+                                                title="laptopPicture"
+                                            />
+                                        </Card>
+                                    </Zoom>
+                                </Grid>
+                            </Hidden>
+                            <Grid item xs={6} textAlign="center">
+                                <Box display="flex">
+                                    <Box m="auto">
+                                        <Typography variant="h3" align='center' >
+                                            Upload your Projects
+                                    </Typography>
+                                        <Typography align='center'>
+                                            Start uploading your projects so you can show it to the public with a professional manner. Have Control on how your project will look like and show the world what your really capable of!
+                                    </Typography>
+                                    </Box>
+                                </Box>
+                            </Grid>
+                        </Grid>
+
+                    </Grid>
+
+                    <Hidden only={["xs", "sm"]}>
+                        <Grid item xs={2} />
+                    </Hidden>
                 </Grid>
 
-                <Hidden only = {["xs", "sm"]}>
-                    <Grid item xs={2} />
-                </Hidden>    
+                <Grid item container justify="center">
+
+                    <Hidden only={["xs", "sm"]}>
+                        <Grid item xs={2} />
+                    </Hidden>
+
+                    <Grid item xs={8}>
+                        <Grid item container spacing={3}>
+                            <Grid item xs={6} alignItems="center" justify="center" >
+                                <Box display="flex" >
+                                    <Box m="auto">
+                                        <Typography variant="h3" align='center' >
+                                            Look up your colleague's projects
+                                    </Typography>
+                                        <Typography align='center'>
+                                            Start uploading your projects so you can show it to the public with a professional manner. Have Control on how your project will look like and show the world what your really capable of!
+                                    </Typography>
+                                    </Box>
+                                </Box>
+                            </Grid>
+                            <Hidden only={["xs", "sm"]}>
+                                <Grid item xs={6} textAlign="center">
+                                    <Zoom in={checked}>
+                                        <Card>
+                                            <CardMedia
+                                                className={classes.media}
+                                                image={projectLaptop}
+                                                alt="laptop"
+                                                title="laptopPicture"
+                                            />
+                                        </Card>
+                                    </Zoom>
+                                </Grid>
+                            </Hidden>
+                        </Grid>
+                    </Grid>
+
+                    <Hidden only={["xs", "sm"]}>
+                        <Grid item xs={2} />
+                    </Hidden>
+
+                </Grid>
 
             </Grid>
-            
-        </Grid>
 
-    </div>
+        </div>
     );
 }

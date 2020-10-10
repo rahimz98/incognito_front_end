@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
         color: "#68C2E8",
     },
     typography: {
-        marginBottom: theme.spacing(2),    
+        marginBottom: theme.spacing(2),
     }
 }));
 
@@ -59,80 +59,80 @@ const CreateProject = () => {
 
     const postProject = (values) => {
         axios
-        .post('http://localhost:5000/api/project/create', values, {
-            headers: {
-              'Authorization': token
-            }
-        })
-        .then((res) => {
-            console.log("Project Created");
-            history.push(`/${user.id}`);
-        }) 
-        .catch((err) => {
-            console.log(err);
-        })
+            .post('http://localhost:5000/api/project/create', values, {
+                headers: {
+                    'Authorization': token
+                }
+            })
+            .then((res) => {
+                console.log("res", res);
+                history.push(`/${user.id}`);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
-    const FriendList = () => (
+    const FriendList = (collaborators) => (
         <div>
-          <Typography className = {classes.typography} variant = "h6">Add the project's collaborators</Typography>
-          <Formik
-            initialValues={{ collabList }}
-            onSubmit={values =>
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-              }, 500)
-            }
-            render={({ values }) => (
-              <Form>
-                <FieldArray
-                  name="collabList"
-                  render={arrayHelpers => (
-                    <div>
-                      {values.collabList && values.collabList.length > 0 ? (
-                        values.collabList.map((friend, index) => (
-                          <div key={index}>
-                            <Field component={TF} name={`collabList.${index}`} />
-                            <Button
-                              type="button"
-                              onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
-                            >
-                              -
+            <Typography className={classes.typography} variant="h6">Add the project's collaborators</Typography>
+            <Formik
+                initialValues={{ collaborators }}
+                onSubmit={values =>
+                    setTimeout(() => {
+                        alert(JSON.stringify(values, null, 2));
+                    }, 500)
+                }
+                render={({ values }) => (
+                    <Form>
+                        <FieldArray
+                            name="collaborators"
+                            render={arrayHelpers => (
+                                <div>
+                                    {values.collaborators && values.collaborators.length > 0 ? (
+                                        values.collaborators.map((friend, index) => (
+                                            <div key={index}>
+                                                <Field component={TF} name={`collaborators.${index}`} />
+                                                <Button
+                                                    type="button"
+                                                    onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                                                >
+                                                    -
                             </Button>
-                            <Button
-                              type="button"
-                              onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
-                            >
-                              +
+                                                <Button
+                                                    type="button"
+                                                    onClick={() => arrayHelpers.insert(index, '')} // insert an empty string at a position
+                                                >
+                                                    +
                             </Button>
-                          </div>
-                        ))
-                      ) : (
-                        <Button type="button" onClick={() => arrayHelpers.push('')}>
-                          {/* show this when user has removed all collaborators from the list */}
+                                            </div>
+                                        ))
+                                    ) : (
+                                            <Button type="button" onClick={() => arrayHelpers.push('')}>
+                                                {/* show this when user has removed all collaborators from the list */}
                           Add a Colloborator
-                        </Button>
-                      )}
-                      {console.log(values)}
-                      {setCollabList(values)}
-                      
-                    </div>
-                  )}
-                />
-              </Form>
-            )}
-          />
+                                            </Button>
+                                        )}
+                                    {console.log(values)}
+                                    {setCollabList(values)}
+
+                                </div>
+                            )}
+                        />
+                    </Form>
+                )}
+            />
         </div>
-      );
-    
+    );
+
 
     return (
         <>
             <Container maxWeidth="lg">
                 <Container maxWeidth="lg" >
                     <Grid Container justify="center" alignItems="center">
-                        <Box className = {classes.paper}>
-                        <Typography variant = "h3">Lets Create a Project</Typography>  
+                        <Box className={classes.paper}>
+                            <Typography variant="h3">Lets Create a Project</Typography>
                         </Box>
                     </Grid>
                 </Container>
@@ -150,49 +150,47 @@ const CreateProject = () => {
                                 console.log(collabList);
                                 values.collaborators = Object.assign(values.collaborators, collabList);
                                 console.log('values: ', values);
-                                
+
                                 postProject(values);
+                                //alert(JSON.stringify(values, null, 2));
                             }}>
+
 
                             <FormikStep label="Project Name">
                                 <Box paddingBottom={2}>
                                     <Field fullWidth name="name" component={TF} label="Name Of Project" />
                                 </Box>
+                            </FormikStep>
 
+                            <FormikStep label="Project Visibility">
                                 <Box paddingBottom={2}>
-                                    <MUTextField
-                                        id="visibility"
-                                        select
+                                    <Field
                                         fullWidth
-                                        label="Visibility"
-                                        value={visible}
-                                        onChange={handleChange}
+                                        component={TF}
+                                        type="text"
+                                        name="visibility"
+                                        select
+                                        variant="standard"
                                         helperText="Please Select whether you want this project to be public or private"
+                                        margin="normal"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
                                     >
                                         {visibility.map((option) => (
                                             <MenuItem key={option.value} value={option.value}>
                                                 {option.label}
                                             </MenuItem>
                                         ))}
-                                    </MUTextField>
+                                    </Field>
                                 </Box>
                             </FormikStep>
 
-                            <FormikStep label="Project Description"
-                                validationSchema={object({
-                                    description: string()
-                                        .required("A description is Required"),
-                                })}>
+
+                            <FormikStep label="Project Description" >
                                 <Box paddingBottom={2}>
                                     <Field fullWidth name="description" component={TF} label="Project Description" />
-                                </Box>
-                            </FormikStep>
 
-
-                            <FormikStep label="Project Colloborators">
-                                <Box paddingBottom={2}>
-                                    {FriendList()}
-                                    
                                 </Box>
                             </FormikStep>
 

@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useParams, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
@@ -26,7 +26,7 @@ import { CustomThemeContext } from './themes/CustomThemeProvider';
 import Search from './search';
 import history from './history';
 import { getUserProfile, logout } from './actions/user';
-import logoName from './logoName.png'; 
+import logoName from './logoName.png';
 import Button from '@material-ui/core/Button';
 import logInPic from './images/logInPic.png';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -36,6 +36,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { ButtonGroup, useScrollTrigger } from "@material-ui/core";
 import HomeIcon from '@material-ui/icons/Home';
+import Tooltip from '@material-ui/core/Tooltip';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from '@material-ui/core/Fab';
 
 const drawerWidth = 240;
 
@@ -124,8 +127,8 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 0,
   },
   signInButton: {
-    backgroundColor : '#2D3E50',
-    color : '#FFFFFF',
+    backgroundColor: '#2D3E50',
+    color: '#FFFFFF',
   },
   icon: {
     verticalAlign: 'middle',
@@ -150,14 +153,14 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   logoutButton: {
-    backgroundColor : theme.palette.primary.button,
-  color : '#FFFFFF',
+    backgroundColor: theme.palette.primary.button,
+    color: '#FFFFFF',
   },
-  creatProjectButton : {
-    //marginLeft : theme.spacing(2),
-  }, 
-  homeIcon: {
-    marginRight : theme.spacing(4),
+  creatProjectButton: {
+    marginRight: theme.spacing(2)
+  },
+  fab: {
+    marginRight: theme.spacing(2)
   }
 }));
 
@@ -192,22 +195,22 @@ const PersistentDrawerLeft = () => {
     setOpen(true);
     console.log("getting the list of projects");
     //useEffect(() => {
-      const token = localStorage.getItem("jwt");
-      axios
-        .get(`http://localhost:5000/api/project/get-project-list`,{
-          headers: {
-            'Authorization': token
-          }
-        })
-        .then(res => {
-          console.log(res);
-          console.log("Hello world");
-          setProjectList(res.data);
-        })
+    const token = localStorage.getItem("jwt");
+    axios
+      .get(`http://localhost:5000/api/project/get-project-list`, {
+        headers: {
+          'Authorization': token
+        }
+      })
+      .then(res => {
+        console.log(res);
+        console.log("Hello world");
+        setProjectList(res.data);
+      })
     //})
-    
 
-    
+
+
   };
 
   const handleDrawerClose = () => {
@@ -282,37 +285,37 @@ const PersistentDrawerLeft = () => {
       </MenuItem>
     </Menu>
   ) : (
-    <Menu
-      anchorEl={dropdownAnchorE1}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isDropdownOpen}
-      onClose={handleDropdownClose}
-    >
-      <MenuItem onClick={handleLogin}>
-        <ExitToAppIcon className={classes.icon} fontSize='small' />
-        <Typography variant='body2'>Login</Typography>
-      </MenuItem>
-      <MenuItem onClick={handleRegister}>
-        <AddCircleOutlineIcon className={classes.icon} fontSize='small' />
-        <Typography variant='body2'>Register</Typography>
-      </MenuItem>
-      <Divider />
-      <MenuItem>
-        <Brightness4Icon className={classes.icon} fontSize='small' />
-        <Typography variant='body2'>Dark theme</Typography>
-        <FormControlLabel
-          control={
-            <SwitchUI
-              checked={isDark}
-              onChange={handleThemeChange}
-              className={classes.switch}
-            />
-          }
-        />
-      </MenuItem>
-    </Menu>
-  );
+      <Menu
+        anchorEl={dropdownAnchorE1}
+        keepMounted
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isDropdownOpen}
+        onClose={handleDropdownClose}
+      >
+        <MenuItem onClick={handleLogin}>
+          <ExitToAppIcon className={classes.icon} fontSize='small' />
+          <Typography variant='body2'>Login</Typography>
+        </MenuItem>
+        <MenuItem onClick={handleRegister}>
+          <AddCircleOutlineIcon className={classes.icon} fontSize='small' />
+          <Typography variant='body2'>Register</Typography>
+        </MenuItem>
+        <Divider />
+        <MenuItem>
+          <Brightness4Icon className={classes.icon} fontSize='small' />
+          <Typography variant='body2'>Dark theme</Typography>
+          <FormControlLabel
+            control={
+              <SwitchUI
+                checked={isDark}
+                onChange={handleThemeChange}
+                className={classes.switch}
+              />
+            }
+          />
+        </MenuItem>
+      </Menu>
+    );
 
   const vistorDrawer = (
     <Drawer
@@ -329,8 +332,8 @@ const PersistentDrawerLeft = () => {
           {theme.direction === 'ltr' ? (
             <ChevronLeftIcon />
           ) : (
-            <ChevronRightIcon />
-          )}
+              <ChevronRightIcon />
+            )}
         </IconButton>
       </div>
       <Divider />
@@ -343,44 +346,59 @@ const PersistentDrawerLeft = () => {
 
   const authDrawer = (
     <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
+      className={classes.drawer}
+      variant="persistent"
+      anchor="left"
+      open={open}
+      classes={{
+        paper: classes.drawerPaper
+      }}
+    >
+
+      <div className={classes.drawerHeader}>
+        <IconButton onClick={handleDrawerClose}>
+          {theme.direction === "ltr" ? (
+            <ChevronLeftIcon />
+          ) : (
               <ChevronRightIcon />
             )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {Object.entries(projectList).map(([key, index]) => ( key != 'null' ? (
-            <ListItem button key={index} onClick = {() => {history.push(`/${user.id}/${key}`)}}  >
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary={index} />
-            </ListItem>
-          ) : <Divider />))}
-        </List>
-        
-        
-        <List>
-            <ListItem >
-              <ButtonGroup variant = "text" aria-label = "text primary button group"> 
-                <HomeIcon className = {classes.HomeIcon} fontSize = "large" onClick = {() => {history.push(`/${user.id}`)}} />
-                <Button className ={classes.creatProjectButton} size = "large" onClick = {() => {history.push(`/${user.id}/createProject`)}}>Create Project</Button>
-              </ButtonGroup>
-            </ListItem>
-        </List> 
+        </IconButton>
+      </div>
+      <Divider />
+      <List>
+        <ListItem>
+          <Tooltip title="Home" aria-label="add" onClick={() => { history.push(`/${user.id}`) }}>
+            <Fab color="primary" className={classes.fab}>
+              <HomeIcon className={classes.HomeIcon} />
+            </Fab>
+          </Tooltip>
+        <h3>Home</h3>
+        </ListItem>
+      </List>
+      <Divider />
+      <List>
+        {Object.entries(projectList).map(([key, index]) => (key != 'null' ? (
+          <ListItem button key={index} onClick={() => { history.push(`/${user.id}/${key}`) }}  >
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary={index} />
+          </ListItem>
+        ) : <Divider />))}
+      </List>
+
+
+      <List>
+        <ListItem >
+
+          <Tooltip title="Create project" className={classes.creatProjectButton} aria-label="add" onClick={() => { history.push(`/${user.id}/createProject`) }}>
+            <Fab color="primary" >
+              <AddIcon />
+            </Fab>
+          </Tooltip>
+          <h3>Create Project</h3>
+        </ListItem>
+      </List>
     </Drawer>
   );
 

@@ -20,6 +20,11 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 
@@ -109,6 +114,7 @@ const EditProject = (props) => {
     const classes = useStyles();
     const user = useSelector(store => store.user);
     const userId = user.id;
+    const [open, setOpen] = React.useState(false);
 
     const blogContent = {
         projectId: `${projectid}`,
@@ -119,6 +125,15 @@ const EditProject = (props) => {
         projectId: `${projectid}`,
         editProject: `${project.project}`,
     }
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
 
 
 
@@ -193,21 +208,21 @@ const EditProject = (props) => {
     const deleteProject = () => {
         const token = localStorage.getItem("jwt");
         axios
-        .get(`http://localhost:5000/api/project/delete/${projectid}`, {
-            headers: {
-                'Authorization': token
-            }
-        })
-        .then((res) => {
-            console.log("res:", res);
-            console.log("Project Deleted");
-            setTimeout(() => {
-                history.push(`/${user.id}`);
-            }, 1000);
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+            .get(`http://localhost:5000/api/project/delete/${projectid}`, {
+                headers: {
+                    'Authorization': token
+                }
+            })
+            .then((res) => {
+                console.log("res:", res);
+                console.log("Project Deleted");
+                setTimeout(() => {
+                    history.push(`/${user.id}`);
+                }, 1000);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
 
@@ -393,14 +408,6 @@ const EditProject = (props) => {
                                                 </Grid>
                                             </Grid>
 
-                                            {/*
-                                            <Field
-                                                name='project'
-                                                label='Project'
-                                                type='html'
-                                                component={TextField}
-                                            />
-                                            */}
                                             <Paper className={classes.project} elevation={1}>
                                                 <Typography>Project</Typography>
                                                 <ReactQuill
@@ -415,6 +422,38 @@ const EditProject = (props) => {
                                             <Grid container justify="space-between">
                                                 <Grid item>
                                                     <Button
+                                                        startIcon={<DeleteIcon />}
+                                                        variant="contained"
+                                                        className={classes.delete}
+                                                        onClick={deleteProject}
+                                                        onClick={handleClickOpen}
+                                                    >
+                                                        Delete project
+                                                    </Button>
+                                                    <Dialog
+                                                        open={open}
+                                                        onClose={handleClose}
+                                                        aria-labelledby="alert-dialog-title"
+                                                        aria-describedby="alert-dialog-description"
+                                                    >
+                                                        <DialogTitle id="alert-dialog-title">{"Delete This Project"}</DialogTitle>
+                                                        <DialogContent>
+                                                            <DialogContentText id="alert-dialog-description">
+                                                                If you delete this project, there will be no way to recover this project and it will be deleted forever.
+                                                            </DialogContentText>
+                                                        </DialogContent>
+                                                        <DialogActions>
+                                                            <Button onClick={handleClose} color="primary" variant="b">
+                                                                Disagree
+                                                            </Button>
+                                                            <Button onClick={deleteProject} color="primary" variant="b" autoFocus>
+                                                                Agree
+                                                            </Button>
+                                                        </DialogActions>
+                                                    </Dialog>
+                                                </Grid>
+                                                <Grid item>
+                                                    <Button
                                                         variant='contained'
                                                         color='primary'
                                                         disabled={isSubmitting}
@@ -424,16 +463,7 @@ const EditProject = (props) => {
                                                     >
                                                         Submit
                                                 </Button>
-                                                </Grid>
-                                                <Grid item>
-                                                    <Button
-                                                        startIcon={<DeleteIcon />}
-                                                        variant="contained"
-                                                        className={classes.delete}
-                                                        onClick={deleteProject}
-                                                    >
-                                                        Delete project
-                                                    </Button>
+
                                                 </Grid>
                                             </Grid>
 
