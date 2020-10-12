@@ -19,6 +19,7 @@ import SignUp from './signUp';
 import HomePage from './home.js';
 import Profile from './profile';
 import NotFound from './notFound';
+import aboutUs from './aboutUs';
 import SearchPage from './searchPage.js';
 import Project from './projects';
 import CreateProject from './createProject';
@@ -64,10 +65,10 @@ function App() {
               <Route exact path='/login' component={Login}/>
               <Route exact path='/signup' component={SignUp}/> 
               <Route exact path='/search' component={SearchPage} />
+              <Route exact path='/aboutUs' component={aboutUs}/>
               <Route exact path='/:id' component={Profile}/>
               <Route exact path='/:id/createProject' component={CreateProject}/>
               <Route exact path='/:id/:projectid' component={Project}/>
-              
               <Route exact path='/:id/:projectid/edit' component={EditProject}/>
               <Route path='*' component={NotFound} />
             </Switch>
