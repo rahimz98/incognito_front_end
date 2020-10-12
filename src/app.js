@@ -65,10 +65,10 @@ function App() {
               <Route exact path='/login' component={Login}/>
               <Route exact path='/signup' component={SignUp}/> 
               <Route exact path='/search' component={SearchPage} />
+              <Route exact path='/aboutUs' component={aboutUs}/>
               <Route exact path='/:id' component={Profile}/>
               <Route exact path='/:id/createProject' component={CreateProject}/>
               <Route exact path='/:id/:projectid' component={Project}/>
-              <Route exact path='/aboutUs' component={aboutUs}/>
               <Route exact path='/:id/:projectid/edit' component={EditProject}/>
               <Route path='*' component={NotFound} />
             </Switch>
