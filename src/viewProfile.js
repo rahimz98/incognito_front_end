@@ -22,6 +22,7 @@ import Typography from '@material-ui/core/Typography';
 import EmailOutlinedIcon from '@material-ui/icons/EmailOutlined';
 import PhoneOutlinedIcon from '@material-ui/icons/PhoneOutlined';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -118,6 +119,12 @@ const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(0.5),
       },
     },
+  },
+  loadingBase: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '250px',
   },
 }));
 
@@ -360,7 +367,15 @@ const ViewProfile = (props) => {
   return (
     <>
       {profile === null ? (
-        <>{found ? <Typography>Loading...</Typography> : <NotFound />}</>
+        <>
+          {found ? (
+            <div className={classes.loadingBase}>
+              <CircularProgress />
+            </div>
+          ) : (
+            <NotFound />
+          )}
+        </>
       ) : (
         <>
           <Container>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import history from './history';
-import { getSearchResult } from './actions/search';
+import { getSearchResult, clearSearchResult } from './actions/search';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
@@ -59,6 +59,7 @@ function Search() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (query) {
+      dispatch(clearSearchResult());
       dispatch(getSearchResult(query));
       history.push(`/search?q=${query}`);
     }

@@ -1,4 +1,4 @@
-import { SET_SEARCH_RESULT } from '../types';
+import { SET_SEARCH_RESULT, CLEAR_SEARCH_RESULT } from '../types';
 
 export const initialState = {
   results: {},
@@ -11,6 +11,8 @@ const search = (state = initialState, action) => {
         ...state,
         results: action.payload,
       };
+    case CLEAR_SEARCH_RESULT:
+      return initialState;
     default:
       return state;
   }

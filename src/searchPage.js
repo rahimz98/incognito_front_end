@@ -9,10 +9,12 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Container from '@material-ui/core/Container';
 import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
+import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
 import ScheduleIcon from '@material-ui/icons/Schedule';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // import mockData from './mockData';
 
@@ -79,6 +81,12 @@ const useStyles = makeStyles((theme) => ({
   },
   noResults: {
     marginTop: theme.spacing(3),
+  },
+  loadingBase: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '200px',
   },
 }));
 
@@ -200,7 +208,9 @@ const SearchPage = () => {
       </Tabs>
       <Divider />
       {userResults === null || projectResults == null ? (
-        <Typography>Loading...</Typography>
+        <div className={classes.loadingBase}>
+          <CircularProgress />
+        </div>
       ) : (
         <>
           {userResults.length > 0 ? (
