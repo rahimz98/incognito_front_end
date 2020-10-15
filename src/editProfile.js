@@ -15,6 +15,11 @@ import { errorSnackbar } from './actions/snackbar';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogActions from '@material-ui/core/DialogActions';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -105,6 +110,7 @@ export const BasicForm = () => {
   const classes = useStyles();
   const user = useSelector((store) => store.user);
   const profile = user.profile;
+  const [open, setOpen] = useState(false);
 
   const [basic, setBasic] = useState({
     name: profile.name,
@@ -161,6 +167,19 @@ export const BasicForm = () => {
         </Button>
       </div>
     );
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteResume());
+    setOpen(false);
   };
 
   return (
@@ -220,12 +239,31 @@ export const BasicForm = () => {
             <div className={classes.resume}>
               <DescriptionOutlinedIcon className={classes.icon} />
               <ViewResume />
-              <IconButton
-                className='binIcon'
-                onClick={() => dispatch(deleteResume())}
-              >
+              <IconButton className='binIcon' onClick={handleClickOpen}>
                 <DeleteOutlineIcon fontSize='small' />
               </IconButton>
+              <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Delete resume/CV</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    If you delete this resume, there will be no way to recover
+                    this resume and it will be deleted forever.
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} color='primary' variant='b'>
+                    Disagree
+                  </Button>
+                  <Button
+                    onClick={handleDelete}
+                    color='primary'
+                    variant='b'
+                    autoFocus
+                  >
+                    Agree
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           </Grid>
         ) : (
