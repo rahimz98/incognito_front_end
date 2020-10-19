@@ -1,13 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
-import {Collapse, Fade, Hidden, Grid, Typography, makeStyles, Card, CardActions, CardMedia, CardContent, Paper, Button} from '@material-ui/core/';
+import {Collapse, Fade, Hidden, Grid, Typography, makeStyles, Card,  CardMedia, CardContent, } from '@material-ui/core/';
 import vision from './spg.svg';
 import zil from './Zille.JPG';
 import faris from './Faris.png';
 import gstar from './Gstar.png';
 import jason from './Jason.jpeg';
 import marcus from  './Marcus.jpeg';
-import { Translate } from '@material-ui/icons';
 
 
 const useStyles = makeStyles((theme) => ({

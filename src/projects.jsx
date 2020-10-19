@@ -1,5 +1,5 @@
-import React, { useEffect, useState, setState } from 'react';
-import { Grid, Paper, makeStyles, Typography, Button, Box, Container } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Grid,  makeStyles } from '@material-ui/core';
 import ProjectContent from './projectContent.jsx';
 import axios from 'axios';
 import ProjectHeading from './projectHeading.jsx';

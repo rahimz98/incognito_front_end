@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import { Card, CardContent, Container, MenuItem, Typography, TextField as MUTextField, Button, Box, Stepper, Step, StepLabel, makeStyles, CircularProgress, Paper, Grid } from '@material-ui/core';
+import { Card, CardContent, Container, MenuItem, Typography, Button, Box, Stepper, Step, StepLabel, makeStyles, CircularProgress,  Grid } from '@material-ui/core';
 import { Form, Formik, Field, FieldArray } from "formik";
 import { TextField as TF } from 'formik-material-ui';
-import { object, mixed, number, string } from "yup";
-import CreateProjectPic from './images/CreateProjectPic.png';
 import axios from "axios";
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import history from './history';
-import { render } from "@testing-library/react";
 
 
 
