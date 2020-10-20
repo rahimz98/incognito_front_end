@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Grid,  makeStyles } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import ProjectContent from './projectContent.jsx';
 import axios from 'axios';
 import ProjectHeading from './projectHeading.jsx';
-//Dummy API
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +33,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const PrivateProject = () => {
+    return (
+        <>
+            <h1>This is a Private Project. You do not have premision to view it</h1>
+        </>
+    )
+}
+
+
 
 
 const Project = () => {
@@ -40,6 +49,8 @@ const Project = () => {
     const { projectid } = useParams();
     const [project, setProject] = useState({});
     console.log("ProjectID id is " + projectid);
+    const user = useSelector(store => store.user);
+
 
 
     useEffect(() => {
@@ -57,25 +68,45 @@ const Project = () => {
             })
     }, [projectid]);
 
-
     return (
         <div className={classes.root}>
             <Grid container>
                 <Grid item xs={1} />
                 <Grid item xs={10}>
-                    <Grid item container direction="column" spacing={2} >
-                        <Grid item />
-                        <Grid item container spacing={1}>
-                            <Grid item xs={12} >
-                                <ProjectHeading content={project} projectId={projectid} />
+                    {project.visibility == "Private" ?
+                        (project.ownerId === user.id ?
+                            <Grid item container direction="column" spacing={2} >
+                                {console.log("access granted")}
+                                <Grid item />
+                                <Grid item container spacing={1}>
+                                    <Grid item xs={12} >
+                                        <ProjectHeading content={project} projectId={projectid} />
 
+                                    </Grid>
+                                </Grid>
+
+                                <Grid item container >
+                                    <ProjectContent content={project} projectId={projectid} />
+                                </Grid>
+                            </Grid>
+                            :
+                            PrivateProject()
+                        )
+                        :
+                        <Grid item container direction="column" spacing={2} >
+                            <Grid item />
+                            <Grid item container spacing={1}>
+                                <Grid item xs={12} >
+                                    <ProjectHeading content={project} projectId={projectid} />
+
+                                </Grid>
+                            </Grid>
+
+                            <Grid item container >
+                                <ProjectContent content={project} projectId={projectid} />
                             </Grid>
                         </Grid>
-
-                        <Grid item container >
-                            <ProjectContent content={project} projectId = {projectid} />
-                        </Grid>
-                    </Grid>
+                    }
                 </Grid>
                 <Grid item xs={1} />
             </Grid>

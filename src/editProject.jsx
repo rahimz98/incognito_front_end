@@ -249,7 +249,7 @@ const EditProject = (props) => {
                                     onSubmit={(values, { setSubmitting }) => {
 
                                         setSubmitting(false);
-                                        console.log(projectid);
+                                        console.log(values);
                                         sendProject(values);
 
                                     }}
