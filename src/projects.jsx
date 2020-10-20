@@ -64,6 +64,7 @@ const Project = () => {
                 <Grid item xs={1} />
                 <Grid item xs={10}>
                     <Grid item container direction="column" spacing={2} >
+                        {console.log("hello world")}
                         <Grid item />
                         <Grid item container spacing={1}>
                             <Grid item xs={12} >
