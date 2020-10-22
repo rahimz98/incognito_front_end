@@ -74,6 +74,7 @@ export const uploadImage = (imageData) => (dispatch) => {
     .post('https://memento-backend.herokuapp.com/about/uploadImage', imageData, {
       headers: {
         Authorization: token,
+        "Access-Control-Allow-Origin": "*"
       },
     })
     .then((res) => {
