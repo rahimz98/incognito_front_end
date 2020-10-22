@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 const PrivateProject = () => {
     return (
         <>
-            <h1>This is a Private Project. You do not have premision to view it</h1>
+            <h1>This Project is either Private or it does not exist</h1>
         </>
     )
 }
@@ -63,7 +63,7 @@ const Project = () => {
                 }
             })
             .then(res => {
-                console.log(typeof (res));
+                console.log("res:",res);
                 setProject(res.data);
             })
     }, [projectid]);
@@ -73,26 +73,7 @@ const Project = () => {
             <Grid container>
                 <Grid item xs={1} />
                 <Grid item xs={10}>
-                    {project.visibility == "Private" ?
-                        (project.ownerId === user.id ?
-                            <Grid item container direction="column" spacing={2} >
-                                {console.log("access granted")}
-                                <Grid item />
-                                <Grid item container spacing={1}>
-                                    <Grid item xs={12} >
-                                        <ProjectHeading content={project} projectId={projectid} />
-
-                                    </Grid>
-                                </Grid>
-
-                                <Grid item container >
-                                    <ProjectContent content={project} projectId={projectid} />
-                                </Grid>
-                            </Grid>
-                            :
-                            PrivateProject()
-                        )
-                        :
+                    {project ?
                         <Grid item container direction="column" spacing={2} >
                             <Grid item />
                             <Grid item container spacing={1}>
@@ -106,6 +87,8 @@ const Project = () => {
                                 <ProjectContent content={project} projectId={projectid} />
                             </Grid>
                         </Grid>
+                        :
+                        <PrivateProject />
                     }
                 </Grid>
                 <Grid item xs={1} />
