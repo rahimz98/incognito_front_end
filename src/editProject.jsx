@@ -10,7 +10,6 @@ import {
     MenuItem,
     Typography,
 } from '@material-ui/core';
-import MuiTextField from '@material-ui/core/TextField';
 import {
     TextField,
 } from 'formik-material-ui';
@@ -28,33 +27,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 
 
-
-{/*
-edit project page will contain:
-name, 
-description, 
-visibility, 
-owner, 
-collaborators, 
-project, 
-blog, 
-media, 
-mainImage, 
-links
-*/ }
-
-
 const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
-        //textAlign: 'center',
         color: theme.palette.text.secondary,
         elevation: 0,
         marginBottom: theme.spacing(2),
     },
     project: {
         padding: theme.spacing(2),
-        //textAlign: 'center',
         color: theme.palette.text.primary,
         elevation: 0,
         marginBottom: theme.spacing(2),
@@ -74,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     submit: {
-        //flexGrow : 1
     }
 
 
@@ -113,7 +93,6 @@ const EditProject = (props) => {
     const { projectid } = useParams();
     const classes = useStyles();
     const user = useSelector(store => store.user);
-    const userId = user.id;
     const [open, setOpen] = React.useState(false);
 
     const blogContent = {

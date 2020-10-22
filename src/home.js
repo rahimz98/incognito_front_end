@@ -3,12 +3,10 @@ import Grid from '@material-ui/core/Grid';
 import { Hidden, Card, CardMedia } from "@material-ui/core";
 import logo from './logo.png';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grow from '@material-ui/core/Grow';
 import Zoom from '@material-ui/core/Zoom';
-import { ColorLensOutlined } from '@material-ui/icons';
 import flatOfficePic from './images/flatOffice.png';
 import projectLaptop from './images/projectLaptop.jpg';
 import Typical from 'react-typical'

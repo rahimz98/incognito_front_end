@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Grid, Paper, makeStyles, Typography, Button, Box, Container, Divider, List, ListItem, ListItemText } from '@material-ui/core';
+import React from 'react';
+import { Grid, Paper, makeStyles, Typography, Button, Divider, List, ListItem} from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import history from './history';
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -82,7 +82,6 @@ export default function Content(props) {
     }
 
     const blogPrint = () => {
-        let blog = content.blog;
         if (content.blog) {
             return (
                 <>
