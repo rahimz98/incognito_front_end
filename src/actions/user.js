@@ -14,7 +14,7 @@ export const deleteResume = () => (dispatch) => {
   const token = localStorage.getItem('jwt');
   const body = {};
   axios
-    .post('http://localhost:5000/about/deleteResume', body, {
+    .post('https://memento-backend.herokuapp.com/about/deleteResume', body, {
       headers: {
         Authorization: token,
       },
@@ -33,7 +33,7 @@ export const deleteResume = () => (dispatch) => {
 export const uploadResume = (fileData) => (dispatch) => {
   const token = localStorage.getItem('jwt');
   axios
-    .post('http://localhost:5000/about/uploadResume', fileData, {
+    .post('https://memento-backend.herokuapp.com/about/uploadResume', fileData, {
       headers: {
         Authorization: token,
       },
@@ -55,7 +55,7 @@ export const uploadResume = (fileData) => (dispatch) => {
 export const editProfile = (userData) => (dispatch) => {
   const token = localStorage.getItem('jwt');
   axios
-    .post('http://localhost:5000/about/updateContact', userData, {
+    .post('https://memento-backend.herokuapp.com/about/updateContact', userData, {
       headers: {
         Authorization: token,
       },
@@ -71,7 +71,7 @@ export const editProfile = (userData) => (dispatch) => {
 export const uploadImage = (imageData) => (dispatch) => {
   const token = localStorage.getItem('jwt');
   axios
-    .post('http://localhost:5000/about/uploadImage', imageData, {
+    .post('https://memento-backend.herokuapp.com/about/uploadImage', imageData, {
       headers: {
         Authorization: token,
       },
@@ -95,7 +95,7 @@ export const uploadImage = (imageData) => (dispatch) => {
 export const getResume = () => (dispatch) => {
   const token = localStorage.getItem('jwt');
   axios
-    .get('http://localhost:5000/about/getResume', {
+    .get('https://memento-backend.herokuapp.com/about/getResume', {
       headers: {
         Authorization: token,
       },
@@ -114,7 +114,7 @@ export const getResume = () => (dispatch) => {
 export const getUserProfile = () => (dispatch) => {
   const token = localStorage.getItem('jwt');
   axios
-    .get('http://localhost:5000/about/getContact', {
+    .get('https://memento-backend.herokuapp.com/about/getContact', {
       headers: {
         Authorization: token,
       },
@@ -135,7 +135,7 @@ export const getUserProfile = () => (dispatch) => {
 export const getProfilePic = () => (dispatch) => {
   const token = localStorage.getItem('jwt');
   axios
-    .get('http://localhost:5000/about/getProfilePic', {
+    .get('https://memento-backend.herokuapp.com/about/getProfilePic', {
       headers: {
         Authorization: token,
       },
@@ -155,7 +155,7 @@ export const logout = () => (dispatch) => {
   const token = localStorage.getItem('jwt');
   const body = {};
   axios
-    .post('http://localhost:5000/api/users/logOutUser', body, {
+    .post('https://memento-backend.herokuapp.com/api/users/logOutUser', body, {
       headers: {
         Authorization: token,
       },
@@ -175,7 +175,7 @@ export const logout = () => (dispatch) => {
 
 export const createUser = (user) => (dispatch) => {
   axios
-    .post('http://localhost:5000/api/users/createUser', user)
+    .post('https://memento-backend.herokuapp.com/api/users/createUser', user)
     .then((res) => {
       dispatch(successSnackbar(res.data.message));
       history.push('/login');
@@ -187,7 +187,7 @@ export const createUser = (user) => (dispatch) => {
 
 export const loginUser = (user) => (dispatch) => {
   axios
-    .post('http://localhost:5000/api/users/loginUser', user)
+    .post('https://memento-backend.herokuapp.com/api/users/loginUser', user)
     .then((res) => {
       if (res.data.login) {
         localStorage.setItem('jwt', res.data['auth-token']);
