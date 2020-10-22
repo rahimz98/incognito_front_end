@@ -156,8 +156,11 @@ export const BasicForm = () => {
 
     return (
       <div className={classes.editButtons}>
-        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button aria-label='cancelBasic' onClick={() => handleClose()}>
+          Cancel
+        </Button>
         <Button
+          aria-label='saveBasic'
           className={classes.submit}
           onClick={() => handleSubmit()}
           type='submit'
@@ -309,8 +312,11 @@ export const BioForm = () => {
 
     return (
       <div className={classes.editButtons}>
-        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button aria-label='cancelBio' onClick={() => handleClose()}>
+          Cancel
+        </Button>
         <Button
+          aria-label='saveBio'
           className={classes.submit}
           onClick={() => handleSubmit()}
           type='submit'
@@ -419,7 +425,6 @@ export const ExperienceForm = () => {
     };
 
     const handleSubmit = () => {
-      console.log('Exp: ' + error);
       if (!error) {
         const userData = {
           ...profile,
@@ -434,8 +439,11 @@ export const ExperienceForm = () => {
 
     return (
       <div className={classes.editButtons}>
-        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button aria-label='cancelExp' onClick={() => handleClose()}>
+          Cancel
+        </Button>
         <Button
+          aria-label='saveExp'
           className={classes.submit}
           onClick={() => handleSubmit()}
           type='submit'
@@ -605,7 +613,6 @@ export const EducationForm = () => {
     };
 
     const handleSubmit = () => {
-      console.log('Edu: ' + error);
       if (!error) {
         const userData = {
           ...profile,
@@ -620,8 +627,11 @@ export const EducationForm = () => {
 
     return (
       <div className={classes.editButtons}>
-        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button aria-label='cancelEdu' onClick={() => handleClose()}>
+          Cancel
+        </Button>
         <Button
+          aria-label='saveEdu'
           className={classes.submit}
           onClick={() => handleSubmit()}
           type='submit'
@@ -789,7 +799,6 @@ export const AchievementForm = () => {
     };
 
     const handleSubmit = () => {
-      console.log('Achv: ' + error);
       if (!error) {
         const userData = {
           ...profile,
@@ -804,8 +813,11 @@ export const AchievementForm = () => {
 
     return (
       <div className={classes.editButtons}>
-        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button aria-label='cancelAchv' onClick={() => handleClose()}>
+          Cancel
+        </Button>
         <Button
+          aria-label='saveAchv'
           className={classes.submit}
           onClick={() => handleSubmit()}
           type='submit'

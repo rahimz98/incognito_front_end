@@ -128,7 +128,7 @@ const PeopleTab = (props) => {
           <Divider />
         </>
       ) : (
-        <Typography className={classes.noResults}>
+        <Typography className={classes.noResults} data-testid='peopleNoResults'>
           No results were found. Try searching something else.
         </Typography>
       )}
@@ -174,7 +174,10 @@ const ProjectTab = (props) => {
           <Divider />
         </>
       ) : (
-        <Typography className={classes.noResults}>
+        <Typography
+          className={classes.noResults}
+          data-testid='projectsNoResults'
+        >
           No results were found. Try searching something else.
         </Typography>
       )}

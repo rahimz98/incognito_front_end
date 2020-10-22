@@ -237,12 +237,6 @@ const Profile = () => {
     dispatch(uploadImage(formData));
   };
 
-  const EditIcon = (action) => (
-    <IconButton onClick={() => handleOpen(action)}>
-      <EditOutlinedIcon fontSize='small' />
-    </IconButton>
-  );
-
   return (
     <>
       {token === null || parseInt(id) !== user.id ? (
@@ -344,6 +338,7 @@ const Profile = () => {
                       <IconButton
                         className='editBasicIcon'
                         onClick={(e) => dispatch(editBasic(true))}
+                        data-testid='basicEditBtn'
                       >
                         <EditOutlinedIcon fontSize='small' />
                       </IconButton>
@@ -370,7 +365,12 @@ const Profile = () => {
                       <>
                         <Typography className={classes.headers} variant='h5'>
                           Bio
-                          <EditIcon action={editBio(true)} />
+                          <IconButton
+                            onClick={(e) => dispatch(editBio(true))}
+                            data-testid='bioEditBtn'
+                          >
+                            <EditOutlinedIcon fontSize='small' />
+                          </IconButton>
                         </Typography>
 
                         {profile.bio ? (
@@ -403,13 +403,22 @@ const Profile = () => {
                       <>
                         <Typography className={classes.headers} variant='h5'>
                           Experience
-                          <EditIcon action={editExperience(true)} />
+                          <IconButton
+                            onClick={(e) => dispatch(editExperience(true))}
+                            data-testid='expEditBtn'
+                          >
+                            <EditOutlinedIcon fontSize='small' />
+                          </IconButton>
                         </Typography>
 
                         {filteredExp && filteredExp.length > 0 ? (
                           filteredExp.map((exp) => {
                             return (
-                              <Card key={generate()} className={classes.card}>
+                              <Card
+                                key={generate()}
+                                className={classes.card}
+                                data-testid='expCard'
+                              >
                                 <CardContent className={classes.cardContent}>
                                   <div className='cardTop'>
                                     <Typography variant='h6'>
@@ -454,13 +463,22 @@ const Profile = () => {
                       <>
                         <Typography className={classes.headers} variant='h5'>
                           Education
-                          <EditIcon action={editEducation(true)} />
+                          <IconButton
+                            onClick={(e) => dispatch(editEducation(true))}
+                            data-testid='eduEditBtn'
+                          >
+                            <EditOutlinedIcon fontSize='small' />
+                          </IconButton>
                         </Typography>
 
                         {filteredEdu && filteredEdu.length > 0 ? (
                           filteredEdu.map((edu) => {
                             return (
-                              <Card key={generate()} className={classes.card}>
+                              <Card
+                                key={generate()}
+                                className={classes.card}
+                                data-testid='eduCard'
+                              >
                                 <CardContent className={classes.cardContent}>
                                   <div className='cardTop'>
                                     <Typography variant='h6'>
@@ -505,13 +523,22 @@ const Profile = () => {
                       <>
                         <Typography className={classes.headers} variant='h5'>
                           Achievements
-                          <EditIcon action={editAchievements(true)} />
+                          <IconButton
+                            onClick={(e) => dispatch(editAchievements(true))}
+                            data-testid='achvEditBtn'
+                          >
+                            <EditOutlinedIcon fontSize='small' />
+                          </IconButton>
                         </Typography>
 
                         {filteredAchv && filteredAchv.length > 0 ? (
                           filteredAchv.map((achv) => {
                             return (
-                              <Card key={generate()} className={classes.card}>
+                              <Card
+                                key={generate()}
+                                className={classes.card}
+                                data-testid='achvCard'
+                              >
                                 <CardContent className={classes.cardContent}>
                                   <div className='cardTop'>
                                     <Typography variant='h6'>

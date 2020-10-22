@@ -9,8 +9,6 @@ import {
 
 export const initialState = {
   basic: false,
-  name: false,
-  contacts: false,
   bio: false,
   experience: false,
   education: false,

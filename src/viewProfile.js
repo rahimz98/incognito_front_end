@@ -170,7 +170,11 @@ const AboutTab = (props) => {
                   filteredExp.length > 0 &&
                   filteredExp.map((exp) => {
                     return (
-                      <Card key={generate()} className={classes.card}>
+                      <Card
+                        key={generate()}
+                        className={classes.card}
+                        data-testid='expCard'
+                      >
                         <CardContent className={classes.cardContent}>
                           <div className='cardTop'>
                             <Typography variant='h6'>{exp.title}</Typography>
@@ -200,7 +204,11 @@ const AboutTab = (props) => {
                   filteredEdu.length > 0 &&
                   filteredEdu.map((edu) => {
                     return (
-                      <Card key={generate()} className={classes.card}>
+                      <Card
+                        key={generate()}
+                        className={classes.card}
+                        data-testid='eduCard'
+                      >
                         <CardContent className={classes.cardContent}>
                           <div className='cardTop'>
                             <Typography variant='h6'>{edu.title}</Typography>
@@ -230,7 +238,11 @@ const AboutTab = (props) => {
                   filteredAchv.length > 0 &&
                   filteredAchv.map((achv) => {
                     return (
-                      <Card key={generate()} className={classes.card}>
+                      <Card
+                        key={generate()}
+                        className={classes.card}
+                        data-testid='achvCard'
+                      >
                         <CardContent className={classes.cardContent}>
                           <div className='cardTop'>
                             <Typography variant='h6'>{achv.title}</Typography>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
-import history from './history';
+import { createMemoryHistory } from 'history';
 import { render as rtlRender } from '@testing-library/react';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
@@ -13,6 +13,8 @@ function render(
   {
     initialState,
     store = createStore(reducer, initialState, applyMiddleware(thunk)),
+    route = '/',
+    history = createMemoryHistory({ initialEntries: [route] }),
     ...renderOptions
   } = {}
 ) {
@@ -26,7 +28,7 @@ function render(
       </Provider>
     );
   }
-  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions }), history;
 }
 
 export * from '@testing-library/react';

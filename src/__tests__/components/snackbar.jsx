@@ -1,10 +1,10 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import Snackbar from '../../snackbar';
-import { render, screen } from '../../testUtils';
+import { render, screen, act } from '../../testUtils';
 
-// Snackbar is rendered twice due to unknown reasons hence
-// getAllByText is used to check for just test rendering
+jest.useFakeTimers();
+
 describe('Snackbar', () => {
   it('renders success snackbar correctly', () => {
     render(<Snackbar />, {
@@ -56,5 +56,20 @@ describe('Snackbar', () => {
       },
     });
     expect(screen.getAllByText('Error snackbar')[0]).toBeInTheDocument();
+  });
+
+  it('snackbar disappears after a certain time', () => {
+    render(<Snackbar />, {
+      initialState: {
+        snackbar: {
+          open: true,
+          type: 'error',
+          text: 'Error snackbar',
+        },
+      },
+    });
+    expect(screen.getAllByText('Error snackbar')[0]).toBeInTheDocument();
+    act(() => jest.advanceTimersByTime(5000));
+    expect(screen.queryByText('Error snackbar')).toBeNull();
   });
 });
