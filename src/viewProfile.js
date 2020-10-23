@@ -330,7 +330,7 @@ const ViewProfile = (props) => {
 
   useEffect(() => {
     axios
-      .post('http://localhost:5000/about/viewUser', { userId: userId })
+      .post('https://memento-backend.herokuapp.com/about/viewUser', { userId: userId })
       .then((res) => {
         // console.log(res.data);
         setProfile(res.data);

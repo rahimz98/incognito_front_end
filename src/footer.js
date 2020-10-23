@@ -5,7 +5,7 @@ import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import uniMelbLogo from './unimelb_logo.jpg';
-import gitHubLogo from './githubLogo.png'; 
+import gitHubLogo from './githubLogo.png';
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 function Copyright() {
@@ -70,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     width: 150,
   },
+  aboutUs : {
+    color : "#ffffff"
+  }
 }));
 
 export default function AppFooter() {
@@ -77,72 +80,74 @@ export default function AppFooter() {
 
   return (
     <>
-    <CssBaseline />
-    <Typography component="footer" className={classes.root} >
-      <Container className={classes.container}>
-        <Grid container spacing={5}>
-          <Grid item xs={6} sm={4} md={3}>
-            <Grid
-              container
-              direction='column'
-              justify='flex-end'
-              className={classes.iconsWrapper}
-              spacing={2}
-            >
-              <Grid item className={classes.icons}>
-                <a
-                  href='https://handbook.unimelb.edu.au/2020/subjects/comp30022'
-                  className={classes.icon}
-                >
-                  <img
-                    src={uniMelbLogo}
-                    alt='Unimelb'
+      <CssBaseline />
+      <Typography component="footer" className={classes.root} >
+        <Container className={classes.container}>
+          <Grid container spacing={5}>
+            <Grid item xs={6} sm={4} md={3}>
+              <Grid
+                container
+                direction='column'
+                justify='flex-end'
+                className={classes.iconsWrapper}
+                spacing={2}
+              >
+                <Grid item className={classes.icons}>
+                  <a
+                    href='https://handbook.unimelb.edu.au/2020/subjects/comp30022'
                     className={classes.icon}
-                  />
-                </a>
-                <a
-                  href='https://github.com/rahimz98/incognito_front_end'
-                  className={classes.icon}
-                >
-                  <img
-                    src={gitHubLogo}
-                    alt='Github Repo'
+                  >
+                    <img
+                      src={uniMelbLogo}
+                      alt='Unimelb'
+                      className={classes.icon}
+                    />
+                  </a>
+                  <a
+                    href='https://github.com/rahimz98/incognito_front_end'
                     className={classes.icon}
-                  />
-                </a>
-              </Grid>
-              <Grid item>
-                <Copyright />
+                  >
+                    <img
+                      src={gitHubLogo}
+                      alt='Github Repo'
+                      className={classes.icon}
+                    />
+                  </a>
+                </Grid>
+                <Grid item>
+                  <Copyright />
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={6} sm={4} md={2}>
-            <Typography variant='h6' marked='left' gutterBottom>
-              Legal
+            <Grid item xs={6} sm={4} md={2}>
+              <Typography variant='h6' marked='left' gutterBottom>
+                Legal
             </Typography>
-            <ul className={classes.list}>
-              <li className={classes.listItem}>
-                <Link href='/'>Terms</Link>
-              </li>
-              <li className={classes.listItem}>
-                <Link href='/'>Privacy</Link>
-              </li>
-            </ul>
-          </Grid>
-          <Grid item xs={6} sm={8} md={4}>
-            <Typography variant='h6' marked='left' gutterBottom>
-              About Us Page (Page not made yet)
+              <ul className={classes.list}>
+                <li className={classes.listItem}>
+                  <Link href='/'>Terms</Link>
+                </li>
+                <li className={classes.listItem}>
+                  <Link href='/'>Privacy</Link>
+                </li>
+              </ul>
+            </Grid>
+            <Grid item xs={6} sm={8} md={4}>
+              <Typography variant='h6' marked='left' gutterBottom className={classes.aboutUs}>
+                <Link href="/aboutUs" className={classes.aboutUs}>
+                {"About Us"}
+                </Link>
             </Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant='caption'>
-              Made by Team Incognito as part of our University of Melbourne
-              Capstone IT project
+            </Grid>
+            <Grid item>
+              <Typography variant='caption'>
+                Made by Team Incognito as part of our University of Melbourne
+                Capstone IT project
             </Typography>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-    </Typography>
+        </Container>
+      </Typography>
     </>
   );
 }
