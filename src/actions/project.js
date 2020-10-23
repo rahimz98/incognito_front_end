@@ -18,7 +18,7 @@ name
 export const openProject = (id) => {
     const token = localStorage.getItem("jwt");
     axios
-    .get('http://localhost:5000/project/id',{
+    .get('https://memento-backend.herokuapp.com/project/id',{
         headers: {
             'Authorization': token
         }

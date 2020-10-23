@@ -57,7 +57,7 @@ const Project = () => {
         console.log("HEllo Word 2.0");
         const token = localStorage.getItem("jwt");
         axios
-            .get(`http://localhost:5000/api/project/open/${projectid}`, {
+            .get(`https://memento-backend.herokuapp.com/api/project/open/${projectid}`, {
                 headers: {
                     'Authorization': token
                 }

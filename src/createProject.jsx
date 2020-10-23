@@ -56,7 +56,7 @@ const CreateProject = () => {
 
     const postProject = (values) => {
         axios
-            .post('http://localhost:5000/api/project/create', values, {
+            .post('https://memento-backend.herokuapp.com/api/project/create', values, {
                 headers: {
                     'Authorization': token
                 }

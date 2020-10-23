@@ -222,7 +222,7 @@ class QuillEditor extends React.Component {
             console.log("HEllo Word 2.0");
             const token = localStorage.getItem("jwt");
             axios
-                .get(`http://localhost:5000/api/project/open/${this.projectid}`, {
+                .get(`https://memento-backend.herokuapp.com/api/project/open/${this.projectid}`, {
                     headers: {
                         'Authorization': token
                     }
@@ -295,7 +295,7 @@ class QuillEditor extends React.Component {
                         let range = quill.getSelection();
                         let position = range ? range.index : 0;
 
-                        quill.insertEmbed(position, "image", { src: "http://localhost:5000/" + response.data.url, alt: response.data.fileName });
+                        quill.insertEmbed(position, "image", { src: "https://memento-backend.herokuapp.com/" + response.data.url, alt: response.data.fileName });
                         quill.setSelection(position + 1);
 
                         if (this._isMounted) {
@@ -332,7 +332,7 @@ class QuillEditor extends React.Component {
 
                         let range = quill.getSelection();
                         let position = range ? range.index : 0;
-                        quill.insertEmbed(position, "video", { src: "http://localhost:5000/" + response.data.url, title: response.data.fileName });
+                        quill.insertEmbed(position, "video", { src: "https://memento-backend.herokuapp.com/" + response.data.url, title: response.data.fileName });
                         quill.setSelection(position + 1);
 
                         if (this._isMounted) {
