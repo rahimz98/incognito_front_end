@@ -2,9 +2,9 @@ import React from 'react';
 import { Router, Switch, Route } from 'react-router-dom';
 import history from './history';
 import { makeStyles } from '@material-ui/core/styles';
+import jwtDecode from 'jwt-decode';
 // Redux
 import { Provider } from 'react-redux';
-import jwtDecode from 'jwt-decode';
 import store from './store';
 import { logout, getUserProfile } from './actions/user';
 import { SET_AUTHENTICATED, SET_USER_ID } from './types';
@@ -12,7 +12,6 @@ import { SET_AUTHENTICATED, SET_USER_ID } from './types';
 import Snackbar from './snackbar';
 import Header from './header.js';
 import Footer from './footer.js';
-// import PrivateRoute from './privateRoute';
 // Pages
 import Login from './login';
 import SignUp from './signUp';
@@ -47,7 +46,6 @@ if (token) {
     store.dispatch({ type: SET_USER_ID, payload: decodedToken.id });
     store.dispatch({ type: SET_AUTHENTICATED });
     store.dispatch(getUserProfile());
-    // history.push(`/${decodedToken.id}`);
   }
 }
 

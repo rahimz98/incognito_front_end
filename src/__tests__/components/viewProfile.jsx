@@ -1,8 +1,8 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, screen } from '../../testUtils';
+import { render, fireEvent, screen } from '../../testProps/testUtils';
 import ViewProfile from '../../viewProfile';
-import { mockViewUser } from '../../mockData';
+import { mockViewUser } from '../../testProps/mockData';
 import mockAxios from 'axios';
 import MutationObserver from '@sheerun/mutationobserver-shim';
 window.MutationObserver = MutationObserver;
@@ -16,19 +16,19 @@ describe('View Profile', () => {
     await screen.findByText('John Smith');
   });
 
-  it('renders basic information of user', async () => {
+  it('renders basic information of user', () => {
     expect(screen.getByText('John Smith')).toBeInTheDocument();
     expect(screen.getByText('johnsmith@gmail.com')).toBeInTheDocument();
     expect(screen.getByText('+61 123 123 123')).toBeInTheDocument();
     expect(screen.getByText('View resume/CV')).toBeInTheDocument();
   });
 
-  it('renders profile page with about and projects tab', async () => {
+  it('renders profile page with about and projects tab', () => {
     expect(screen.getByText('About')).toBeInTheDocument();
     expect(screen.getByText('Projects')).toBeInTheDocument();
   });
 
-  it('renders about information of user', async () => {
+  it('renders about information of user', () => {
     expect(screen.getByText('Bio')).toBeInTheDocument();
     expect(screen.getByText('johnsmiths bio')).toBeInTheDocument();
 
@@ -54,7 +54,7 @@ describe('View Profile', () => {
     expect(achv).toEqual(mockAchv);
   });
 
-  it('renders projects of user when projects tab is clicked', async () => {
+  it('renders projects of user when projects tab is clicked', () => {
     fireEvent.click(screen.getByText('Projects'));
 
     expect(screen.getByText('Project John')).toBeInTheDocument();

@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, screen } from '../../testUtils';
+import { render, fireEvent, screen } from '../../testProps/testUtils';
 import Login from '../../login';
 
 describe('Login', () => {

@@ -15,8 +15,6 @@ import Typography from '@material-ui/core/Typography';
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-// import mockData from './mockData';
-
 const useStyles = makeStyles((theme) => ({
   tabs: {
     margin: '0 auto',

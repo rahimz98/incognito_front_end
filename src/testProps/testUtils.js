@@ -5,8 +5,8 @@ import { render as rtlRender } from '@testing-library/react';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
-import reducer from './reducers/index';
-import Snackbar from './snackbar';
+import reducer from '../reducers/index';
+import Snackbar from '../snackbar';
 
 function render(
   ui,

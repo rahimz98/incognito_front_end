@@ -219,10 +219,6 @@ const Profile = () => {
     dispatch(closeEdits());
   }, [dispatch]);
 
-  const handleOpen = ({ action }) => {
-    dispatch(action);
-  };
-
   const handleEditImage = () => {
     const fileInput = document.getElementById('fileInput');
     fileInput.click();

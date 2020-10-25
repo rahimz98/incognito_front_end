@@ -1,8 +1,8 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, screen } from '../../testUtils';
+import { render, fireEvent, screen } from '../../testProps/testUtils';
 import SearchPage from '../../searchPage';
-import { mockResults, mockEmptyResults } from '../../mockData';
+import { mockResults, mockEmptyResults } from '../../testProps/mockData';
 
 describe('Search Page', () => {
   it('renders people and projects tab', () => {

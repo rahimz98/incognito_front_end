@@ -107,3 +107,52 @@ export const mockViewUser = {
     MIrxBOa3tPEl3NyrqE: 'Project John Second',
   },
 };
+
+export const mockDrawerProjects = {
+  MIrxBOa3tPEl3NyrqD: 'Project John',
+  MIrxBOa3tPEl3NyrqE: 'Project John Second',
+};
+
+export const mockProject = {
+  blog: 'project john reflections',
+  canEdit: true,
+  collaborators: ['johnsmith@gmail.com'],
+  creationDate: '2020-10-25',
+  description: 'project john description',
+  isOwner: true,
+  links: ['johnsmith.com'],
+  name: 'Project John',
+  ownerId: '0',
+  project: '<p>project content</p>',
+  projectId: 'MIrxBOa3tPEl3NyrqD',
+  visibility: 'Public',
+};
+
+export const mockEditProject = {
+  blog: '<p>project john reflections</p>',
+  canEdit: true,
+  collaborators: ['johnsmith@gmail.com'],
+  creationDate: '2020-10-25',
+  description: 'project john description',
+  isOwner: true,
+  links: ['johnsmith.com'],
+  name: 'Project John',
+  ownerId: '0',
+  project: '<p>project content</p>',
+  projectId: 'MIrxBOa3tPEl3NyrqD',
+  visibility: 'Public',
+};
+
+export const mockViewProject = {
+  blog: 'project john reflections',
+  canEdit: false,
+  collaborators: ['johnsmith@gmail.com'],
+  creationDate: '2020-10-25',
+  description: 'project john description',
+  isOwner: false,
+  name: 'Project John',
+  ownerId: '0',
+  project: '<p>project content</p>',
+  projectId: 'MIrxBOa3tPEl3NyrqD',
+  visibility: 'Public',
+};
