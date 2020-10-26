@@ -1,24 +1,24 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+import clsx from 'clsx';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 import SwitchUI from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -156,11 +156,11 @@ const useStyles = makeStyles((theme) => ({
     color: '#FFFFFF',
   },
   creatProjectButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   fab: {
-    marginRight: theme.spacing(2)
-  }
+    marginRight: theme.spacing(2),
+  },
 }));
 
 const PersistentDrawerLeft = () => {
@@ -173,7 +173,7 @@ const PersistentDrawerLeft = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const { currentTheme, setTheme } = useContext(CustomThemeContext);
-  const isDark = Boolean(currentTheme === 'dark')
+  const isDark = Boolean(currentTheme === 'dark');
   const [projectList, setProjectList] = useState({});
 
   const handleThemeChange = (event) => {
@@ -192,24 +192,21 @@ const PersistentDrawerLeft = () => {
 
   const handleDrawerOpen = () => {
     setOpen(true);
-    console.log("getting the list of projects");
+    console.log('getting the list of projects');
     //useEffect(() => {
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem('jwt');
     axios
       .get(`https://memento-backend.herokuapp.com/api/project/get-project-list`, {
         headers: {
-          'Authorization': token
-        }
+          Authorization: token,
+        },
       })
-      .then(res => {
+      .then((res) => {
         console.log(res);
-        console.log("Hello world");
+        console.log('Hello world');
         setProjectList(res.data);
-      })
+      });
     //})
-
-
-
   };
 
   const handleDrawerClose = () => {
@@ -284,37 +281,37 @@ const PersistentDrawerLeft = () => {
       </MenuItem>
     </Menu>
   ) : (
-      <Menu
-        anchorEl={dropdownAnchorE1}
-        keepMounted
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isDropdownOpen}
-        onClose={handleDropdownClose}
-      >
-        <MenuItem onClick={handleLogin}>
-          <ExitToAppIcon className={classes.icon} fontSize='small' />
-          <Typography variant='body2'>Login</Typography>
-        </MenuItem>
-        <MenuItem onClick={handleRegister}>
-          <AddCircleOutlineIcon className={classes.icon} fontSize='small' />
-          <Typography variant='body2'>Register</Typography>
-        </MenuItem>
-        <Divider />
-        <MenuItem>
-          <Brightness4Icon className={classes.icon} fontSize='small' />
-          <Typography variant='body2'>Dark theme</Typography>
-          <FormControlLabel
-            control={
-              <SwitchUI
-                checked={isDark}
-                onChange={handleThemeChange}
-                className={classes.switch}
-              />
-            }
-          />
-        </MenuItem>
-      </Menu>
-    );
+    <Menu
+      anchorEl={dropdownAnchorE1}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={isDropdownOpen}
+      onClose={handleDropdownClose}
+    >
+      <MenuItem onClick={handleLogin}>
+        <ExitToAppIcon className={classes.icon} fontSize='small' />
+        <Typography variant='body2'>Login</Typography>
+      </MenuItem>
+      <MenuItem onClick={handleRegister}>
+        <AddCircleOutlineIcon className={classes.icon} fontSize='small' />
+        <Typography variant='body2'>Register</Typography>
+      </MenuItem>
+      <Divider />
+      <MenuItem>
+        <Brightness4Icon className={classes.icon} fontSize='small' />
+        <Typography variant='body2'>Dark theme</Typography>
+        <FormControlLabel
+          control={
+            <SwitchUI
+              checked={isDark}
+              onChange={handleThemeChange}
+              className={classes.switch}
+            />
+          }
+        />
+      </MenuItem>
+    </Menu>
+  );
 
   const vistorDrawer = (
     <Drawer
@@ -331,8 +328,8 @@ const PersistentDrawerLeft = () => {
           {theme.direction === 'ltr' ? (
             <ChevronLeftIcon />
           ) : (
-              <ChevronRightIcon />
-            )}
+            <ChevronRightIcon />
+          )}
         </IconButton>
       </div>
       <Divider />
@@ -346,52 +343,72 @@ const PersistentDrawerLeft = () => {
   const authDrawer = (
     <Drawer
       className={classes.drawer}
-      variant="persistent"
-      anchor="left"
+      variant='persistent'
+      anchor='left'
       open={open}
       classes={{
-        paper: classes.drawerPaper
+        paper: classes.drawerPaper,
       }}
     >
-
       <div className={classes.drawerHeader}>
         <IconButton onClick={handleDrawerClose}>
-          {theme.direction === "ltr" ? (
+          {theme.direction === 'ltr' ? (
             <ChevronLeftIcon />
           ) : (
-              <ChevronRightIcon />
-            )}
+            <ChevronRightIcon />
+          )}
         </IconButton>
       </div>
       <Divider />
       <List>
         <ListItem>
-          <Tooltip title="Home" aria-label="add" onClick={() => { history.push(`/${user.id}`) }}>
-            <Fab color="primary" className={classes.fab}>
+          <Tooltip
+            title='Home'
+            aria-label='add'
+            onClick={() => {
+              history.push(`/${user.id}`);
+            }}
+          >
+            <Fab color='primary' className={classes.fab}>
               <HomeIcon className={classes.HomeIcon} />
             </Fab>
           </Tooltip>
-        <h3>Home</h3>
+          <h3>Home</h3>
         </ListItem>
       </List>
       <Divider />
       <List>
-        {Object.entries(projectList).map(([key, index]) => (key != 'null' ? (
-          <ListItem button key={index} onClick={() => { history.push(`/${user.id}/${key}`) }}  >
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary={index} />
-          </ListItem>
-        ) : <Divider />))}
+        {Object.entries(projectList).map(([key, index]) =>
+          key != 'null' ? (
+            <ListItem
+              button
+              key={index}
+              onClick={() => {
+                history.push(`/${user.id}/${key}`);
+              }}
+            >
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={index} />
+            </ListItem>
+          ) : (
+            <Divider />
+          )
+        )}
       </List>
 
-
       <List>
-        <ListItem >
-
-          <Tooltip title="Create project" className={classes.creatProjectButton} aria-label="add" onClick={() => { history.push(`/${user.id}/createProject`) }}>
-            <Fab color="primary" >
+        <ListItem>
+          <Tooltip
+            title='Create project'
+            className={classes.creatProjectButton}
+            aria-label='add'
+            onClick={() => {
+              history.push(`/${user.id}/createProject`);
+            }}
+          >
+            <Fab color='primary'>
               <AddIcon />
             </Fab>
           </Tooltip>
@@ -414,6 +431,7 @@ const PersistentDrawerLeft = () => {
         <Toolbar className={classes.root}>
           <div className={classes.left}>
             <IconButton
+              data-testid='drawer'
               color='inherit'
               aria-label='open drawer'
               onClick={handleDrawerOpen}
@@ -433,6 +451,7 @@ const PersistentDrawerLeft = () => {
           <div className={classes.rightExpanded}>
             <Brightness4Icon className={classes.icon} />
             <FormControlLabel
+              data-testid='darkModeSwitch'
               control={
                 <SwitchUI checked={isDark} onChange={handleThemeChange} />
               }
@@ -458,6 +477,6 @@ const PersistentDrawerLeft = () => {
       </main>
     </div>
   );
-}
+};
 
 export default PersistentDrawerLeft;

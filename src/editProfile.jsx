@@ -11,7 +11,7 @@ import {
 } from './actions/profile';
 import { AddResumeButton, ViewResume } from './profile';
 import { generate } from 'shortid';
-import { errorSnackbar } from './actions/snackbar';
+import { errorSnackbar, infoSnackbar } from './actions/snackbar';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -62,10 +62,6 @@ const useStyles = makeStyles((theme) => ({
   editButtons: {
     display: 'flex',
     justifyContent: 'flex-end',
-  },
-  submit: {
-    backgroundColor: '#192231',
-    color: '#FFFFFF',
   },
   divider: {
     marginTop: theme.spacing(2),
@@ -147,6 +143,7 @@ export const BasicForm = () => {
           email: basic.email ? basic.email : profile.email,
           phone: basic.phone ? formatPhone : profile.phone,
         };
+        dispatch(infoSnackbar('Updating...'));
         dispatch(editProfile(userData));
         handleClose();
       } else {
@@ -156,12 +153,15 @@ export const BasicForm = () => {
 
     return (
       <div className={classes.editButtons}>
-        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button aria-label='cancelBasic' onClick={() => handleClose()}>
+          Cancel
+        </Button>
         <Button
-          className={classes.submit}
+          aria-label='saveBasic'
           onClick={() => handleSubmit()}
           type='submit'
           variant='contained'
+          color='primary'
         >
           Save
         </Button>
@@ -303,18 +303,22 @@ export const BioForm = () => {
         ...profile,
         bio: newBio,
       };
+      dispatch(infoSnackbar('Updating...'));
       dispatch(editProfile(userData));
       handleClose();
     };
 
     return (
       <div className={classes.editButtons}>
-        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button aria-label='cancelBio' onClick={() => handleClose()}>
+          Cancel
+        </Button>
         <Button
-          className={classes.submit}
+          aria-label='saveBio'
           onClick={() => handleSubmit()}
           type='submit'
           variant='contained'
+          color='primary'
         >
           Save
         </Button>
@@ -419,12 +423,12 @@ export const ExperienceForm = () => {
     };
 
     const handleSubmit = () => {
-      console.log('Exp: ' + error);
       if (!error) {
         const userData = {
           ...profile,
           experience: newExp ? newExp : profile.experience,
         };
+        dispatch(infoSnackbar('Updating...'));
         dispatch(editProfile(userData));
         handleClose();
       } else {
@@ -434,12 +438,15 @@ export const ExperienceForm = () => {
 
     return (
       <div className={classes.editButtons}>
-        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button aria-label='cancelExp' onClick={() => handleClose()}>
+          Cancel
+        </Button>
         <Button
-          className={classes.submit}
+          aria-label='saveExp'
           onClick={() => handleSubmit()}
           type='submit'
           variant='contained'
+          color='primary'
         >
           Save
         </Button>
@@ -605,12 +612,12 @@ export const EducationForm = () => {
     };
 
     const handleSubmit = () => {
-      console.log('Edu: ' + error);
       if (!error) {
         const userData = {
           ...profile,
           education: newEdu ? newEdu : profile.education,
         };
+        dispatch(infoSnackbar('Updating...'));
         dispatch(editProfile(userData));
         handleClose();
       } else {
@@ -620,12 +627,15 @@ export const EducationForm = () => {
 
     return (
       <div className={classes.editButtons}>
-        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button aria-label='cancelEdu' onClick={() => handleClose()}>
+          Cancel
+        </Button>
         <Button
-          className={classes.submit}
+          aria-label='saveEdu'
           onClick={() => handleSubmit()}
           type='submit'
           variant='contained'
+          color='primary'
         >
           Save
         </Button>
@@ -789,12 +799,12 @@ export const AchievementForm = () => {
     };
 
     const handleSubmit = () => {
-      console.log('Achv: ' + error);
       if (!error) {
         const userData = {
           ...profile,
           achievements: newAchv ? newAchv : profile.achievements,
         };
+        dispatch(infoSnackbar('Updating...'));
         dispatch(editProfile(userData));
         handleClose();
       } else {
@@ -804,12 +814,15 @@ export const AchievementForm = () => {
 
     return (
       <div className={classes.editButtons}>
-        <Button onClick={() => handleClose()}>Cancel</Button>
+        <Button aria-label='cancelAchv' onClick={() => handleClose()}>
+          Cancel
+        </Button>
         <Button
-          className={classes.submit}
+          aria-label='saveAchv'
           onClick={() => handleSubmit()}
           type='submit'
           variant='contained'
+          color='primary'
         >
           Save
         </Button>

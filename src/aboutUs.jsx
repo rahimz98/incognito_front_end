@@ -39,7 +39,14 @@ const useStyles = makeStyles((theme) => ({
     },
     pos: {
         marginTop: 12,
-    } 
+    },
+    image: {
+        margin: 'auto',
+        maxWidth: '100%',
+    },
+    teamCard: {
+        marginBottom: theme.spacing(1),
+    }
 }));
 
 const PeopleCard = (props) =>{
@@ -122,7 +129,7 @@ function AboutUs () {
                 <Hidden  only={["xs"]}>
                     <Grid item xs={false} sm={2}/>
                     <Grid item container alignItems="center" justify = "space-evenly">
-                        <img src = {vision} alt = "teams.svg"/>  
+                        <img className={classes.image} src = {vision} alt = "teams.svg"/>  
                     </Grid>
                     <Grid item xs={false} sm={2}/>
                     <Grid item xs={false} sm={2}/>
@@ -151,7 +158,7 @@ function AboutUs () {
                     <Grid item xs={false} sm={2}/>
 
                         <Grid item xs={12} sm={8}>
-                            <Card elevation={2} onClick={handleChange2}>
+                            <Card className={classes.teamCard} elevation={2} onClick={handleChange2}>
                                 <Typography className={classes.title} color='textSecondary'>
                                     The Team
                                 </Typography>

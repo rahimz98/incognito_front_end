@@ -1,12 +1,14 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, screen } from '../../testUtils';
+import { render, fireEvent, screen } from '../../testProps/testUtils';
 import SignUp from '../../signUp';
 
 describe('Register', () => {
-  it('renders register page', () => {
+  beforeEach(() => {
     render(<SignUp />);
+  });
 
+  it('renders register page', () => {
     expect(screen.getByText('First Name')).toBeInTheDocument();
     expect(screen.getByText('Last Name')).toBeInTheDocument();
     expect(screen.getByText('Email')).toBeInTheDocument();
@@ -17,8 +19,6 @@ describe('Register', () => {
   });
 
   it('empty inputs should provide error messages', () => {
-    render(<SignUp />);
-
     fireEvent.click(screen.getByText('Sign Up'));
 
     expect(
@@ -33,7 +33,6 @@ describe('Register', () => {
   });
 
   it('correct inputs should allow sign up', () => {
-    render(<SignUp />);
     const firstNameInput = screen.getByTestId('firstname');
     const lastNameInput = screen.getByTestId('lastname');
     const emailInput = screen.getByTestId('email');

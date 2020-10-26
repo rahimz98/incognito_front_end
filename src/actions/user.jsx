@@ -6,7 +6,7 @@ import {
   SET_USER_RESUME,
   LOGOUT_SUCCESS,
 } from '../types';
-import { successSnackbar, errorSnackbar } from '../actions/snackbar';
+import { successSnackbar, errorSnackbar } from './snackbar';
 import history from '../history';
 import axios from 'axios';
 
@@ -33,11 +33,15 @@ export const deleteResume = () => (dispatch) => {
 export const uploadResume = (fileData) => (dispatch) => {
   const token = localStorage.getItem('jwt');
   axios
-    .post('https://memento-backend.herokuapp.com/about/uploadResume', fileData, {
-      headers: {
-        Authorization: token,
-      },
-    })
+    .post(
+      'https://memento-backend.herokuapp.com/about/uploadResume',
+      fileData,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    )
     .then((res) => {
       const validFileType = res.data.fileType;
       if (!validFileType) {
@@ -55,11 +59,15 @@ export const uploadResume = (fileData) => (dispatch) => {
 export const editProfile = (userData) => (dispatch) => {
   const token = localStorage.getItem('jwt');
   axios
-    .post('https://memento-backend.herokuapp.com/about/updateContact', userData, {
-      headers: {
-        Authorization: token,
-      },
-    })
+    .post(
+      'https://memento-backend.herokuapp.com/about/updateContact',
+      userData,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
+    )
     .then(() => {
       dispatch(getUserProfile());
     })
@@ -71,12 +79,16 @@ export const editProfile = (userData) => (dispatch) => {
 export const uploadImage = (imageData) => (dispatch) => {
   const token = localStorage.getItem('jwt');
   axios
-    .post('https://memento-backend.herokuapp.com/about/uploadImage', imageData, {
-      headers: {
-        Authorization: token,
-        "Access-Control-Allow-Origin": "*"
-      },
-    })
+    .post(
+      'https://memento-backend.herokuapp.com/about/uploadImage',
+      imageData,
+      {
+        headers: {
+          Authorization: token,
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
+    )
     .then((res) => {
       const validFileType = res.data.fileType;
       if (!validFileType) {

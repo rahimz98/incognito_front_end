@@ -1,12 +1,14 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, screen } from '../../testUtils';
+import { render, fireEvent, screen } from '../../testProps/testUtils';
 import Login from '../../login';
 
 describe('Login', () => {
-  it('renders login page', () => {
+  beforeEach(() => {
     render(<Login />);
+  });
 
+  it('renders login page', () => {
     expect(screen.getByText('Email')).toBeInTheDocument();
     expect(screen.getByText('Password')).toBeInTheDocument();
 
@@ -15,8 +17,6 @@ describe('Login', () => {
   });
 
   it('empty inputs should provide error messages', () => {
-    render(<Login />);
-
     fireEvent.click(screen.getByText('Log In'));
 
     expect(
@@ -26,7 +26,6 @@ describe('Login', () => {
   });
 
   it('correct inputs should allow login', () => {
-    render(<Login />);
     const emailInput = screen.getByTestId('email');
     const passwordInput = screen.getByTestId('password');
     fireEvent.change(emailInput, { target: { value: 'new@gmail.com' } });

@@ -26,10 +26,6 @@ const useStyles = makeStyles((theme) => ({
   typo: {
     textAlign: 'center',
   },
-  button: {
-    backgroundColor: '#192231',
-    color: '#FFFFFF',
-  },
 }));
 
 const NotFound = () => {
@@ -60,11 +56,11 @@ const NotFound = () => {
         </Grid>
         <Grid item xs={12} align='center'>
           <Button
-            className={classes.button}
             component={Link}
             size='large'
             to={returnRoute}
             variant='contained'
+            color='primary'
           >
             <Typography variant='h5'>Home Page</Typography>
           </Button>
