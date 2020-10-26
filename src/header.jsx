@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   left: {
     float: 'left',
+    display: 'flex',
   },
   center: {
     margin: '0 auto',
@@ -141,7 +142,8 @@ const useStyles = makeStyles((theme) => ({
     color: '#FFFFFF',
   },
   title: {
-    verticalAlign: 'middle',
+    display: 'flex',
+    alignItems: 'center',
     marginRight: theme.spacing(2),
     [theme.breakpoints.between(0, 650)]: {
       display: 'none',
