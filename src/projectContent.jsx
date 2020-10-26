@@ -1,8 +1,9 @@
 import React from 'react';
-import { Grid, Paper, makeStyles, Typography, Button, Divider, List, ListItem} from '@material-ui/core';
+import { Grid, Paper, makeStyles, Typography, Button, Divider, List, ListItem } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import history from './history';
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { FacebookShareButton, FacebookIcon, LinkedinShareButton, LinkedinIcon } from "react-share";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,12 +27,15 @@ const useStyles = makeStyles((theme) => ({
     project: {
         padding: theme.spacing(2),
     },
-    editButton : {
-        backgroundColor : '#2D3E50',
-        color : '#FFFFFF',
+    editButton: {
+        backgroundColor: '#2D3E50',
+        color: '#FFFFFF',
         '&:hover': {
-            backgroundColor : '#2D3E50',
+            backgroundColor: '#2D3E50',
         }
+    }, 
+    socialMediaButton : {
+        margin : theme.spacing(1),
     }
 }));
 
@@ -108,17 +112,35 @@ export default function Content(props) {
                         {content.project ? <div dangerouslySetInnerHTML={{ __html: content.project }} /> : <div dangerouslySetInnerHTML={{ __html: noProject }} />}
                     </Paper>
                 </Grid>
-                <Grid item container direction = "column" xs={12} md={4}>
+                <Grid item container direction="column" xs={12} md={4}>
                     <Grid item>
                         {blogPrint()}
                     </Grid>
                     <Grid item className={classes.sidebarSection}>
                         {linksPrint()}
                         {LinksList()}
+                        <FacebookShareButton
+                            url={"http://www.facebook.com"} //ADD the proper project url when website is hosted
+                            quote={"Check out this project!"}
+                            hashtag="#Memento"
+                            className={classes.socialMediaButton}>
+                            <FacebookIcon size={36} />
+                        </FacebookShareButton>
+                        <LinkedinShareButton
+                            url={"http://www.linkedin.com"}
+                            source={"google.com"} //ADD project url when website is hosted
+                            className={classes.socialMediaButton}
+                        > 
+                            <LinkedinIcon size={36}/>
+                        </LinkedinShareButton>
                     </Grid>
+                    {content.canEdit === true ?
                     <Grid item>
-                        <Button variant='contained' color='primary' onClick = {() => {history.push(`/${user.id}/${projectId}/edit`)}}>Edit Project</Button>
+                        <Button variant='contained' color='primary' onClick={() => { history.push(`/${user.id}/${projectId}/edit`) }}>Edit Project</Button>
                     </Grid>
+                    :
+                    <Grid item></Grid>
+                    }
                 </Grid>
             </Grid>
 

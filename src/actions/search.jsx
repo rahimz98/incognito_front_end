@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const getSearchResult = (query) => (dispatch) => {
   axios
-    .post('http://localhost:5000/api/search', { query: query })
+    .post('https://memento-backend.herokuapp.com/api/search', { query: query })
     .then((res) => {
       dispatch({
         type: SET_SEARCH_RESULT,

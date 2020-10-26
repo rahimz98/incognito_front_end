@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Grid,  makeStyles } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import ProjectContent from './projectContent.jsx';
 import axios from 'axios';
 import ProjectHeading from './projectHeading.jsx';
-//Dummy API
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +33,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+const PrivateProject = () => {
+    return (
+        <>
+            <h1>This Project is either Private or it does not exist</h1>
+        </>
+    )
+}
+
+
 
 
 const Project = () => {
@@ -40,43 +49,47 @@ const Project = () => {
     const { projectid } = useParams();
     const [project, setProject] = useState({});
     console.log("ProjectID id is " + projectid);
+    const user = useSelector(store => store.user);
+
 
 
     useEffect(() => {
         console.log("HEllo Word 2.0");
         const token = localStorage.getItem("jwt");
         axios
-            .get(`http://localhost:5000/api/project/open/${projectid}`, {
+            .get(`https://memento-backend.herokuapp.com/api/project/open/${projectid}`, {
                 headers: {
                     'Authorization': token
                 }
             })
             .then(res => {
-                console.log(typeof (res));
+                console.log("res:",res);
                 setProject(res.data);
             })
     }, [projectid]);
-
 
     return (
         <div className={classes.root}>
             <Grid container>
                 <Grid item xs={1} />
                 <Grid item xs={10}>
-                    <Grid item container direction="column" spacing={2} >
-                        {console.log("hello world")}
-                        <Grid item />
-                        <Grid item container spacing={1}>
-                            <Grid item xs={12} >
-                                <ProjectHeading content={project} projectId={projectid} />
+                    {project ?
+                        <Grid item container direction="column" spacing={2} >
+                            <Grid item />
+                            <Grid item container spacing={1}>
+                                <Grid item xs={12} >
+                                    <ProjectHeading content={project} projectId={projectid} />
 
+                                </Grid>
+                            </Grid>
+
+                            <Grid item container >
+                                <ProjectContent content={project} projectId={projectid} />
                             </Grid>
                         </Grid>
-
-                        <Grid item container >
-                            <ProjectContent content={project} projectId = {projectid} />
-                        </Grid>
-                    </Grid>
+                        :
+                        <PrivateProject />
+                    }
                 </Grid>
                 <Grid item xs={1} />
             </Grid>

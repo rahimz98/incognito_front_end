@@ -73,11 +73,10 @@ const ranges = [
 
 const modules = {
     toolbar: [
-        [{ 'header': [1, 2, false] }],
+        [{ 'header': [1, 2, 3, 4 , false] }],
         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
         [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-        ['link', 'image'],
-        ['clean']
+        
     ],
 }
 
@@ -85,7 +84,7 @@ const formats = [
     'header',
     'bold', 'italic', 'underline', 'strike', 'blockquote',
     'list', 'bullet', 'indent',
-    'link', 'image', 'video',
+    
 ]
 
 const EditProject = (props) => {
@@ -135,7 +134,7 @@ const EditProject = (props) => {
         //Project content
 
         axios
-            .post('http://localhost:5000/api/project/edit/projectContent', projectContent, {
+            .post('https://memento-backend.herokuapp.com/api/project/edit/projectContent', projectContent, {
                 headers: {
                     'Authorization': token
                 }
@@ -150,7 +149,7 @@ const EditProject = (props) => {
 
         //Project details
         axios
-            .post('http://localhost:5000/api/project/edit', values, {
+            .post('https://memento-backend.herokuapp.com/api/project/edit', values, {
                 headers: {
                     'Authorization': token
                 }
@@ -167,7 +166,7 @@ const EditProject = (props) => {
         setTimeout(() => {
             console.log("blogcontent:", blogContent);
             axios
-                .post('http://localhost:5000/api/project/edit/blog', blogContent, {
+                .post('https://memento-backend.herokuapp.com/api/project/edit/blog', blogContent, {
                     headers: {
                         'Authorization': token
                     }
@@ -187,7 +186,7 @@ const EditProject = (props) => {
     const deleteProject = () => {
         const token = localStorage.getItem("jwt");
         axios
-            .get(`http://localhost:5000/api/project/delete/${projectid}`, {
+            .get(`https://memento-backend.herokuapp.com/api/project/delete/${projectid}`, {
                 headers: {
                     'Authorization': token
                 }
@@ -209,7 +208,7 @@ const EditProject = (props) => {
         console.log("HEllo Word 2.0");
         const token = localStorage.getItem("jwt");
         axios
-            .get(`http://localhost:5000/api/project/open/${projectid}`, {
+            .get(`https://memento-backend.herokuapp.com/api/project/open/${projectid}`, {
                 headers: {
                     'Authorization': token
                 }
@@ -249,7 +248,7 @@ const EditProject = (props) => {
                                     onSubmit={(values, { setSubmitting }) => {
 
                                         setSubmitting(false);
-                                        console.log(projectid);
+                                        console.log(values);
                                         sendProject(values);
 
                                     }}

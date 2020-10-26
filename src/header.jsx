@@ -198,7 +198,7 @@ const PersistentDrawerLeft = () => {
     //useEffect(() => {
     const token = localStorage.getItem('jwt');
     axios
-      .get(`http://localhost:5000/api/project/get-project-list`, {
+      .get(`https://memento-backend.herokuapp.com/api/project/get-project-list`, {
         headers: {
           Authorization: token,
         },
