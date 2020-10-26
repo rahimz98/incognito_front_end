@@ -10,16 +10,16 @@ import { logout, getUserProfile } from './actions/user';
 import { SET_AUTHENTICATED, SET_USER_ID } from './types';
 // Components
 import Snackbar from './snackbar';
-import Header from './header.js';
-import Footer from './footer.js';
+import Header from './header';
+import Footer from './footer';
 // Pages
 import Login from './login';
 import SignUp from './signUp';
-import HomePage from './home.js';
+import HomePage from './home';
 import Profile from './profile';
 import NotFound from './notFound';
 import aboutUs from './aboutUs';
-import SearchPage from './searchPage.js';
+import SearchPage from './searchPage';
 import Project from './projects';
 import CreateProject from './createProject';
 import EditProject from './editProject';
@@ -55,23 +55,31 @@ function App() {
     <Provider store={store}>
       <Router history={history}>
         <div className={classes.root}>
-        <Snackbar/>
+          <Snackbar />
           <div className={classes.container}>
-          <Header/>
+            <Header />
             <Switch>
-              <Route exact path='/' component={HomePage}/>
-              <Route exact path='/login' component={Login}/>
-              <Route exact path='/signup' component={SignUp}/> 
+              <Route exact path='/' component={HomePage} />
+              <Route exact path='/login' component={Login} />
+              <Route exact path='/signup' component={SignUp} />
               <Route exact path='/search' component={SearchPage} />
-              <Route exact path='/aboutUs' component={aboutUs}/>
-              <Route exact path='/:id' component={Profile}/>
-              <Route exact path='/:id/createProject' component={CreateProject}/>
-              <Route exact path='/:id/:projectid' component={Project}/>
-              <Route exact path='/:id/:projectid/edit' component={EditProject}/>
+              <Route exact path='/aboutUs' component={aboutUs} />
+              <Route exact path='/:id' component={Profile} />
+              <Route
+                exact
+                path='/:id/createProject'
+                component={CreateProject}
+              />
+              <Route exact path='/:id/:projectid' component={Project} />
+              <Route
+                exact
+                path='/:id/:projectid/edit'
+                component={EditProject}
+              />
               <Route path='*' component={NotFound} />
             </Switch>
           </div>
-          <Footer/> 
+          <Footer />
         </div>
       </Router>
     </Provider>

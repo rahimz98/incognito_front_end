@@ -29,8 +29,6 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     marginTop: theme.spacing(3),
     float: 'right',
-    backgroundColor: '#192231',
-    color: '#FFFFFF',
   },
   signup: {
     marginTop: theme.spacing(3),
@@ -142,6 +140,7 @@ const Login = () => {
                 onClick={handleSubmit}
                 type='submit'
                 variant='contained'
+                color='primary'
               >
                 Log In
               </Button>

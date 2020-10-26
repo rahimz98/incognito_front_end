@@ -63,10 +63,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
-  submit: {
-    backgroundColor: '#192231',
-    color: '#FFFFFF',
-  },
   divider: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
@@ -161,10 +157,10 @@ export const BasicForm = () => {
         </Button>
         <Button
           aria-label='saveBasic'
-          className={classes.submit}
           onClick={() => handleSubmit()}
           type='submit'
           variant='contained'
+          color='primary'
         >
           Save
         </Button>
@@ -317,10 +313,10 @@ export const BioForm = () => {
         </Button>
         <Button
           aria-label='saveBio'
-          className={classes.submit}
           onClick={() => handleSubmit()}
           type='submit'
           variant='contained'
+          color='primary'
         >
           Save
         </Button>
@@ -444,10 +440,10 @@ export const ExperienceForm = () => {
         </Button>
         <Button
           aria-label='saveExp'
-          className={classes.submit}
           onClick={() => handleSubmit()}
           type='submit'
           variant='contained'
+          color='primary'
         >
           Save
         </Button>
@@ -632,10 +628,10 @@ export const EducationForm = () => {
         </Button>
         <Button
           aria-label='saveEdu'
-          className={classes.submit}
           onClick={() => handleSubmit()}
           type='submit'
           variant='contained'
+          color='primary'
         >
           Save
         </Button>
@@ -818,10 +814,10 @@ export const AchievementForm = () => {
         </Button>
         <Button
           aria-label='saveAchv'
-          className={classes.submit}
           onClick={() => handleSubmit()}
           type='submit'
           variant='contained'
+          color='primary'
         >
           Save
         </Button>
