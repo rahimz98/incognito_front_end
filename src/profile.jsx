@@ -21,6 +21,7 @@ import {
 } from './actions/profile';
 import jwtDecode from 'jwt-decode';
 import { generate } from 'shortid';
+import { infoSnackbar } from './actions/snackbar';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
@@ -147,6 +148,7 @@ export const AddResumeButton = () => {
     const formData = new FormData();
     formData.append('image', file);
     formData.append('userId', decodedToken.id);
+    dispatch(infoSnackbar('Loading resume...'));
     dispatch(uploadResume(formData));
   };
 
@@ -238,6 +240,7 @@ const Profile = () => {
     const formData = new FormData();
     formData.append('image', image);
     formData.append('userId', decodedToken.id);
+    dispatch(infoSnackbar('Loading image...'));
     dispatch(uploadImage(formData));
   };
 

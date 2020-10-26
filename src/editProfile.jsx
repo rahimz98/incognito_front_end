@@ -11,7 +11,7 @@ import {
 } from './actions/profile';
 import { AddResumeButton, ViewResume } from './profile';
 import { generate } from 'shortid';
-import { errorSnackbar } from './actions/snackbar';
+import { errorSnackbar, infoSnackbar } from './actions/snackbar';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -143,6 +143,7 @@ export const BasicForm = () => {
           email: basic.email ? basic.email : profile.email,
           phone: basic.phone ? formatPhone : profile.phone,
         };
+        dispatch(infoSnackbar('Updating...'));
         dispatch(editProfile(userData));
         handleClose();
       } else {
@@ -302,6 +303,7 @@ export const BioForm = () => {
         ...profile,
         bio: newBio,
       };
+      dispatch(infoSnackbar('Updating...'));
       dispatch(editProfile(userData));
       handleClose();
     };
@@ -426,6 +428,7 @@ export const ExperienceForm = () => {
           ...profile,
           experience: newExp ? newExp : profile.experience,
         };
+        dispatch(infoSnackbar('Updating...'));
         dispatch(editProfile(userData));
         handleClose();
       } else {
@@ -614,6 +617,7 @@ export const EducationForm = () => {
           ...profile,
           education: newEdu ? newEdu : profile.education,
         };
+        dispatch(infoSnackbar('Updating...'));
         dispatch(editProfile(userData));
         handleClose();
       } else {
@@ -800,6 +804,7 @@ export const AchievementForm = () => {
           ...profile,
           achievements: newAchv ? newAchv : profile.achievements,
         };
+        dispatch(infoSnackbar('Updating...'));
         dispatch(editProfile(userData));
         handleClose();
       } else {
