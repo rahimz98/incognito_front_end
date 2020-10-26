@@ -134,9 +134,13 @@ export default function Content(props) {
                             <LinkedinIcon size={36}/>
                         </LinkedinShareButton>
                     </Grid>
+                    {content.canEdit === true ?
                     <Grid item>
                         <Button variant='contained' color='primary' onClick={() => { history.push(`/${user.id}/${projectId}/edit`) }}>Edit Project</Button>
                     </Grid>
+                    :
+                    <Grid item></Grid>
+                    }
                 </Grid>
             </Grid>
 
