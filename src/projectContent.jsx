@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import history from './history';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { FacebookShareButton, FacebookIcon, LinkedinShareButton, LinkedinIcon } from "react-share";
+import HelmetMetaData from './HelmetMetaData';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,9 +34,9 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: '#2D3E50',
         }
-    }, 
-    socialMediaButton : {
-        margin : theme.spacing(1),
+    },
+    socialMediaButton: {
+        margin: theme.spacing(1),
     }
 }));
 
@@ -120,26 +121,28 @@ export default function Content(props) {
                         {linksPrint()}
                         {LinksList()}
                         <FacebookShareButton
-                            url={"http://www.facebook.com"} //ADD the proper project url when website is hosted
+                            url={`https://memento-front-end.herokuapp.com/${user.id}/${projectId}`} //ADD the proper project url when website is hosted
                             quote={"Check out this project!"}
                             hashtag="#Memento"
                             className={classes.socialMediaButton}>
                             <FacebookIcon size={36} />
                         </FacebookShareButton>
                         <LinkedinShareButton
-                            url={"http://www.linkedin.com"}
-                            source={"google.com"} //ADD project url when website is hosted
+                            title={content.name}
+                            summary={content.description}
+                            url={`https://memento-front-end.herokuapp.com/${user.id}/${projectId}`}
+                            source={`https://memento-front-end.herokuapp.com/${user.id}/${projectId}`} //ADD project url when website is hosted
                             className={classes.socialMediaButton}
-                        > 
-                            <LinkedinIcon size={36}/>
+                        >
+                            <LinkedinIcon size={36} />
                         </LinkedinShareButton>
                     </Grid>
                     {content.canEdit === true ?
-                    <Grid item>
-                        <Button variant='contained' color='primary' onClick={() => { history.push(`/${user.id}/${projectId}/edit`) }}>Edit Project</Button>
-                    </Grid>
-                    :
-                    <Grid item></Grid>
+                        <Grid item>
+                            <Button variant='contained' color='primary' onClick={() => { history.push(`/${user.id}/${projectId}/edit`) }}>Edit Project</Button>
+                        </Grid>
+                        :
+                        <Grid item></Grid>
                     }
                 </Grid>
             </Grid>
