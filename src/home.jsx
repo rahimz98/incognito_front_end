@@ -194,7 +194,7 @@ export default function HomePage() {
                                                     Upload Your Projects
                                                 </Typography>
                                                 <Typography align='center'>
-                                                    Start uploading your projects so you can show it to the public with a professional manner. Have Control on how your project will look like and show the world what your really capable of!
+                                                    Start uploading your projects so you can show it to the public with a professional manner. Have control on how your project will look like and show the world what your really capable of!
                                                 </Typography>
                                             </Box>
                                         </Box>

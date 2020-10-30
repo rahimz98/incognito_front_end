@@ -12,7 +12,17 @@ describe('Home', () => {
 
     expect(screen.getByText(/upload your projects/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/look up your colleague's projects/i)
+      screen.getByText(
+        'Start uploading your projects so you can show it to the public with a professional manner. Have control on how your project will look like and show the world what your really capable of!'
+      )
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/look up your colleague's profile/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'Search up your friends, associates or colleagues and be able to see their profile, resume and alongside their projects and all the hardwork they have accomplished over the years!'
+      )
     ).toBeInTheDocument();
   });
 });

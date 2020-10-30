@@ -198,11 +198,14 @@ const PersistentDrawerLeft = () => {
     //useEffect(() => {
     const token = localStorage.getItem('jwt');
     axios
-      .get(`https://memento-backend.herokuapp.com/api/project/get-project-list`, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      .get(
+        `https://memento-backend.herokuapp.com/api/project/get-project-list`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
         console.log('Hello world');
@@ -244,12 +247,7 @@ const PersistentDrawerLeft = () => {
       <Button className={classes.button} component={Link} to='/signup'>
         Get Started
       </Button>
-      <Button
-        variant='contained'
-        className={classes.signInButton}
-        component={Link}
-        to='/login'
-      >
+      <Button className={classes.signInButton} component={Link} to='/login'>
         Log In
       </Button>
     </React.Fragment>
