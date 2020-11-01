@@ -55,9 +55,13 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     submit: {
-    }
-
-
+    },
+    loadingBase: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '250px',
+      },
 }));
 
 const ranges = [
@@ -450,7 +454,7 @@ const EditProject = (props) => {
                                     )}
                                 </Formik>
                             </React.Fragment>
-                        ) : <CircularProgress />}
+                        ) : <div className = {classes.loadingBase}><CircularProgress /></div>}
 
                     </Grid>
                 </Grid>
