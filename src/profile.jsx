@@ -237,9 +237,11 @@ const Profile = () => {
   const handleChangeImage = (e) => {
     const decodedToken = jwtDecode(token);
     const image = e.target.files[0];
+    console.log(image);
     const formData = new FormData();
     formData.append('image', image);
     formData.append('userId', decodedToken.id);
+    console.log(formData);
     dispatch(infoSnackbar('Loading image...'));
     dispatch(uploadImage(formData));
   };

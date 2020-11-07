@@ -78,6 +78,7 @@ export const editProfile = (userData) => (dispatch) => {
 
 export const uploadImage = (imageData) => (dispatch) => {
   const token = localStorage.getItem('jwt');
+  console.log(imageData);
   axios
     .post(
       'https://memento-backend.herokuapp.com/about/uploadImage',

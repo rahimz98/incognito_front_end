@@ -4,7 +4,9 @@ import { useSelector } from 'react-redux';
 import history from './history';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { FacebookShareButton, FacebookIcon, LinkedinShareButton, LinkedinIcon } from "react-share";
+import ImageStepper from './ImageStepper.jsx';
 import HelmetMetaData from './HelmetMetaData';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -90,12 +92,14 @@ export default function Content(props) {
         if (content.blog) {
             return (
                 <>
+                {content.blog === "<p></p>" ? <div /> : 
                     <Paper elevation={0} className={classes.sidebarBlogBox}>
                         <Typography variant="h6" gutterBottom>
                             Blog
                         </Typography>
                         <div dangerouslySetInnerHTML={{ __html: content.blog }} />
                     </Paper>
+                }
                 </>
             )
         }
@@ -108,12 +112,15 @@ export default function Content(props) {
             <CssBaseline />
             <Grid container spacing={5} className={classes.mainGrid}>
                 <Divider />
+                {content.project === "<p></p>" ? <div /> :
                 <Grid item xs={12} md={8}>
                     <Paper className={classes.project}>
                         {content.project ? <div dangerouslySetInnerHTML={{ __html: content.project }} /> : <div dangerouslySetInnerHTML={{ __html: noProject }} />}
                     </Paper>
+                    
                 </Grid>
-                <Grid item container direction="column" xs={12} md={4}>
+                }
+                <Grid item container direction="column" xs md>
                     <Grid item>
                         {blogPrint()}
                     </Grid>
@@ -136,6 +143,9 @@ export default function Content(props) {
                         >
                             <LinkedinIcon size={36} />
                         </LinkedinShareButton>
+                    </Grid>
+                    <Grid item>
+                        <ImageStepper images={content.media} projectId={projectId}/>
                     </Grid>
                     {content.canEdit === true ?
                         <Grid item>

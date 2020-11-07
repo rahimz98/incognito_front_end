@@ -61,7 +61,10 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: '250px',
-      },
+    },
+    gallery: {
+        marginRight: theme.spacing(2),
+    }
 }));
 
 const ranges = [
@@ -435,6 +438,14 @@ const EditProject = (props) => {
                                                     </Dialog>
                                                 </Grid>
                                                 <Grid item>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        className={classes.gallery}
+                                                        onClick={() => history.push(`/${user.id}/${projectid}/images`)}
+                                                    >
+                                                        Upload Images
+                                                    </Button>
                                                     <Button
                                                         variant='contained'
                                                         color='primary'
