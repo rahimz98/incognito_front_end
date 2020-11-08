@@ -241,7 +241,6 @@ const EditProject = (props) => {
                         <Typography variant="h4" className={classes.edit}>Edit Project</Typography>
                         {project && project.name && project.collaborators && projectid ? (
                             <React.Fragment>
-                                <Typography className={classes.owner} >Owner: {project.owner}</Typography>
                                 <Formik
                                     initialValues={{
                                         projectId: `${projectid}`,

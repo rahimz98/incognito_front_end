@@ -12,8 +12,10 @@ import Hidden from '@material-ui/core/Hidden';
 import Popover from '@material-ui/core/Popover';
 import ListItemText from '@material-ui/core/ListItemText';
 import projectDefaultPic1 from './images/projectDefaultBG1.png';
-import { Divider } from '@material-ui/core';
+import { Button, Divider } from '@material-ui/core';
 import {  useSelector } from 'react-redux';
+import history from './history';
+
 
 
 
@@ -61,6 +63,9 @@ const useStyles = makeStyles((theme) => ({
   },
   grids: {
     margin: "0",
+  },
+  collabButton: {
+    textTransform: 'none',
   }
 }));
 
@@ -69,13 +74,16 @@ export default function MainFeaturedPost(props) {
   const { content, projectId } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handlePopoverOpen = (event) => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handlePopoverClose = () => {
+
+  const handleClose = () => {
     setAnchorEl(null);
   };
+
   const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   let collabList = (<div></div>)
   if (content && Object.keys(content).length && content.collaborators) {
@@ -101,9 +109,9 @@ export default function MainFeaturedPost(props) {
               <Typography variant="h5" color="inherit" paragraph>
                 {content.description}
               </Typography>
-              <Link variant="subtitle1" href="#">
-                link
-            </Link>
+              <Link variant="subtitle1" onClick={() => history.push(`/${content.ownerId}`)}>
+                Visit Profile
+              </Link>
             </div>
           </Grid>
         </Grid>
@@ -114,29 +122,21 @@ export default function MainFeaturedPost(props) {
               <div className={classes.cardDetails}>
                 <CardContent>
                   <Typography component="h2" variant="h5">
-                    Project Owner: {content.owner}
-                  </Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
                     Creation : {content.creationDate}
                   </Typography>
-                  <Typography
+                  <Button
                     variant="subtitle1"
-                    paragraph
-                    aria-owns={open ? 'mouse-over-popover' : undefined}
-                    aria-haspopup="true"
-                    onMouseEnter={handlePopoverOpen}
-                    onMouseLeave={handlePopoverClose}
+                    aria-describedby={id}
+                    onClick={handleClick}
+                    className={classes.collabButton}
                   >
                     Collaborators
-              </Typography>
+                  </Button>
                   <Popover
-                    id="mouse-over-popover"
-                    className={classes.popover}
-                    classes={{
-                      paper: classes.paper,
-                    }}
+                    id={id}
                     open={open}
                     anchorEl={anchorEl}
+                    onClose={handleClose}
                     anchorOrigin={{
                       vertical: 'bottom',
                       horizontal: 'left',
@@ -145,8 +145,6 @@ export default function MainFeaturedPost(props) {
                       vertical: 'top',
                       horizontal: 'left',
                     }}
-                    onClose={handlePopoverClose}
-                    disableRestoreFocus
                   >
                     {collabList}
                   </Popover>

@@ -50,7 +50,8 @@ const Project = () => {
     const [project, setProject] = useState({});
     console.log("ProjectID id is " + projectid);
     const user = useSelector(store => store.user);
-
+    const token = localStorage.getItem('jwt');
+    const { id } = useParams();
 
 
     useEffect(() => {
@@ -63,38 +64,43 @@ const Project = () => {
                 }
             })
             .then(res => {
-                console.log("res:",res);
+                console.log("res:", res);
                 setProject(res.data);
             })
     }, [projectid]);
 
     return (
-        <div className={classes.root}>
-            <Grid container>
-                <Grid item xs={1} />
-                <Grid item xs={10}>
-                    {project ?
-                        <Grid item container direction="column" spacing={2} >
-                            <Grid item />
-                            <Grid item container spacing={1}>
-                                <Grid item xs={12} >
-                                    <ProjectHeading content={project} projectId={projectid} />
+        <>
+            {token === null || parseInt(id) !== user.id ? (
+                console.log("visitor can view project") 
+            ) : (console.log("logged in user can view content"))}
+            <div className={classes.root}>
+                <Grid container>
+                    <Grid item xs={1} />
+                    <Grid item xs={10}>
+                        {project ?
+                            <Grid item container direction="column" spacing={2} >
+                                <Grid item />
+                                <Grid item container spacing={1}>
+                                    <Grid item xs={12} >
+                                        <ProjectHeading content={project} projectId={projectid} />
 
+                                    </Grid>
+                                </Grid>
+
+                                <Grid item container >
+                                    <ProjectContent content={project} projectId={projectid} />
                                 </Grid>
                             </Grid>
-
-                            <Grid item container >
-                                <ProjectContent content={project} projectId={projectid} />
-                            </Grid>
-                        </Grid>
-                        :
-                        <PrivateProject />
-                    }
+                            :
+                            <PrivateProject />
+                        }
+                    </Grid>
+                    <Grid item xs={1} />
                 </Grid>
-                <Grid item xs={1} />
-            </Grid>
 
-        </div>
+            </div>
+        </>
     )
 }
 

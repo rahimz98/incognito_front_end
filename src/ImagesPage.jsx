@@ -63,7 +63,7 @@ const ImagePage = () => {
                 setProject(res.data);
                 setImages(res.data.media);
             })
-    }, [projectid]);
+    }, [images.length]);
 
 
     const uploadMedia = (formData) => {
@@ -76,8 +76,9 @@ const ImagePage = () => {
                 }
             })
             .then((res) => {
-                console.log(res.data.media);
+                console.log("media recieved:",res.data.media);
                 setImages(res.data.media);
+                window.location.reload(false);
 
             })
             .catch((err) => {

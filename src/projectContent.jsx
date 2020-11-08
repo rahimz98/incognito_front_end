@@ -66,7 +66,7 @@ export default function Content(props) {
             return (
                 <>
                     <List>
-                        <a style={{ fontSize: "20px", textTransform: 'none', color: "" }} href={value}>{value}</a>
+                        <Button style={{ fontSize: "20px", textTransform: 'none', color: "" }} onClick={() => window.open(`https://facebook.com`)}>{value}</Button>
                     </List>
                 </>
             )
@@ -80,7 +80,8 @@ export default function Content(props) {
                 <>
                     <List>
                         {linksList = links.map((value, index) => {
-                            return <ListItem style={{ fontSize: "15px", textTransform: 'none', color: "" }} ><a style={{ fontSize: "20px", textTransform: 'none', color: "", display: "table-cell" }} href={value} target="_blank">{value}</a></ListItem>
+                            console.log(value);
+                            return <ListItem style={{ fontSize: "15px", textTransform: 'none', color: "" }} ><Button style={{ fontSize: "20px", textTransform: 'none', color: "", display: "table-cell" }} onClick={() => window.open(value)} >{value}</Button></ListItem>
                         })}
                     </List>
                 </>
