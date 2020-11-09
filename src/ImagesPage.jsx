@@ -78,7 +78,7 @@ const ImagePage = () => {
 
     const uploadMedia = (formData) => {
         axios
-            .post('http://localhost:5000/api/project/edit/add-media', formData, {
+            .post('https://memento-backend.herokuapp.com/api/project/edit/add-media', formData, {
                 headers: {
                     Authorization: token,
                     'Access-Control-Allow-Origin': '*',
@@ -105,7 +105,7 @@ const ImagePage = () => {
         //imageInfo.append('projectId',projectid);
         //imageInfo.append('deleteMediaName', imageName);
         axios
-            .post('http://localhost:5000/api/project/edit/delete-media', imageInfo, {
+            .post('https://memento-backend.herokuapp.com/api/project/edit/delete-media', imageInfo, {
                 headers: {
                     Authorization: token,
                 }
