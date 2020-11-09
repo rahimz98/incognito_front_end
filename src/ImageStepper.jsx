@@ -61,7 +61,7 @@ const SwipeableTextMobileStepper = (props) => {
     };
 
     const handleOpen = () => {
-        history.push(`/${user.id}/${projectId}/images`);
+        history.push(`/${user.id}/${projectId}/gallery`);
     }
 
     return (
@@ -74,10 +74,10 @@ const SwipeableTextMobileStepper = (props) => {
                         onChangeIndex={handleStepChange}
                         enableMouseEvents
                     >
-                        {images.map((step, index) => (
+                        {Object.entries(images).map(([imageName,imageLink], index) => (
                             <div >
                                 {Math.abs(activeStep - index) <= 2 ? (
-                                    <img className={classes.img} src={step} alt="image" onClick={handleOpen}/>
+                                    <img className={classes.img} src={imageLink} alt="image" onClick={handleOpen}/>
                                 ) : null}
                             </div>
                         ))}

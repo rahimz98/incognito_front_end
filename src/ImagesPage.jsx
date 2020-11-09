@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { DropzoneDialog } from 'material-ui-dropzone'
-import { Button, Card, CardContent, CardMedia, CircularProgress, Grid, Input, makeStyles, Typography } from '@material-ui/core';
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CircularProgress, Fab, Grid, Input, makeStyles, Typography } from '@material-ui/core';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +31,14 @@ const useStyles = makeStyles((theme) => ({
     cardContent: {
         textAlign: "center",
     },
+    delete: {
+        backgroundColor: "#DC004E",
+        color: "#FFFFFF",
+        '&:hover': {
+            backgroundColor: "#DC004E",
+            color: "#FFFFFF"
+        },
+    },
 }));
 
 const NoImage = () => {
@@ -45,7 +55,7 @@ const ImagePage = () => {
     const [project, setProject] = useState({});
     const { projectid } = useParams();
     const classes = useStyles();
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState({});
 
 
 
@@ -76,10 +86,33 @@ const ImagePage = () => {
                 }
             })
             .then((res) => {
-                console.log("media recieved:",res.data.media);
+                console.log("media recieved:", res.data.media);
                 setImages(res.data.media);
-                window.location.reload(false);
+                //window.location.reload(false);
 
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+
+    const deleteImage = (imageName) => {
+        var imageInfo = {
+            projectId: `${projectid}`,
+            deleteMediaName: `${imageName}`
+        }
+        console.log("ProjectID:",projectid,"imageName:",imageName);
+        //imageInfo.append('projectId',projectid);
+        //imageInfo.append('deleteMediaName', imageName);
+        axios
+            .post('http://localhost:5000/api/project/edit/delete-media', imageInfo, {
+                headers: {
+                    Authorization: token,
+                }
+            })
+            .then((res) => {
+                console.log("media recieved:", res.data.media);
+                setImages(res.data.media);
             })
             .catch((err) => {
                 console.log(err);
@@ -101,7 +134,7 @@ const ImagePage = () => {
         formData.append('projectId', projectid);
         console.log("formData:", formData);
         uploadMedia(formData);
-        
+
 
     }
 
@@ -112,16 +145,28 @@ const ImagePage = () => {
     const toFirstCharUppercase = (name) =>
         name.charAt(0).toUpperCase() + name.slice(1);
 
-    const getImage = (file) => {
+    const getImage = (fileName, fileLink) => {
         return (
             <Grid item xs={4}>
-                <Card onClick={() => window.open(file)}>
-                    <CardMedia
-                        className={classes.cardMedia}
-                        image={file}
-                        style={{ height: "200px" }}
-                        
-                    />
+                <Card>
+                    <CardActionArea onClick={() => window.open(fileLink)}>
+                        <CardMedia
+                            className={classes.cardMedia}
+                            image={fileLink}
+                            style={{ height: "200px" }}
+
+                        />
+                    </CardActionArea>
+                    <CardActions>
+                        <Grid
+                            container
+                            justify="flex-end"
+                        >
+                            <Fab size="small" color="primary" aria-label="add">
+                                <DeleteOutlineIcon onClick={() => deleteImage(fileName)} />
+                            </Fab>
+                        </Grid>    
+                    </CardActions>
                 </Card>
             </Grid>
         )
@@ -129,39 +174,38 @@ const ImagePage = () => {
 
 
     return (
-        <Grid container>
-            <Grid item xs={2} />
-            <Grid item xs={8} >
-                <Typography variant="h3">Gallery</Typography>
-                {project.canEdit === true ?
-                    <Button variant='contained' color='primary' onClick={handleOpen.bind(this)}>
-                        Add Image
-                    </Button>
-                    :
-                    <Grid item></Grid>
-                }
-                {images ? (
-                    <Grid container spacing={2} className={classes.imageContainer}>
-                        {images.map(
-                            (image) =>
-                                getImage(image)
-                        )}
+                <Grid container>
+                    <Grid item xs={2} />
+                    <Grid item xs={8} >
+                        <Typography variant="h3">Gallery</Typography>
+                        <Grid container justify="space-between">
+                            <Grid item>
+                                <Button variant='contained' color='primary' onClick={handleOpen.bind(this)}>
+                                    Add Images
+                                </Button>
+                            </Grid>
+                        </Grid>
+                        {images ? (
+                            <Grid container spacing={2} className={classes.imageContainer}>
+                                {Object.entries(images).map(([imageName, imageLink]) =>
+                                    getImage(imageName, imageLink)
+                                )}
+                            </Grid>
+                        ) : (
+                                <div className={classes.loadingBase}><NoImage /></div>
+                            )}
+                        <DropzoneDialog
+                            open={open}
+                            onSave={handleSave.bind(this)}
+                            acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+                            showPreviews={true}
+                            maxFileSize={25000000}
+                            filesLimit={10}
+                            onClose={handleClose.bind(this)}
+                        />
                     </Grid>
-                ) : (
-                    <div className = {classes.loadingBase}><NoImage /></div>
-                    )}
-                <DropzoneDialog
-                    open={open}
-                    onSave={handleSave.bind(this)}
-                    acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
-                    showPreviews={true}
-                    maxFileSize={25000000}
-                    filesLimit={10}
-                    onClose={handleClose.bind(this)}
-                />
-            </Grid>
-            <Grid item xs={2} />
-        </Grid>
+                    <Grid item xs={2} />
+                </Grid>
     );
 }
 
