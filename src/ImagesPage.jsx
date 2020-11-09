@@ -63,7 +63,7 @@ const ImagePage = () => {
                 setProject(res.data);
                 setImages(res.data.media);
             })
-    }, [images.length]);
+    }, [projectid]);
 
 
     const uploadMedia = (formData) => {
