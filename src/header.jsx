@@ -367,6 +367,7 @@ const PersistentDrawerLeft = () => {
             aria-label='add'
             onClick={() => {
               history.push(`/${user.id}`);
+              setOpen(false);
             }}
           >
             <Fab color='primary' className={classes.fab}>
@@ -385,6 +386,7 @@ const PersistentDrawerLeft = () => {
               key={index}
               onClick={() => {
                 history.push(`/${user.id}/${key}`);
+                setOpen(false);
               }}
             >
               <ListItemIcon>
@@ -406,6 +408,7 @@ const PersistentDrawerLeft = () => {
             aria-label='add'
             onClick={() => {
               history.push(`/${user.id}/createProject`);
+              setOpen(false);
             }}
           >
             <Fab color='primary'>

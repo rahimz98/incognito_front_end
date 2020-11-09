@@ -61,7 +61,10 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: '250px',
-      },
+    },
+    gallery: {
+        marginRight: theme.spacing(2),
+    }
 }));
 
 const ranges = [
@@ -238,7 +241,6 @@ const EditProject = (props) => {
                         <Typography variant="h4" className={classes.edit}>Edit Project</Typography>
                         {project && project.name && project.collaborators && projectid ? (
                             <React.Fragment>
-                                <Typography className={classes.owner} >Owner: {project.owner}</Typography>
                                 <Formik
                                     initialValues={{
                                         projectId: `${projectid}`,
@@ -435,6 +437,14 @@ const EditProject = (props) => {
                                                     </Dialog>
                                                 </Grid>
                                                 <Grid item>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        className={classes.gallery}
+                                                        onClick={() => history.push(`/${user.id}/${projectid}/images`)}
+                                                    >
+                                                        Upload Images
+                                                    </Button>
                                                     <Button
                                                         variant='contained'
                                                         color='primary'
