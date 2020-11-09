@@ -68,7 +68,12 @@ export const editProfile = (userData) => (dispatch) => {
         },
       }
     )
-    .then(() => {
+    .then((res) => {
+      const validEmail = res.data.emailAlreadyInUse;
+      if (validEmail) {
+        dispatch(errorSnackbar('This email address has already been taken.'));
+      }
+      console.log(res.data);
       dispatch(getUserProfile());
     })
     .catch((err) => {
