@@ -21,19 +21,24 @@ describe('Project', () => {
     screen.debug(null, 20000);
     expect(screen.getByText('Project John')).toBeInTheDocument();
     expect(screen.getByText('project john description')).toBeInTheDocument();
-    expect(screen.getByText('link')).toBeInTheDocument();
-    expect(screen.getByText(/project owner/i)).toBeInTheDocument();
+    expect(screen.getByText('Visit Profile')).toBeInTheDocument();
+
     expect(screen.getByText('Creation : 2020-10-25')).toBeInTheDocument();
     expect(screen.getByText(/collaborators/i)).toBeInTheDocument();
     const collabs = screen.getByText(/collaborators/i);
-    fireEvent.mouseOver(collabs);
+    fireEvent.click(collabs);
     expect(screen.getByText('johnsmith@gmail.com')).toBeInTheDocument();
+
     expect(screen.getByText('project content')).toBeInTheDocument();
+
     expect(screen.getByText(/blog/i)).toBeInTheDocument();
     expect(screen.getByText('project john reflections')).toBeInTheDocument();
+
     expect(screen.getByText('Links')).toBeInTheDocument();
     expect(screen.getByText('johnsmith.com')).toBeInTheDocument();
-    // test sharing icons
+
+    expect(screen.getByLabelText('facebook')).toBeInTheDocument();
+    expect(screen.getByLabelText('linkedin')).toBeInTheDocument();
 
     expect(screen.getByText(/edit project/i)).toBeInTheDocument();
   });
