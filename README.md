@@ -17,6 +17,10 @@
 - [Installation guide](#installation-guide) 
 - [API Documentation](#api-documentation)
 
+## About
+
+Memento is a retrospective based e-portfolio website meant to be used for students to showcase their projects to the public. Users are able to view other users as well as the projects that other users are currently working on via the search bar. Users can also choose to publicize or privatize their projects used for privacy-sake. 
+
 ## Creators
 - Zill-e Rahim
 - Gieester Thai
@@ -24,27 +28,23 @@
 - Marcus Lim
 - Jason Thien
 
-## About
-
-Memento is a retrospective based e-portfolio website meant to be used for students to showcase their projects to the public. Users are able to view other users as well as the projects that other users are currently working on via the search bar. Users can also choose to publicize or privatize their projects used for privacy-sake. 
-
 ## Demo
 
 Following this [Link](https://memento-front-end.herokuapp.com/), you will be able to demo our product at your own leisure
 
 ## Features
-Register & Login
+**Register & Login**
 
 ![Register & Login](/readme_media/register.gif)
 
-User Profile
+**User Profile**
 - Edit profile
 - Change profile picture
 - Add & remove resume
 
 ![User Profile](/readme_media/profile.gif)
 
-Sidebar 
+**Sidebar**
 - Access to home and projects
 - Create projects
 
@@ -52,7 +52,7 @@ Sidebar
 
 ![Sidebar](/readme_media/createproject.gif)
 
-Projects
+**Projects**
 - Edit & delete projects
 - Add & delete images
 - Share to social media
@@ -60,12 +60,12 @@ Projects
 
 ![Projects](/readme_media/project.gif)
 
-Search
+**Search**
 - Find people & projects
 
 ![Search](/readme_media/search.gif)
 
-Dark Mode
+**Dark Mode**
 
 ![Dark Mode](/readme_media/darkmode.gif)
 
