@@ -5,7 +5,7 @@ import history from '../history';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { FacebookShareButton, FacebookIcon, LinkedinShareButton, LinkedinIcon } from "react-share";
 import ImageStepper from './ImageStepper.jsx';
-import HelmetMetaData from '../HelmetMetaData';
+import HelmetMetaData from '../utils/HelmetMetaData';
 
 
 
