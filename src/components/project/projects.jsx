@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, makeStyles } from '@material-ui/core';
+import { CircularProgress, Grid, makeStyles } from '@material-ui/core';
 import ProjectContent from './projectContent.jsx';
 import axios from 'axios';
 import ProjectHeading from './projectHeading.jsx';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import ViewProject from './viewProject';
+import NotFound from '../notFound/notFound';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
     mainGrid: {
         margintop: theme.spacing(3),
     },
+    loadingBase: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: '250px',
+    },
 }));
 
 const PrivateProject = () => {
@@ -52,6 +60,8 @@ const Project = () => {
     const user = useSelector(store => store.user);
     const token = localStorage.getItem('jwt');
     const { id } = useParams();
+    const [open, setOpen] = useState(true);
+    const [dataReceived, setDataReceived] = useState(false);
 
 
     useEffect(() => {
@@ -65,43 +75,71 @@ const Project = () => {
             })
             .then(res => {
                 console.log("res:", res);
-                setProject(res.data);
+                setDataReceived(true);
+                if (res.data.msg === "Project does not exist") {
+                    setOpen(false);
+                    console.log("Project was not found");
+                }
+                else {
+                    setProject(res.data);
+                    setOpen(true);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
             })
     }, [projectid]);
 
     return (
         <>
-            {token === null || parseInt(id) !== user.id ? (
-                console.log("visitor can view project") 
-            ) : (console.log("logged in user can view content"))}
-            <div className={classes.root}>
-                <Grid container>
-                    <Grid item xs={1} />
-                    <Grid item xs={10}>
-                        {project ?
-                            <Grid item container direction="column" spacing={2} >
-                                <Grid item />
-                                <Grid item container spacing={1}>
-                                    <Grid item xs={12} >
-                                        <ProjectHeading content={project} projectId={projectid} />
+            {token === null ?
+                <ViewProject projectId={projectid} />
+                :
+                <>
+                    {dataReceived ?
+                        <>
+                            {open == false ? (<NotFound />) :
 
+                                <div className={classes.root}>
+                                    <Grid container>
+                                        <Grid item xs={1} />
+                                        <Grid item xs={10}>
+                                            {project ?
+                                                <Grid item container direction="column" spacing={2} >
+                                                    <Grid item />
+                                                    <Grid item container spacing={1}>
+                                                        <Grid item xs={12} >
+                                                            <ProjectHeading content={project} projectId={projectid} />
+
+                                                        </Grid>
+                                                    </Grid>
+
+                                                    <Grid item container >
+                                                        <ProjectContent content={project} projectId={projectid} />
+                                                    </Grid>
+                                                </Grid>
+                                                :
+                                                <div className={classes.loadingBase}><CircularProgress /></div>
+                                            }
+                                        </Grid>
+                                        <Grid item xs={1} />
                                     </Grid>
-                                </Grid>
 
-                                <Grid item container >
-                                    <ProjectContent content={project} projectId={projectid} />
-                                </Grid>
-                            </Grid>
-                            :
-                            <PrivateProject />
-                        }
-                    </Grid>
-                    <Grid item xs={1} />
-                </Grid>
+                                </div>
+                            }
+                        </>
+                        :
+                        <div className={classes.loadingBase}><CircularProgress /></div>
 
-            </div>
+                    }
+                </>
+
+            }
+
+
         </>
     )
 }
 
 export default Project;
+

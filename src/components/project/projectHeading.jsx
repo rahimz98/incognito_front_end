@@ -12,7 +12,7 @@ import Hidden from '@material-ui/core/Hidden';
 import Popover from '@material-ui/core/Popover';
 import ListItemText from '@material-ui/core/ListItemText';
 import projectDefaultPic1 from '../../images/projectDefaultBG1.png';
-import { Button, Divider } from '@material-ui/core';
+import { Button, CircularProgress, Divider } from '@material-ui/core';
 import history from '../../history';
 
 
@@ -63,7 +63,13 @@ const useStyles = makeStyles((theme) => ({
   },
   collabButton: {
     textTransform: 'none',
-  }
+  },
+  loadingBase: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: '250px',
+},
 }));
 
 export default function MainFeaturedPost(props) {
@@ -94,6 +100,7 @@ export default function MainFeaturedPost(props) {
 
   return (
     <>
+   
       <Paper className={classes.mainFeaturedPost}  >
 
         <div className={classes.overlay} />
@@ -154,9 +161,8 @@ export default function MainFeaturedPost(props) {
             </Card>
         </Grid>
       </Grid>
-
-
     </>
+  
   );
 }
 

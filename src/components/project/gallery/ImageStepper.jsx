@@ -44,7 +44,7 @@ const SwipeableTextMobileStepper = (props) => {
     let maxSteps = 0 
 
     if (images){
-        maxSteps = images.length;
+        maxSteps = Object.keys(images).length;
     }
 
     const handleNext = () => {
