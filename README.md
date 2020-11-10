@@ -1,5 +1,5 @@
 <p>
-    <img src='readme_gifs/logo.png' 
+    <img src='readme_media/logo.png' 
         style='display: block;
             margin-left: auto;
             margin-right: auto;
@@ -35,22 +35,22 @@ Following this [Link](https://memento-front-end.herokuapp.com/), you will be abl
 ## Features
 Register & Login
 
-![Register & Login](/readme_gifs/register.gif)
+![Register & Login](/readme_media/register.gif)
 
 User Profile
 - Edit profile
 - Change profile picture
 - Add & remove resume
 
-![User Profile](/readme_gifs/profile.gif)
+![User Profile](/readme_media/profile.gif)
 
 Sidebar 
 - Access to home and projects
 - Create projects
 
-![Sidebar](/readme_gifs/menu.gif)
+![Sidebar](/readme_media/menu.gif)
 
-![Sidebar](/readme_gifs/createproject.gif)
+![Sidebar](/readme_media/createproject.gif)
 
 Projects
 - Edit & delete projects
@@ -58,16 +58,16 @@ Projects
 - Share to social media
 - Public & private visibility
 
-![Projects](/readme_gifs/project.gif)
+![Projects](/readme_media/project.gif)
 
 Search
 - Find people & projects
 
-![Search](/readme_gifs/search.gif)
+![Search](/readme_media/search.gif)
 
 Dark Mode
 
-![Dark Mode](/readme_gifs/darkmode.gif)
+![Dark Mode](/readme_media/darkmode.gif)
 
 ## Installation Guide 
 
