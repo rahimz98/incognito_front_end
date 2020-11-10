@@ -1,21 +1,14 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Hidden, Card, CardMedia } from "@material-ui/core";
-import logo from './logo.png';
+import logo from '../images/logo.png';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Grow from '@material-ui/core/Grow';
 import Zoom from '@material-ui/core/Zoom';
-import flatOfficePic from './images/flatOffice.png';
-import projectLaptop from './images/projectLaptop.jpg';
-import Typical from 'react-typical'
-
-
-
-
-
-
+import flatOfficePic from '../images/flatOffice.png';
+import projectLaptop from '../images/projectLaptop.jpg';
 
 const userStyles = makeStyles((theme) => ({
 

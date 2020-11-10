@@ -1,11 +1,11 @@
 import React from 'react';
 import { Grid, Paper, makeStyles, Typography, Button, Divider, List, ListItem } from '@material-ui/core';
 import { useSelector } from 'react-redux';
-import history from './history';
+import history from '../history';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { FacebookShareButton, FacebookIcon, LinkedinShareButton, LinkedinIcon } from "react-share";
 import ImageStepper from './ImageStepper.jsx';
-import HelmetMetaData from './HelmetMetaData';
+import HelmetMetaData from '../HelmetMetaData';
 
 
 

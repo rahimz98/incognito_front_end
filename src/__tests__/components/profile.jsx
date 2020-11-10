@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, screen } from '../../testProps/testUtils';
-import Profile from '../../profile';
+import { render, fireEvent, screen } from '../../utils/testUtils';
+import Profile from '../../components/profile';
 import {
   mockUserProfile,
   mockEmptyUserProfile,
-} from '../../testProps/mockData';
+} from '../../utils/mockData';
 
 describe('Profile', () => {
   beforeEach(() => {

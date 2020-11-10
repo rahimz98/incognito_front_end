@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, screen } from '../../testProps/testUtils';
-import Project from '../../projects';
-import { mockProject } from '../../testProps/mockData';
+import { render, fireEvent, screen } from '../../utils/testUtils';
+import Project from '../../components/projects';
+import { mockProject } from '../../utils/mockData';
 import mockAxios from 'axios';
 import MutationObserver from '@sheerun/mutationobserver-shim';
 window.MutationObserver = MutationObserver;

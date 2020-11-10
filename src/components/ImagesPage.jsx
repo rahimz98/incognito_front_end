@@ -4,7 +4,6 @@ import { Button, Card, CardContent, CardMedia, CircularProgress, Grid, Input, ma
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
-
 const useStyles = makeStyles((theme) => ({
     loadingBase: {
         display: 'flex',

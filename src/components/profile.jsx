@@ -10,7 +10,7 @@ import {
   AchievementForm,
 } from './editProfile';
 import ViewProfile from './viewProfile';
-import { uploadImage, uploadResume } from './actions/user';
+import { uploadImage, uploadResume } from '../actions/user';
 import {
   editBasic,
   editBio,
@@ -18,10 +18,10 @@ import {
   editEducation,
   editAchievements,
   closeEdits,
-} from './actions/profile';
+} from '../actions/profile';
 import jwtDecode from 'jwt-decode';
 import { generate } from 'shortid';
-import { infoSnackbar } from './actions/snackbar';
+import { infoSnackbar } from '../actions/snackbar';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';

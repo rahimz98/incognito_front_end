@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { editProfile, deleteResume } from './actions/user';
+import { editProfile, deleteResume } from '../actions/user';
 import {
   editBasic,
   editBio,
   editExperience,
   editEducation,
   editAchievements,
-} from './actions/profile';
+} from '../actions/profile';
 import { AddResumeButton, ViewResume } from './profile';
 import { generate } from 'shortid';
-import { errorSnackbar, infoSnackbar } from './actions/snackbar';
+import { errorSnackbar, infoSnackbar } from '../actions/snackbar';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';

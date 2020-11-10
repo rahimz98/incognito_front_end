@@ -9,21 +9,21 @@ import store from './store';
 import { logout, getUserProfile } from './actions/user';
 import { SET_AUTHENTICATED, SET_USER_ID } from './types';
 // Components
-import Snackbar from './snackbar';
-import Header from './header';
-import Footer from './footer';
+import Snackbar from './components/snackbar';
+import Header from './components/header';
+import Footer from './components/footer';
 // Pages
-import Login from './login';
-import SignUp from './signUp';
-import HomePage from './home';
-import Profile from './profile';
-import NotFound from './notFound';
-import aboutUs from './aboutUs';
-import SearchPage from './searchPage';
-import Project from './projects';
-import CreateProject from './createProject';
-import EditProject from './editProject';
-import ImagePage from './ImagesPage';
+import Login from './components/login';
+import SignUp from './components/signUp';
+import HomePage from './components/home';
+import Profile from './components/profile';
+import NotFound from './components/notFound';
+import aboutUs from './components/aboutUs/aboutUs';
+import SearchPage from './components/searchPage';
+import Project from './components/projects';
+import CreateProject from './components/createProject';
+import EditProject from './components/editProject';
+import ImagePage from './components/ImagesPage';
 
 const useStyles = makeStyles((theme) => ({
   root: {

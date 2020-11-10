@@ -11,9 +11,9 @@ import {
   CardContent,
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import { loginUser } from './actions/user';
-import history from './history';
-import logo from './logoOwl.png';
+import { loginUser } from '../actions/user';
+import history from '../history';
+import logo from '../images/logoOwl.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -1,8 +1,8 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render, fireEvent, screen } from '../../testProps/testUtils';
-import ViewProfile from '../../viewProfile';
-import { mockViewUser } from '../../testProps/mockData';
+import { render, fireEvent, screen } from '../../utils/testUtils';
+import ViewProfile from '../../components/viewProfile';
+import { mockViewUser } from '../../utils/mockData';
 import mockAxios from 'axios';
 import MutationObserver from '@sheerun/mutationobserver-shim';
 window.MutationObserver = MutationObserver;
