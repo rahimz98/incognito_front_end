@@ -9,22 +9,22 @@ import store from './store';
 import { logout, getUserProfile } from './actions/user';
 import { SET_AUTHENTICATED, SET_USER_ID } from './types';
 // Components
-import Snackbar from './components/snackbar';
-import Header from './components/header';
-import Footer from './components/footer';
+import Snackbar from './components/snackbar/snackbar';
+import Header from './components/header/header';
+import Footer from './components/footer/footer';
 // Pages
-import Login from './components/login';
-import SignUp from './components/signUp';
-import HomePage from './components/home';
-import Profile from './components/profile';
-import NotFound from './components/notFound';
+import Login from './components/userAuth/login';
+import SignUp from './components/userAuth/signUp';
+import HomePage from './components/home/home';
+import Profile from './components/profile/profile';
+import NotFound from './components/notFound/notFound';
 import aboutUs from './components/aboutUs/aboutUs';
-import SearchPage from './components/searchPage';
-import Project from './components/projects';
-import CreateProject from './components/createProject';
-import EditProject from './components/editProject';
-import ImagePage from './components/ImagesPage';
-import Gallery from './components/Gallery';
+import SearchPage from './components/search/searchPage';
+import Project from './components/project/projects';
+import CreateProject from './components/project/createProject';
+import EditProject from './components/project/editProject';
+import ImagePage from './components/project/gallery/ImagesPage';
+import Gallery from './components/project/gallery/Gallery';
 
 const useStyles = makeStyles((theme) => ({
   root: {

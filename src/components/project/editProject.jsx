@@ -2,7 +2,7 @@ import { Grid, Hidden, makeStyles, Paper } from '@material-ui/core';
 import * as React from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import history from '../history';
+import history from '../../history';
 import { useSelector } from 'react-redux';
 import { Formik, Form, Field, FieldArray } from 'formik';
 import {

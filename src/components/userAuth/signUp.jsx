@@ -11,9 +11,9 @@ import {
   CardContent,
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import { loginUser } from '../actions/user';
-import history from '../history';
-import logo from '../images/logoOwl.png';
+import { createUser } from '../../actions/user';
+import history from '../../history';
+import logo from '../../images/logoOwl.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,31 +26,47 @@ const useStyles = makeStyles((theme) => ({
   form: {
     marginTop: theme.spacing(3),
   },
+  agreement: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: theme.spacing(3),
+  },
   submit: {
     marginTop: theme.spacing(3),
     float: 'right',
   },
-  signup: {
+  login: {
     marginTop: theme.spacing(3),
     float: 'left',
   },
 }));
 
+function validateName(name) {
+  return name.length >= 2 && name.length <= 50;
+}
+
 function validateEmail(email) {
-  return email.length > 0;
+  return (
+    email !== '' && email.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/)
+  );
 }
 
 function validatePassword(password) {
-  return password.length > 0;
+  return password.length >= 8;
 }
 
-const Login = () => {
+const SignUp = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [isValid, setIsValid] = useState({
+    firstname: true,
+    lastname: true,
     email: true,
     password: true,
   });
@@ -60,6 +76,16 @@ const Login = () => {
       history.push(`/${user.id}`);
     }
   }, [user.isAuth, user.id]);
+
+  const handleFirstnameChange = (e) => {
+    setFirstname(e.target.value);
+    setIsValid({ ...isValid, firstname: true });
+  };
+
+  const handleLastnameChange = (e) => {
+    setLastname(e.target.value);
+    setIsValid({ ...isValid, lastname: true });
+  };
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -81,12 +107,20 @@ const Login = () => {
     e.preventDefault();
 
     setIsValid({
+      firstname: validateName(firstname),
+      lastname: validateName(lastname),
       email: validateEmail(email),
       password: validatePassword(password),
     });
 
-    if (validateEmail(email) && validatePassword(password)) {
-      dispatch(loginUser({ email, password }));
+    // Check for valid inputs before proceeding
+    if (
+      validateName(firstname) &&
+      validateName(lastname) &&
+      validateEmail(email) &&
+      validatePassword(password)
+    ) {
+      dispatch(createUser({ email, firstname, lastname, password }));
     }
   };
 
@@ -97,12 +131,42 @@ const Login = () => {
         <CardContent>
           <div className={classes.root}>
             <img src={logo} alt='logoOwl' />
-            <Typography variant='h5'>Welcome</Typography>
+            <Typography variant='h5'>Create your Account!</Typography>
             <form className={classes.form} onKeyDown={onEnterPress} noValidate>
               <Grid container spacing={3}>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={6}>
                   <TextField
                     autoFocus
+                    error={!isValid.firstname}
+                    fullWidth
+                    helperText={
+                      isValid.firstname ? '' : 'Must be between 2-50 characters'
+                    }
+                    inputProps={{ 'data-testid': 'firstname' }}
+                    label='First Name'
+                    name='firstname'
+                    onChange={handleFirstnameChange}
+                    required
+                    type='text'
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    error={!isValid.lastname}
+                    fullWidth
+                    helperText={
+                      isValid.lastname ? '' : 'Must be between 2-50 characters'
+                    }
+                    inputProps={{ 'data-testid': 'lastname' }}
+                    label='Last Name'
+                    name='lastname'
+                    onChange={handleLastnameChange}
+                    required
+                    type='text'
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
                     error={!isValid.email}
                     fullWidth
                     helperText={
@@ -121,7 +185,7 @@ const Login = () => {
                     error={!isValid.password}
                     fullWidth
                     helperText={
-                      isValid.password ? '' : 'Please enter your password'
+                      isValid.password ? '' : 'Must be longer than 8 characters'
                     }
                     inputProps={{ 'data-testid': 'password' }}
                     label='Password'
@@ -132,8 +196,11 @@ const Login = () => {
                   />
                 </Grid>
               </Grid>
-              <Button className={classes.signup} component={Link} to='/signup'>
-                Sign Up?
+              <Typography variant='body2' className={classes.agreement}>
+                By clicking Sign Up, you agree to use this website.
+              </Typography>
+              <Button className={classes.login} component={Link} to='/login'>
+                Log In instead?
               </Button>
               <Button
                 className={classes.submit}
@@ -142,7 +209,7 @@ const Login = () => {
                 variant='contained'
                 color='primary'
               >
-                Log In
+                Sign Up
               </Button>
             </form>
           </div>
@@ -152,4 +219,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

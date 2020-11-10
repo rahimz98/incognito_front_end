@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '../../utils/testUtils';
-import NotFound from '../../components/notFound';
+import NotFound from '../../components/notFound/notFound';
 
 describe('Not Found', () => {
   it('renders 404 page with home button', () => {

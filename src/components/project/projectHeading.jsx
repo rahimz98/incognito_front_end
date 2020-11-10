@@ -11,10 +11,9 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import Popover from '@material-ui/core/Popover';
 import ListItemText from '@material-ui/core/ListItemText';
-import projectDefaultPic1 from '../images/projectDefaultBG1.png';
+import projectDefaultPic1 from '../../images/projectDefaultBG1.png';
 import { Button, Divider } from '@material-ui/core';
-import {  useSelector } from 'react-redux';
-import history from '../history';
+import history from '../../history';
 
 
 const useStyles = makeStyles((theme) => ({

@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent, screen } from '../../utils/testUtils';
-import Header from '../../components/header';
+import Header from '../../components/header/header';
 import { mockDrawerProjects } from '../../utils/mockData';
 import mockAxios from 'axios';
 import MutationObserver from '@sheerun/mutationobserver-shim';

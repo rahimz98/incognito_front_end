@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent, screen } from '../../utils/testUtils';
-import SignUp from '../../components/signUp';
+import SignUp from '../../components/userAuth/signUp';
 
 describe('Register', () => {
   beforeEach(() => {

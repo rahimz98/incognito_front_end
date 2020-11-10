@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import history from '../history';
-import { getSearchResult, clearSearchResult } from '../actions/search';
+import history from '../../history';
+import { getSearchResult, clearSearchResult } from '../../actions/search';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';

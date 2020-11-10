@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import NotFound from './notFound';
+import NotFound from '../notFound/notFound';
 import { generate } from 'shortid';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';

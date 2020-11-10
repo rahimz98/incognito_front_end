@@ -6,7 +6,7 @@ import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import reducer from '../reducers/index';
-import Snackbar from '../components/snackbar';
+import Snackbar from '../components/snackbar/snackbar';
 
 function render(
   ui,

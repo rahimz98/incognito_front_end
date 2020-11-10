@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent, screen } from '../../utils/testUtils';
-import SearchPage from '../../components/searchPage';
+import SearchPage from '../../components/search/searchPage';
 import { mockResults, mockEmptyResults } from '../../utils/mockData';
 
 describe('Search Page', () => {

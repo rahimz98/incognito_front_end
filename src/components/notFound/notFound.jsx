@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import error404 from '../images/error404Image.png';
+import error404 from '../../images/error404Image.png';
 // MUI
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';

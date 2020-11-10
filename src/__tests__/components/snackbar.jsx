@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import Snackbar from '../../components/snackbar';
+import Snackbar from '../../components/snackbar/snackbar';
 import { render, screen, act } from '../../utils/testUtils';
 
 jest.useFakeTimers();

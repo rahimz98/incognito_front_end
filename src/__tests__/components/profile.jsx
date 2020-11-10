@@ -2,7 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent, screen } from '../../utils/testUtils';
-import Profile from '../../components/profile';
+import Profile from '../../components/profile/profile';
 import {
   mockUserProfile,
   mockEmptyUserProfile,

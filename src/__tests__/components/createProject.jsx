@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, fireEvent, screen } from '../../utils/testUtils';
-import CreateProject from '../../components/createProject';
+import CreateProject from '../../components/project/createProject';
 
 describe('Create Project', () => {
   it('renders title and subtitles for create steps', () => {

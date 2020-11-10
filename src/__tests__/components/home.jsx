@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '../../utils/testUtils';
-import Home from '../../components/home';
+import Home from '../../components/home/home';
 
 describe('Home', () => {
   it('renders home page', () => {

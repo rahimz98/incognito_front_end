@@ -4,8 +4,8 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import uniMelbLogo from '../images/unimelb_logo.jpg';
-import gitHubLogo from '../images/githubLogo.png';
+import uniMelbLogo from '../../images/unimelb_logo.jpg';
+import gitHubLogo from '../../images/githubLogo.png';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 function Copyright() {
@@ -65,23 +65,6 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.warning.dark,
     },
   },
-  // list: {
-  //   margin: 0,
-  //   listStyle: 'none',
-  //   padding: 0,
-  // },
-  // listItem: {
-  //   paddingTop: theme.spacing(0.5),
-  //   paddingBottom: theme.spacing(0.5),
-  //   '& >*': {
-  //     textDecoration: 'inherit',
-  //     color: '#192231',
-  //   },
-  // },
-  // language: {
-  //   marginTop: theme.spacing(1),
-  //   width: 150,
-  // },
   aboutUs: {
     color: '#ffffff',
   },
@@ -97,7 +80,6 @@ export default function AppFooter() {
         <Container maxWidth='lg' className={classes.container}>
           <Grid container spacing={5}>
             <Grid item xs={12} md={3} lg={3} className={classes.icons}>
-              {/* <div className={classes.icons}> */}
               <a
                 href='https://handbook.unimelb.edu.au/2020/subjects/comp30022'
                 className={classes.icon}
@@ -114,7 +96,6 @@ export default function AppFooter() {
                   className={classes.icon}
                 />
               </a>
-              {/* </div> */}
             </Grid>
             <Grid item xs={12} md={3} lg={3} className={classes.items}>
               <Typography
@@ -127,19 +108,6 @@ export default function AppFooter() {
                 </Link>
               </Typography>
             </Grid>
-            {/* <Grid item xs={6} sm={4} md={2}>
-              <Typography variant='h6' marked='left' gutterBottom>
-                Legal
-            </Typography>
-              <ul className={classes.list}>
-                <li className={classes.listItem}>
-                  <Link href='/'>Terms</Link>
-                </li>
-                <li className={classes.listItem}>
-                  <Link href='/'>Privacy</Link>
-                </li>
-              </ul>
-            </Grid> */}
             <Grid item xs={12} md={3} lg={3} className={classes.items}>
               <Typography variant='body3' className={classes.items}>
                 Made by Team Incognito for IT project

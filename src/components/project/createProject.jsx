@@ -4,7 +4,7 @@ import { Form, Formik, Field, FieldArray } from "formik";
 import { TextField as TF } from 'formik-material-ui';
 import axios from "axios";
 import { useSelector } from 'react-redux';
-import history from '../history';
+import history from '../../history';
 import { Alert } from "@material-ui/lab";
 
 
