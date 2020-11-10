@@ -2,35 +2,35 @@
 ## Features
 Register & Login
 
-![Register & Login](/readme-gifs/register.gif)
+![Register & Login](/readme_gifs/register.gif)
 
 User Profile
 
-![User Profile](/readme-gifs/profile.gif)
+![User Profile](/readme_gifs/profile.gif)
 
 Sidebar 
 - Access to home and projects
 - Create projects
 
-![Sidebar](/readme-gifs/menu.gif)
+![Sidebar](/readme_gifs/menu.gif)
 
-![Sidebar](/readme-gifs/createproject.gif)
+![Sidebar](/readme_gifs/createproject.gif)
 
 Projects
-- Edit projects
+- Edit & delete projects
 - Add & delete images
 - Share to social media
 
-![Projects](/readme-gifs/project.gif)
+![Projects](/readme_gifs/project.gif)
 
 Search
 - Find people & projects
 
-![Search](/readme-gifs/search.gif)
+![Search](/readme_gifs/search.gif)
 
 Dark Mode
 
-![Dark Mode](/readme-gifs/darkmode.gif)
+![Dark Mode](/readme_gifs/darkmode.gif)
 
 ## Installation Guide 
 
@@ -52,5 +52,5 @@ Below are the steps to install both the front end and back end on local machines
     `npm install --save` <br />
     3.3. To start the Front-End client, run the following command<br />
     `npm start`<br />
-    3.4. Open [http://localhost:3000](http://localhost:3000) to view the server in the browser<br />
+    3.4. Open [http://localhost:3000](http://localhost:3000) to view the client in the browser<br />
     3.5 (OPTIONAL) Install the React Redux Dev Tool extension, on Chrome, [Here](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd) to be able to see and visualize the redux states
