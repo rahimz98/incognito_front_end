@@ -24,7 +24,6 @@
 - Marcus Lim
 - Jason Thien
 
-
 ## About
 
 Memento is a retrospective based e-portfolio website meant to be used for students to showcase their projects to the public. Users are able to view other users as well as the projects that other users are currently working on via the search bar. Users can also choose to publicize or privatize their projects used for privacy-sake. 
@@ -39,6 +38,9 @@ Register & Login
 ![Register & Login](/readme_gifs/register.gif)
 
 User Profile
+- Edit profile
+- Change profile picture
+- Add & remove resume
 
 ![User Profile](/readme_gifs/profile.gif)
 
@@ -54,6 +56,7 @@ Projects
 - Edit & delete projects
 - Add & delete images
 - Share to social media
+- Public & private visibility
 
 ![Projects](/readme_gifs/project.gif)
 
@@ -91,6 +94,30 @@ Below are the steps to install both the front end and back end on local machines
 
 ## Application Layer
 
+**Front-End**
+- userAuth (components/userAuth)
+  - login, signUp, privateRoute
+- profile (components/profile)
+  - profile, editProfile, viewProfile
+- project (components/project)
+  - projects, projectHeading, projectContent, editProject, createProject
+  - gallery (components/project/gallery)
+      -  gallery, imagesPage, imageStepper
+- search (components/search)
+  - search, searchPage
+- home (components/home)
+  - home
+- header (components/header)
+  - header
+- footer (components/footer)
+  - footer
+- editor (components/editor)
+  - quilEditor
+- notFound (components/notFound)
+  - notFound
+- snackbar (components/snackbar)
+  - snackbar
+
 **Back-End**
 - User controller (controllers/user-controller.js)
   - Creates, read, update, deletes all fields in the User reference
@@ -105,10 +132,6 @@ Below are the steps to install both the front end and back end on local machines
   - Handles the search for Users and Projects
 - Database controller (controllers/db-controller.js)
   - Setup for the Firebase configuration
-
-**Front-End**
-(needs to be filled)
-
 
 ## API Documentation
 
