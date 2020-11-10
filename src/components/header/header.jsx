@@ -377,7 +377,7 @@ const PersistentDrawerLeft = () => {
           <h3>Home</h3>
         </ListItem>
       </List>
-      <Divider />
+      {Object.keys(projectList).length > 1 && <Divider/>}
       <List>
         {Object.entries(projectList).map(([key, index]) =>
           key != 'null' ? (
