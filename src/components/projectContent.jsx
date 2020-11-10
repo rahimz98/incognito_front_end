@@ -81,7 +81,7 @@ export default function Content(props) {
                     <List>
                         {linksList = links.map((value, index) => {
                             console.log(value);
-                            return <ListItem style={{ fontSize: "15px", textTransform: 'none', color: "" }} ><Button style={{ fontSize: "20px", textTransform: 'none', color: "", display: "table-cell" }} onClick={() => window.open(value)} >{value}</Button></ListItem>
+                            return <ListItem style={{ fontSize: "15px", textTransform: 'none', color: "" }} ><Button style={{ fontSize: "20px", textTransform: 'none', color: "", display: "table-cell" }} onClick={() => window.open(`https://${value}`)} >{value}</Button></ListItem>
                         })}
                     </List>
                 </>

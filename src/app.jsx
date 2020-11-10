@@ -24,6 +24,7 @@ import Project from './components/projects';
 import CreateProject from './components/createProject';
 import EditProject from './components/editProject';
 import ImagePage from './components/ImagesPage';
+import Gallery from './components/Gallery';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,7 +78,8 @@ function App() {
                 path='/:id/:projectid/edit'
                 component={EditProject}
               />
-              <Route exact path='/:id/:projectid/images' component={ImagePage}/>
+              <Route exact path='/:id/:projectid/images' component={ImagePage} />
+              <Route exact path='/:id/:projectid/gallery' component={Gallery} />
               <Route path='*' component={NotFound} />
             </Switch>
           </div>

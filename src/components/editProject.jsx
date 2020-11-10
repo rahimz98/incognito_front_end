@@ -407,7 +407,6 @@ const EditProject = (props) => {
                                                         startIcon={<DeleteIcon />}
                                                         variant="contained"
                                                         className={classes.delete}
-                                                        onClick={deleteProject}
                                                         onClick={handleClickOpen}
                                                     >
                                                         Delete project
@@ -441,7 +440,7 @@ const EditProject = (props) => {
                                                         className={classes.gallery}
                                                         onClick={() => history.push(`/${user.id}/${projectid}/images`)}
                                                     >
-                                                        Upload Images
+                                                        Images
                                                     </Button>
                                                     <Button
                                                         variant='contained'
