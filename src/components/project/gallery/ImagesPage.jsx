@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { DropzoneDialog } from 'material-ui-dropzone'
 import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, CircularProgress, Fab, Grid, Input, makeStyles, Typography } from '@material-ui/core';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-
+import { infoSnackbar } from '../../../actions/snackbar';
 
 const useStyles = makeStyles((theme) => ({
     loadingBase: {
@@ -56,7 +57,7 @@ const ImagePage = () => {
     const classes = useStyles();
     const [images, setImages] = useState({});
 
-
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
         console.log("HEllo Word 2.0");
@@ -134,7 +135,7 @@ const ImagePage = () => {
         console.log("formData:", formData);
         uploadMedia(formData);
 
-
+        dispatch(infoSnackbar('Adding images...'));
     }
 
     const handleOpen = () => {
