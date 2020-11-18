@@ -81,7 +81,7 @@ const Content =  () =>{
                 <PeopleCard nickname ={"The Planner"} name = {"Nik Faris Arief"} description ={"Fully fledged potato from Malaysia. Majoring in Computer Science at UniMelb. Good at coercing people to procrastinate with him"} pic ={faris}/>
             </Grid>
             <Grid item xs={12} sm={4}>
-                <PeopleCard nickname = {"The Prodigy"} name = {"Gieester Thai"} description ={"Co-founder of Memento and an integral member of Team Incognito. Majoring in Computer Science at UniMelb. Whereabouts  unknown to this day"}/>
+                <PeopleCard nickname = {"The Prodigy"} name = {"Gieester Thai"} description ={"Co-founder of Memento and member of Team Incognito. Majoring in Computer Science at UniMelb. Whereabouts unknown to this day"}/>
             </Grid>
             <Grid item xs={12} sm ={4}>
                 <PeopleCard  nickname = {"The Smooth Talker"} name = {"Zill-e-Rahim"} description = {"Aspiring Web Developer born in Pakistan and raised in Qatar. Majoring in Computer Science at UniMelb. Loves everything about Pokemon ϞϞ(๑⚈ ․̫ ⚈๑)"} pic ={zil}/>
